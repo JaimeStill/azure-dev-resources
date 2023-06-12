@@ -28,6 +28,8 @@ Download and install the [WSL2 Linux kernel update package for x64 machines](htt
 wsl --set-default-version 2
 ```
 
+> Ubuntu cloud images: https://cloud-images.ubuntu.com/releases
+
 [Download](https://learn.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions) a Linux Distribution:
 
 ```PowerShell
@@ -58,11 +60,11 @@ Add-AppxPackage .\ubunut.appx
 
 ## npm
 
-Node.JS (JavaScript / TypeScript) dependencies.
+Node.JS (JavaScript / TypeScript) dependencies, known as [npm packages](https://docs.npmjs.com/about-packages-and-modules).
 
 ### Self-Hosting
 
-Project-local dependency cache strategy has been established. No strategy for self-hosting an npm registry yet. [verdaccio](https://verdaccio.org/) looks promising, but need to prove it out.
+Project-local dependency cache strategy has been established. No strategy for self-hosting an [npm registry](https://docs.npmjs.com/cli/v9/using-npm/registry?v=true) yet. [verdaccio](https://verdaccio.org/) looks promising, but need to prove it out.
 
 ## NuGet
 
