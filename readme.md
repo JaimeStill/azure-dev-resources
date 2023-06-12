@@ -1,14 +1,11 @@
 # Azure Dev Resources
 
+* [OS Configuration]()
+* [Software]()
 * [npm]()
 * [NuGet]()
 * [Azure CLI]()
-* [Docker]()
-* []
-
-Resource | Description | Notes
----------|-------------|------
-NuGet packages | .NET (C#) dependencies | Any networked file-share should be able to serve as a resolution point for NuGet packages, configurable via `dotnet nuget` commands.
+* [Docker Images]()
 
 ## OS Configuration
 
@@ -36,7 +33,7 @@ wsl --set-default-version 2
 ```PowerShell
 Invoke-WebRequest -Uri https://aka.ms/wslubuntu2204 -OutFile ubuntu.appx -UseBasicParsing
 
-Add-AppxPackage
+Add-AppxPackage .\ubunut.appx
 ```
 
 ## Software
@@ -57,7 +54,7 @@ Add-AppxPackage
 
 ### Configurations for Offline Environments
 
-## Ubuntu Software
+### Ubuntu Software
 
 ## npm
 
