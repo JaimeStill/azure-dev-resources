@@ -1,4 +1,11 @@
-# OS Configuration
+---
+title: OS Reconfiguration
+---
+
+* [Home](./readme.md)
+    * [NuGet](./02-nuget.md)
+    * [npm](./03-npm.md)
+    * [Docker](./04-docker.md)
 
 The following sections outline the configurations and infrastructure needed to facilitate containerized cloud development on a development machine lacking a connection to the internet.
 
@@ -127,3 +134,8 @@ Press <kbd>F1</kbd> -> **Preferences: Open Settings (JSON)**:
     "update.mode": "none"
 }
 ```
+
+* [Home](./readme.md)
+    * [NuGet](./02-nuget.md)
+    * [npm](./03-npm.md)
+    * [Docker](./04-docker.md)

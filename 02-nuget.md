@@ -1,4 +1,11 @@
-# NuGet
+---
+title: NuGet
+---
+
+* [Home](./readme.md)
+    * [OS Configuration](./01-os-configuration.md)
+    * [npm](./03-npm.md)
+    * [Docker](./04-docker.md)
 
 .NET (C#) dependencies, known as [NuGet Packages](https://learn.microsoft.com/en-us/nuget/what-is-nuget).
 
@@ -57,3 +64,8 @@ jobs:
 ```
 
 To initiate an updated version, create a new GitHub Tag (this can be done at: https://github.com/<User>/<Repo>/tags) in the format of `v[0-9].[0-9].[0-9]`. This should be done after an approved pull request.
+
+* [Home](./readme.md)
+    * [OS Configuration](./01-os-configuration.md)
+    * [npm](./03-npm.md)
+    * [Docker](./04-docker.md)
