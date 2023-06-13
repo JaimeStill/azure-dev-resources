@@ -1,5 +1,5 @@
 # OS Configuration
-[Home](./readme.md)
+[Home](./index.md)
 
 The following sections outline the configurations and infrastructure needed to facilitate containerized cloud development on a development machine lacking a connection to the internet.
 
@@ -129,4 +129,4 @@ Press <kbd>F1</kbd> -> **Preferences: Open Settings (JSON)**:
 }
 ```
 
-[Home](./readme.md)
+[Home](./index.md)
