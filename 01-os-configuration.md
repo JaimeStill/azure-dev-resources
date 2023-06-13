@@ -1,6 +1,4 @@
----
-title: OS Reconfiguration
----
+# OS Configuration
 
 * [Home](./readme.md)
     * [NuGet](./02-nuget.md)

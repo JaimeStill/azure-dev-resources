@@ -1,6 +1,4 @@
----
-title: NuGet
----
+# NuGet
 
 * [Home](./readme.md)
     * [OS Configuration](./01-os-configuration.md)

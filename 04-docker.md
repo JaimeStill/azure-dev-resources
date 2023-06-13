@@ -1,6 +1,4 @@
----
-title: Docker
----
+# Docker
 
 * [Home](./readme.md)
     * [OS Configuration](./01-os-configuration.md)
