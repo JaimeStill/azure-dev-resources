@@ -1,9 +1,5 @@
 # Docker
-
-* [Home](./readme.md)
-    * [OS Configuration](./os-configuration.md)
-    * [NuGet](./nuget.md)
-    * [npm](./npm.md)
+[Home](./readme.md)
 
 ## Cache and Restore Images
 
@@ -55,7 +51,4 @@
 
 ## Node Images
 
-* [Home](./readme.md)
-    * [OS Configuration](./os-configuration.md)
-    * [NuGet](./nuget.md)
-    * [npm](./npm.md)
+[Home](./readme.md)
