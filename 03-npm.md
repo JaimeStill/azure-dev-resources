@@ -2,9 +2,11 @@
 
 Node.JS (JavaScript / TypeScript) dependencies, known as [npm packages](https://docs.npmjs.com/about-packages-and-modules).
 
-## Self-Hosting
+## Hosting npm Packages
 
-Project-local dependency cache strategy has been established. No strategy for self-hosting an [npm registry](https://docs.npmjs.com/cli/v9/using-npm/registry?v=true) yet. [verdaccio](https://verdaccio.org/) looks promising, but need to prove it out.
+No strategy for self-hosting an [npm registry](https://docs.npmjs.com/cli/v9/using-npm/registry?v=true) has been established yet. [verdaccio](https://verdaccio.org/) looks promising, but need to prove it out.
+
+## Per-project Dependency Cache
 
 ## Local npm Packages
 

@@ -1,10 +1,16 @@
 # NuGet
 
-.NET (C#) dependencies.
+.NET (C#) dependencies, known as [NuGet Packages](https://learn.microsoft.com/en-us/nuget/what-is-nuget).
 
-Any networked file-share should be able to serve as a resolution point for NuGet packages, configurable via `dotnet nuget` commands.
+## Hosting NuGet Packages
 
-## Publishing NuGet Updates
+### Building a NuGet Cache
+
+## Internal NuGet Packages
+
+Internal NuGet packages should be managed and published on an unclassfied network and resolved with all additional external dependencies.
+
+### Publishing NuGet Updates
 
 ```bash
 dotnet pack -c Release -o ./.nuget/
@@ -16,7 +22,7 @@ dotnet nuget push \
     --skip-duplicate
 ```
 
-## Automating NuGet Package Deployments
+### Automating NuGet Package Deployments
 
 Deployment to NuGet can be automated through GitHub Actions:
 
@@ -51,10 +57,3 @@ jobs:
 ```
 
 To initiate an updated version, create a new GitHub Tag (this can be done at: https://github.com/<User>/<Repo>/tags) in the format of `v[0-9].[0-9].[0-9]`. This should be done after an approved pull request.
-
-## Internal NuGet Packages
-
-Internal NuGet packages should be managed and published on an unclassfied network and resolved with all additional external dependencies out outlined in the above *Self-Hosting* section.
-
-* Internal NuGet Package Strategy
-* Internal NuGet CI / CD Actions
