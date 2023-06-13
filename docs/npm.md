@@ -1,11 +1,11 @@
 # npm
 
 * [Home](./readme.md)
-    * [OS Configuration](./01-os-configuration.md)
-    * [NuGet](./02-nuget.md)
-    * [Docker](./04-docker.md)
+    * [OS Configuration](./os-configuration.md)
+    * [NuGet](./nuget.md)
+    * [Docker](./docker.md)
 
-[Prev](./02-nuget.md) | [Home](./readme.md) | [Next](./04-docker.md)
+[Prev](./nuget.md) | [Home](./readme.md) | [Next](./docker.md)
 
 Node.JS (JavaScript / TypeScript) dependencies, known as [npm packages](https://docs.npmjs.com/about-packages-and-modules).
 
@@ -20,6 +20,6 @@ No strategy for self-hosting an [npm registry](https://docs.npmjs.com/cli/v9/usi
 Prove out the steps from here: https://stackoverflow.com/questions/15806241/how-to-specify-local-modules-as-npm-package-dependencies/38417065#38417065
 
 * [Home](./readme.md)
-    * [OS Configuration](./01-os-configuration.md)
-    * [NuGet](./02-nuget.md)
-    * [Docker](./04-docker.md)
+    * [OS Configuration](./os-configuration.md)
+    * [NuGet](./nuget.md)
+    * [Docker](./docker.md)
