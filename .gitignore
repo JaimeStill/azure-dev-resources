@@ -1,2 +1,6 @@
-assets/software/
-assets/extensions/
+bundle/
+*.appx
+*.exe
+*.msi
+*.msixbundle
+*.vsix

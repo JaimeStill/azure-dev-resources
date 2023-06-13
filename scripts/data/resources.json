@@ -1,0 +1,14 @@
+[
+    {
+        "dir": "software",
+        "list": "software.json"
+    },
+    {
+        "dir": "extensions/ads",
+        "list": "ads-extensions.json"
+    },
+    {
+        "dir": "extensions/code",
+        "list": "code-extensions.json"
+    }
+]
