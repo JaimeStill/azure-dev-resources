@@ -86,4 +86,44 @@ Extension | Description
 
 ## Managing Ubuntu
 
+See [How to Update Ubuntu Offline without Internet Connection](https://www.debugpoint.com/how-to-update-or-upgrade-ubuntu-offline-without-internet/) and verify.
+
+**Installing Packages Offline**  
+
+* [apt-offline](https://manpages.ubuntu.com/manpages/bionic/man8/apt-offline.8.html)
+* https://superuser.com/questions/393109/how-can-i-download-ubuntu-packages-in-windows-to-install-them-on-an-offline-ubun
+* https://www.nstec.com/how-to-install-software-on-linux-without-internet-connection/
+* https://unix.stackexchange.com/questions/574266/problem-downloading-a-package-and-installing-it-without-internet-on-ubuntu-18-04
+
 ## Configurations for Offline Environments
+
+The following steps will be used to adjust settings for disabling background network traffic that will never succeed in an offline environment.
+
+### Environment Variables
+
+1. Type <kbd>Win + R</kbd> to open the **Run...** prompt, type **SystemPropertiesAdvanced**, press <kbd>Enter</kbd>, then click **Environment Variables...**
+
+2. In **System variables**, using the **New...** button, add teh following:
+
+    Variable | Value
+    ---------|------
+    `POWERSHELL_TELEMTRY_OPTOUT` | 1
+    `POWERSHELL_UPDATECHECK` | 0
+    `POWERSHELL_UPDATECHECK_OPTOUT` | 1
+
+3. Click **OK** and close all windows created from this task.
+
+### Visual Studio Code
+
+Press <kbd>F1</kbd> -> **Preferences: Open Settings (JSON)**:
+
+```json
+{
+    "extensions.autoCheckUpdates": false,
+    "extensions.autoUpdate": false,
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "update.enableWindowsBackgroundUpdates": false,
+    "update.mode": "none"
+}
+```
