@@ -7,7 +7,7 @@ With the establishment of the IL6 cloud region, we now have access to the servic
 * [OS Configuration](./01-os-configuration.md)
     * [WSL + Ubuntu](./01-os-configuration.md#wsl--ubuntu)
     * [Software](./01-os-configuration.md#software)
-    * [Code Extensions](./01-os-configuration.md#code-extensions)
+    * [Extensions](./01-os-configuration.md#extensions)
     * [Managing Ubuntu](./01-os-configuration.md#managing-ubuntu)
     * [Configurations for Offline Environments](./01-os-configuration.md#configurations-for-offline-environments)
 * [NuGet](./02-nuget.md)
