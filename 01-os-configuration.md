@@ -2,6 +2,8 @@
 
 The following sections outline the configurations and infrastructure needed to facilitate containerized cloud development on a development machine lacking a connection to the internet.
 
+> All of the required dependencies specified below can be bundled into the [assets](./assets/) directory by running the [Get-DevResources.ps1](./assets/Get-DevResources.ps1) script.
+
 ## WSL + Ubuntu
 
 https://learn.microsoft.com/en-us/windows/wsl/install-manual
