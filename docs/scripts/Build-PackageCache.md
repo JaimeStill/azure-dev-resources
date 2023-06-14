@@ -1,3 +1,6 @@
+# Build-PackageCache.ps1
+
+```PowerShell
 param(
     [string]
     [Parameter()]
@@ -76,3 +79,4 @@ Build-Cache $Cache $Solution
 if (-not $KeepSolution) {
     Remove-Item $Solution -Recurse -Force
 }
+```

@@ -46,7 +46,7 @@ dotnet nuget locals all --clear
 
 ## Building a NuGet Cache
 
-The PowerShell script [Build-PackageCache.ps1](./scripts/Build-PackageCache.ps1) defines the ability to generate a NuGet Package cache based on a series of dependencies defined in a provided JSON file. The generated cache can then be transported to a disconnected network and used to establish or update a NuGet package feed.
+The PowerShell script [Build-PackageCache.ps1](./scripts/Build-PackageCache.md) defines the ability to generate a NuGet Package cache based on a series of dependencies defined in a provided JSON file. The generated cache can then be transported to a disconnected network and used to establish or update a NuGet package feed.
 
 Property | Type | Default Value | Description
 ---------|------|---------------|------------

@@ -1,3 +1,6 @@
+# Get-DevResources.ps1
+
+```PowerShell
 param(
     [string]
     [Parameter()]
@@ -59,3 +62,4 @@ try {
 finally {
     $global:ProgressPreference = $initialProgressPreference
 }
+```
