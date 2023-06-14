@@ -15,8 +15,8 @@ The PowerShell script [Build-NpmCache.ps1](./scripts/Build-NpmCache.md) defines 
 
 The generated cache can then be transported to a disconnected network and used to establish or update the dependencies for an existing Node.js project.
 
-Property | Type | Default Value | Description
----------|------|---------------|------------
+Parameter | Type | Default Value | Description
+----------|------|---------------|------------
 Cache | **string** | `node_cache` | The directory to store gzipped npm packages. Used to populate the project-local [`.npmrc`](https://docs.npmjs.com/cli/v9/configuring-npm/npmrc) [cache](https://docs.npmjs.com/cli/v9/using-npm/config#cache) variable.
 Source | **string** | `data\package.json` | The dependency-specific package.json file.
 Name | **string** | `cache` | Specifies the name for the generated package.json file.

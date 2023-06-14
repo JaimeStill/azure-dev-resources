@@ -9,4 +9,6 @@ solution/
 *.exe
 *.msi
 *.msixbundle
+*.tar
 *.vsix
+.docker-temp*
