@@ -1,6 +1,7 @@
 # Build-PackageCache.ps1
+[Home](../index.md)
 
-```PowerShell
+```powershell
 param(
     [string]
     [Parameter()]

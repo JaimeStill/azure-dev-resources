@@ -1,6 +1,7 @@
 # Get-DevResources.ps1
+[Home](../index.md)
 
-```PowerShell
+```powershell
 param(
     [string]
     [Parameter()]
