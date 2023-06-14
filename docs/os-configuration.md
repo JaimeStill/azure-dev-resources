@@ -3,7 +3,7 @@
 
 The following sections outline the configurations and infrastructure needed to facilitate containerized cloud development on a development machine lacking a connection to the internet.
 
-> All of the required dependencies specified below can be bundled into a single directory by running the [Get-DevResources.ps1](../scripts/Get-DevResources.ps1) script.
+> All of the required dependencies specified below can be bundled into a single directory by running the [Get-DevResources.ps1](./scripts/Get-DevResources.ps1) script.
 
 ## WSL + Ubuntu
 

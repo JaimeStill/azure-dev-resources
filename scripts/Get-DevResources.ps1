@@ -10,7 +10,7 @@ param(
     $Resources = "resources.json"
 )
 
-. .\functions.ps1
+. .\ResourceFunctions.ps1
 
 $initialProgressPreference = $global:ProgressPreference
 $global:ProgressPreference = 'SilentlyContinue'

@@ -5,7 +5,105 @@
 
 ## Hosting NuGet Packages
 
-### Building a NuGet Cache
+NuGet packages can be hosted in a variety of publicly routable locations including networked file shares, [Azure DevOps Artifacts](https://learn.microsoft.com/en-us/azure/devops/artifacts/get-started-nuget?view=azure-devops&tabs=windows) feeds, or an HTTP web server.
+
+Once a feed has been established, you can view and mangage feeds via the .NET SDK. Here are a series of commands that are helpful for managing NuGet package feeds and cached data:
+
+```bash
+# show nuget sources
+dotnet nuget list source
+
+# add official nuget source
+dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+
+# add Azure Artifacts nuget source
+dotnet nuget add source https://pkgs.dev.azure.com/dev/_packaging/feed/nuget/v3/index.json -n "Azure Cache"
+
+# add internal nuget source
+dotnet nuget add source "\\dev-share\nuget" -n "Internal Cache"
+
+# remove nuget source
+dotnet nuget remove source "Azure Cache"
+
+# disable nuget source
+dotnet nuget disable source "nuget.org"
+
+# enable nuget source
+dotnet nuget enable source "Internal Cache"
+
+# list all cache directories
+dotnet nuget locals all --list
+
+# clear the global-packages cache
+dotnet nuget locals global-packages --clear
+
+# clear the http-cache
+dotnet nuget locals http-cache --clear
+
+# clear all caches
+dotnet nuget locals all --clear
+```
+
+## Building a NuGet Cache
+
+The PowerShell script [Build-PackageCache.ps1](./scripts/Build-PackageCache.ps1) defines the ability to generate a NuGet Package cache based on a series of dependencies defined in a provided JSON file. The generated cache can then be transported to a disconnected network and used to establish or update a NuGet package feed.
+
+Property | Type | Default Value | Description
+---------|------|---------------|------------
+Cache | **string** | `..\nuget-packages` | The cache target directory.
+Source | **string** | `solution.json` | The JSON file containing information int he JSON Schema format outlined below.
+Solution | **string** | `..\solution` | The directory to create the .NET solution used to generate the cache.
+Framework | **string** | `net7.0` | The target framework for the solution projects. Valid values are: `net6.0`, `net7.0`, `netstandard2.0`, `netstandard2.1`.
+KeepSolution | **switch** | null | When present, do no remove the solution created to generate the cache.
+SkipClean | **switch** | null | When present, prevent the script from cleaning the local NuGet cache (`dotnet nuget locals all --clear`).
+
+### JSON Schema
+
+An array of objects that provide metadata for a .NET project. Object schema is as follows:
+
+Property | Description
+---------|------------
+`name` | the name of the project
+`template` | the `dotnet new <template>` to use to generate the project
+`dependencies` | an array of NuGet packages dependencies to use with `dotnet add package <dependency>`. To specify a version, use the following format: `package@version`.
+
+**Example**  
+
+```json
+[
+    {
+        "name": "Core",
+        "template": "classlib",
+        "dependencies": [
+            "DocumentFormat.OpenXml",
+            "Microsoft.Data.SqlClient",
+            "Microsoft.EntityFrameworkCore",
+            "Microsoft.EntityFrameworkCore.Design",
+            "Microsoft.EntityFrameworkCore.Relational",
+            "Microsoft.EntityFrameworkCore.SqlServer",
+            "Microsoft.EntityFrameworkCore.Tools",
+            "Microsoft.Extensions.Configuration.Abstractions",
+            "Microsoft.Extensions.Configuration.Binder",
+            "Newtonsoft.Json",
+            "System.DirectoryServices",
+            "System.DirectoryServices.AccountManagement"
+        ]
+    },
+    {
+        "name": "Web",
+        "template": "webapi",
+        "dependencies": [
+            "Automapper",
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson",
+            "Microsoft.AspNetCore.OData",
+            "Microsoft.Data.SqlClient@2.1.4",
+            "Serilog.AspNetCore",
+            "Swashbuckle.AspNetCore",
+            "Swashbuckle.AspNetCore.Newtonsoft"
+        ]
+    }
+]
+```
 
 ## Internal NuGet Packages
 
@@ -57,6 +155,20 @@ jobs:
             --skip-duplicate
 ```
 
-To initiate an updated version, create a new GitHub Tag (this can be done at: https://github.com/<User>/<Repo>/tags) in the format of `v[0-9].[0-9].[0-9]`. This should be done after an approved pull request.
+To initiate an updated version, create a new GitHub Tag (this can be done at: https://github.com/<User>/<Repo>/tags) in the format of `v[0-9].[0-9].[0-9]`. This should be done after an approved pull request. 
+
+## Configuration Hierarchy
+
+> NuGet's behavior is driven by the accumulated settings in one or more `NuGet.Config` (XML) files that can exist at project-, user-, and machine-wide levels. A global `NuGetDefaults.Config` file also specifically configured package sources. Settings apply to all commands issued in the CLI, the Package Manager Console, and the Package Manager UI.
+>
+> [NuGet Microsoft Docs - Common NuGet Configurations](https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior)
+
+Settings are applied from top to bottom, with more specific configs overwriting broader-level configs.
+
+Scope | `NuGet.Config` File Location | Description
+------|------------------------------|------------
+Solution | Current folder (aka Solution folder) or any folder up to the drive root. | In a solution folder, settings apply to all projects in subfolders. Note that if a config file is placed in a project folder, it has no effect on that project.
+User | **Windows**: `%appdata%\NuGet\NuGet.Config` <br />**Mac/Linux**: `~/.config/NuGet/NuGet.Config` or `~/.nuget/NuGet/NuGet.Config` (varies by OS distribution) | Settings apply to all operations, but are overridden by any project-level settings.
+Computer | **Windows**: `%ProgramFiles(x86)%\NuGet\Config` <br />**Mac/Linux**: `$XDG_DATA_HOME`. If `$XDG_DATA_HOME` is null or empty, `~/.local/share` or `/usr/local/share` will be used (varies by OS distribution) | Settings apply to all operations on the computer, but are overridden by any user- or project-level settings.
     
 [Home](./index.md)

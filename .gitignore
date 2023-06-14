@@ -1,4 +1,6 @@
 bundle/
+nuget-packages/
+solution/
 *.appx
 *.exe
 *.msi
