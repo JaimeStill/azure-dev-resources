@@ -155,7 +155,7 @@ jobs:
             --skip-duplicate
 ```
 
-To initiate an updated version, create a new GitHub Tag (this can be done at: https://github.com/<User>/<Repo>/tags) in the format of `v[0-9].[0-9].[0-9]`. This should be done after an approved pull request. 
+To initiate an updated version, create a new GitHub Tag (this can be done at: `https://github.com/<User>/<Repo>/tags`) in the format of `v[0-9].[0-9].[0-9]`. This should be done after an approved pull request. 
 
 ## Configuration Hierarchy
 
