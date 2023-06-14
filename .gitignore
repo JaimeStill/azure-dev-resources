@@ -1,4 +1,8 @@
+.logs/
 bundle/
+node_cache/
+node_modules/
+npm/
 nuget-packages/
 solution/
 *.appx

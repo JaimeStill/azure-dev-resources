@@ -1,57 +1,57 @@
 [
     {
-        "name": "Angular Language Service",
-        "file": "angular-language-service.vsix",
-        "source": "https://github.com/angular/vscode-ng-language-service/releases/download/v16.0.0/ng-template.vsix"
+        "publisher": "angular",
+        "name": "ng-template",
+        "label": "Angular Language Service"
     },
     {
-        "name": "C# Dev Kit",
-        "file": "csharp-devkit.vsix",
-        "source": "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-dotnettools/vsextensions/csdevkit/0.1.83/vspackage?targetPlatform=win32-x64"
+        "publisher": "ms-dotnettools",
+        "name": "csdevkit",
+        "label": "C# Dev Kit"
     },
     {
-        "name": "Docker",
-        "file": "docker.vsix",
-        "source": "https://github.com/microsoft/vscode-docker/releases/download/v1.25.1/vscode-docker-1.25.1.vsix"
+        "publisher": "ms-azuretools",
+        "name": "vscode-docker",
+        "label": "Docker"
     },
     {
-        "name": "EditorConfig",
-        "file": "editorconfig.vsix",
-        "source": "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/EditorConfig/vsextensions/EditorConfig/0.16.4/vspackage"
+        "publisher": "editorconfig",
+        "name": "editorconfig",
+        "label": "EditorConfig"
     },
     {
-        "name": "GitHub Markdown Preview",
-        "file": "github-markdown.vsix",
-        "source": "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/bierner/vsextensions/github-markdown-preview/0.3.0/vspackage"
+        "publisher": "bierner",
+        "name": "github-markdown-preview",
+        "label": "GitHub Markdown Preview"
     },
     {
-        "name": "GitHub Theme",
-        "file": "github-theme.vsix",
-        "source": "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/GitHub/vsextensions/github-vscode-theme/6.3.4/vspackage"
+        "publisher": "github",
+        "name": "github-vscode-theme",
+        "label": "GitHub Theme"
     },
     {
-        "name": "PowerShell",
-        "file": "powershell.vsix",
-        "source": "https://github.com/PowerShell/vscode-powershell/releases/download/v2023.6.0/powershell-2023.6.0.vsix"
+        "publisher": "ms-vscode",
+        "name": "powershell",
+        "label": "PowerShell"
     },
     {
-        "name": "Remote Development",
-        "file": "remote-dev.vsix",
-        "source": "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode-remote/vsextensions/vscode-remote-extensionpack/0.24.0/vspackage"
+        "publisher": "ms-vscode-remote",
+        "name": "vscode-remote-extensionpack",
+        "label": "Remote Development"
     },
     {
-        "name": "Task Explorer",
-        "file": "task-explorer.vsix",
-        "source": "https://github.com/spmeesseman/vscode-taskexplorer/releases/download/v2.13.2/vscode-taskexplorer-2.13.2.vsix"
+        "publisher": "spmeesseman",
+        "name": "vscode-taskexplorer",
+        "label": "Task Explorer"
     },
     {
-        "name": "Thunder Client",
-        "file": "thunder-client.vsix",
-        "source": "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/rangav/vsextensions/vscode-thunder-client/2.7.6/vspackage"
+        "publisher": "rangav",
+        "name": "vscode-thunder-client",
+        "label": "Thunder Client"
     },
     {
-        "name": "YAML",
-        "file": "yaml.vsix",
-        "source": "https://github.com/redhat-developer/vscode-yaml/releases/download/1.13.0/yaml-1.13.0-19534.vsix"
+        "publisher": "redhat",
+        "name": "vscode-yaml",
+        "label": "YAML"
     }
 ]

@@ -2,6 +2,7 @@
 
 With the establishment of the IL6 cloud region, we now have access to the services necessary for hosting capabilities in the cloud environment. In order to leverage these services, we still need to establish the underlying infrastructure needed to develop and deploy these capabilities. This repository is an effort to identify this needed infrastructure, and identify strategies for standardizing their use in an environment without access to the internet.
 
+* [Scripts](./scripts/)
 * [OS Configuration](./os-configuration.md)
     * [WSL + Ubuntu](./os-configuration.md#wsl--ubuntu)
     * [Software](./os-configuration.md#software)

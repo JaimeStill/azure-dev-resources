@@ -3,7 +3,7 @@
 
 The following sections outline the configurations and infrastructure needed to facilitate containerized cloud development on a development machine lacking a connection to the internet.
 
-> All of the required dependencies specified below can be bundled into a single directory by running the [Get-DevResources.ps1](./scripts/Get-DevResources.md) script.
+> All of the required dependencies specified below can be bundled into a single directory by running the [Build-DevResources.ps1](./scripts/Build-DevResources.md) script.
 
 ## WSL + Ubuntu
 
@@ -29,7 +29,7 @@ wsl --set-default-version 2
 [Download](https://learn.microsoft.com/en-us/windows/wsl/install-manual#downloading-distributions) a Linux Distribution:
 
 ```PowerShell
-Invoke-WebRequest -Uri https://aka.ms/wslubuntu2204 -OutFile ubuntu.appx -UseBasicParsing
+Invoke-WebRequest -Uri https://aka.ms/wslubuntu2204 -OutFile ubuntu.appx
 
 Add-AppxPackage .\ubuntu.appx
 ```

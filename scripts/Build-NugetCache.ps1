@@ -1,11 +1,7 @@
-# Build-PackageCache.ps1
-[Home](../index.md)
-
-```powershell
 param(
     [string]
     [Parameter()]
-    $Cache = "..\nuget-packages",
+    $Target = "..\nuget-packages",
     [string]
     [Parameter()]
     $Source = "data\solution.json",
@@ -75,9 +71,8 @@ if (-not $SkipClean) {
     & dotnet nuget locals all --clear
 }
 
-Build-Cache $Cache $Solution
+Build-Cache $Target $Solution
 
 if (-not $KeepSolution) {
     Remove-Item $Solution -Recurse -Force
 }
-```

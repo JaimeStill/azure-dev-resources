@@ -4,7 +4,7 @@ With the establishment of the IL6 cloud region, we now have access to the servic
 
 ## Aggregate Resources
 
-As external dependencies needed to facilitate disconnected cloud development are identified, their acquisition will be automated in the [scripts](./scripts/) directory via the [Get-DevResources.ps1](./scripts/Get-DevResources.ps1) script.
+As external dependencies needed to facilitate disconnected cloud development are identified, their acquisition will be automated in the [scripts](./scripts/) directory.
 
 ## Documentation
 
