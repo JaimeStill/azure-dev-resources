@@ -81,3 +81,37 @@ if (-not $KeepSolution) {
     Remove-Item $Solution -Recurse -Force
 }
 ```
+
+## solution.json
+
+```json
+[
+    {
+        "name": "Core",
+        "template": "classlib",
+        "dependencies": [
+            "DocumentFormat.OpenXml",
+            "Microsoft.Data.SqlClient",
+            "Microsoft.EntityFrameworkCore",
+            "Microsoft.EntityFrameworkCore.Design",
+            "Microsoft.EntityFrameworkCore.Relational",
+            "Microsoft.EntityFrameworkCore.SqlServer",
+            "Microsoft.EntityFrameworkCore.Tools",
+            "Microsoft.Extensions.Configuration.Abstractions",
+            "Microsoft.Extensions.Configuration.Binder",
+            "System.DirectoryServices",
+            "System.DirectoryServices.AccountManagement"
+        ]
+    },
+    {
+        "name": "Web",
+        "template": "webapi",
+        "dependencies": [
+            "Microsoft.AspNetCore.OData",
+            "Microsoft.Data.SqlClient",
+            "Swashbuckle.AspNetCore",
+            "System.Linq.Dynamic.Core"
+        ]
+    }
+]
+```

@@ -56,3 +56,17 @@ Remove-Item node_modules -Recurse -Force
 
 Set-Location $path
 ```
+
+## package.json
+
+```json
+{
+    "dependencies": {
+        "@microsoft/signalr": "^7.0.7"
+    },
+    "devDependencies": {
+        "@types/node": "^20.3.1",
+        "typescript": "^5.1.3"
+    }
+}
+```

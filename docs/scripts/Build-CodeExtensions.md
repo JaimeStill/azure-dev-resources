@@ -62,3 +62,65 @@ finally {
     $global:ProgressPreference = $initialProgressPreference
 }
 ```
+
+## code-extensions.json
+
+```json
+[
+    {
+        "publisher": "angular",
+        "name": "ng-template",
+        "label": "Angular Language Service"
+    },
+    {
+        "publisher": "ms-dotnettools",
+        "name": "csdevkit",
+        "label": "C# Dev Kit"
+    },
+    {
+        "publisher": "ms-azuretools",
+        "name": "vscode-docker",
+        "label": "Docker"
+    },
+    {
+        "publisher": "editorconfig",
+        "name": "editorconfig",
+        "label": "EditorConfig"
+    },
+    {
+        "publisher": "bierner",
+        "name": "github-markdown-preview",
+        "label": "GitHub Markdown Preview"
+    },
+    {
+        "publisher": "github",
+        "name": "github-vscode-theme",
+        "label": "GitHub Theme"
+    },
+    {
+        "publisher": "ms-vscode",
+        "name": "powershell",
+        "label": "PowerShell"
+    },
+    {
+        "publisher": "ms-vscode-remote",
+        "name": "vscode-remote-extensionpack",
+        "label": "Remote Development"
+    },
+    {
+        "publisher": "spmeesseman",
+        "name": "vscode-taskexplorer",
+        "label": "Task Explorer"
+    },
+    {
+        "publisher": "rangav",
+        "name": "vscode-thunder-client",
+        "label": "Thunder Client"
+    },
+    {
+        "publisher": "redhat",
+        "name": "vscode-yaml",
+        "label": "YAML"
+    }
+]
+```

@@ -41,3 +41,25 @@ $data | ForEach-Object {
     Get-DockerImage $_ $Target
 }
 ```
+
+## docker.json
+
+```json
+[
+    {
+        "repository": "node",
+        "name": "node",
+        "tag": "latest"
+    },
+    {
+        "repository": "mcr.microsoft.com/dotnet/sdk",
+        "name": "mcr.microsoft.com-dotnet-sdk",
+        "tag": "latest"
+    },
+    {
+        "repository": "mcr.microsoft.com/dotnet/aspnet",
+        "name": "mcr.microsoft.com-dotnet-aspnet",
+        "tag": "latest"
+    }
+]
+```
