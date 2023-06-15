@@ -48,14 +48,21 @@ param(
 
 Write-Output "Bundling Azure Dev Resources..."
 
+$data = Get-content -Raw -Path $Source | ConvertFrom-Json
+
+$($data.npm.projects) | ForEach-Object {
+    .\Build-NpmCache -Target (Join-Path $Target $($data.npm.target) $($_.name)) `
+        -Name $($_.name) `
+        -Version $($_.version) `
+        -Cache $($_.cache) `
+        -Dependencies $($_.packages)
+}
+
 .\Build-NugetCache.ps1 -Target "$Target\$NugetTarget" `
     -Source $NugetSource `
     -Solution $NugetSolution `
-    -KeepSolution $NugetKeepSolution `
-    -SkipClean $NugetSkipClean
-
-.\Build-DockerCache.ps1 -Target "$Target\$DockerTarget" `
-    -Source $DockerSource
+    -KeepSolution:$NugetKeepSolution `
+    -SkipClean:$NugetSkipClean
 
 .\Build-AdsExtensions.ps1 -Target "$Target\$AdsTarget" `
     -Source $AdsSource
@@ -63,17 +70,10 @@ Write-Output "Bundling Azure Dev Resources..."
 .\Build-CodeExtensions.ps1 -Target "$Target\$CodeTarget" `
     -Source $CodeSource
 
+.\Build-DockerCache.ps1 -Target "$Target\$DockerTarget" `
+    -Source $DockerSource
+
 .\Build-Software.ps1 -Target "$Target\$SoftwareTarget" `
     -Source $SoftwareSource
-
-$data = Get-content -Raw -Path $Source | ConvertFrom-Json
-
-$($data.npm.projects) | ForEach-Object {
-    Build-NpmCache -Target (Join-Path $($data.npm.target) $($_.name)) `
-        -Name $($_.name) `
-        -Version $($_.version) `
-        -Cache $($_.cache) `
-        -Dependencies $($_.packages)
-}
 
 Write-Output "Finished bundling Azure Dev Resources!"

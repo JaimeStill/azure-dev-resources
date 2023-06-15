@@ -20,7 +20,7 @@ function Get-AdsExtension([psobject] $ext, [string] $dir) {
     }
 
     try {
-        Invoke-WebRequest -Uri $ext.source -OutFile $output -MaximumRetryCount 3
+        Invoke-WebRequest -Uri $ext.source -OutFile $output -MaximumRetryCount 10 -RetryIntervalSec 6
         Write-Output "$($ext.name) successfully retrieved"
     }
     catch {
