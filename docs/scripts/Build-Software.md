@@ -24,7 +24,7 @@ function Get-Software([psobject] $software, [string] $dir) {
     }
 
     try {
-        Invoke-WebRequest -Uri $software.source -OutFile $output -MaximumRetryCount 3
+        Invoke-WebRequest -Uri $software.source -OutFile $output -MaximumRetryCount 10 -RetryIntervalSec 6
         Write-Output "$($software.name) successfully retrieved"
     }
     catch {

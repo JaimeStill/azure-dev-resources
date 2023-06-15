@@ -11,6 +11,22 @@ param(
     $Source = "data\code-extensions.json"
 )
 
+function Invoke-CodeDownload([string] $download, [string] $output) {
+    try {
+        Invoke-WebRequest -Uri $download -OutFile $output -MaximumRetryCount 10 -RetryIntervalSec 6
+    }
+    catch {
+        if ($_.Exception.Response.StatusCode -eq 429) {
+            $RetryPeriod = 60
+            Write-Output "Rate Limit Exceeded. Sleeping $RetryPeriod seconds due to HTTP 429 response"
+            Start-Sleep -Seconds $RetryPeriod
+            Invoke-CodeDownload @PSBoundParameters
+        } else {
+            Write-Error -Exception $_.Exception -Message "Failed to download Code Extension: $_"
+        }
+    }
+}
+
 function Get-CodeExtension([psobject] $extension, [string] $path) {
     Write-Output "Retrieving $($extension.label)"
     
@@ -32,14 +48,9 @@ function Get-CodeExtension([psobject] $extension, [string] $path) {
         Remove-Item $output -Force
     }
 
-    try {
-        Write-Output "Downloading $($extension.label) from $download"
-        Invoke-WebRequest -Uri $download -OutFile $output -MaximumRetryCount 3
-        Write-Output "$($extension.label) successfully downloaded"
-    }
-    catch {
-        Write-Error $_
-    }
+    Write-Output "Downloading $($extension.label) from $download"
+    Invoke-CodeDownload $download $output
+    Write-Output "$($extension.label) successfully downloaded"
 }
 
 $initialProgressPreference = $global:ProgressPreference
