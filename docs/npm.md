@@ -17,11 +17,12 @@ The generated cache can then be transported to a disconnected network and used t
 
 Parameter | Type | Default Value | Description
 ----------|------|---------------|------------
-Cache | **string** | `node_cache` | The directory to store gzipped npm packages. Used to populate the project-local [`.npmrc`](https://docs.npmjs.com/cli/v9/configuring-npm/npmrc) [cache](https://docs.npmjs.com/cli/v9/using-npm/config#cache) variable.
+Target | **string** | `..\npm` | The cache target directory.
 Source | **string** | `data\package.json` | The dependency-specific package.json file.
 Name | **string** | `cache` | Specifies the name for the generated package.json file.
 Version | **string** | `0.0.1` | Specifies the version for the generated package.json file.
-Target | **string** | `..\npm` | The cache target directory.
+Cache | **string** | `node_cache` | The directory to store gzipped npm packages. Used to populate the project-local [`.npmrc`](https://docs.npmjs.com/cli/v9/configuring-npm/npmrc) [cache](https://docs.npmjs.com/cli/v9/using-npm/config#cache) variable.
+Dependencies | **PSObject** | `null` | If present, provides a dependency object to use instead of retrieving dependencies from *Source*.
 
 **Example `package.json`**
 

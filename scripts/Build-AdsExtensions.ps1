@@ -4,7 +4,7 @@ param(
     $Target = "..\bundle\extensions\ads",
     [string]
     [Parameter()]
-    $List = "data\ads-extensions.json"
+    $Source = "data\ads-extensions.json"
 )
 
 $initialProgressPreference = $global:ProgressPreference
@@ -33,7 +33,7 @@ try {
         New-Item -Path $Target -ItemType Directory -Force
     }
 
-    $data = Get-Content -Raw -Path $List | ConvertFrom-Json
+    $data = Get-Content -Raw -Path $Source | ConvertFrom-Json
 
     Write-Output "Generating Azure Data Studio extensions in $Target"
 

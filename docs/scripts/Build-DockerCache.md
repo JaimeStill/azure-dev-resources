@@ -8,10 +8,7 @@ param(
     $Target = "..\docker",
     [string]
     [Parameter()]
-    $Source = "data\docker.json",
-    [switch]
-    [Parameter()]
-    $ClearImage
+    $Source = "data\docker.json"
 )
 
 function Get-DockerImage([psobject] $image, [string] $dir) {
@@ -25,7 +22,7 @@ function Get-DockerImage([psobject] $image, [string] $dir) {
 
     & docker save "$($image.repository)`:$($image.tag)" -o $output
 
-    if ($ClearImage) {
+    if ($($image.clear)) {
         Write-Output "Clearing image $($image.repository)`:$($image.tag)"
         & docker rmi "$($image.repository)`:$($image.tag)"
     }
@@ -49,17 +46,20 @@ $data | ForEach-Object {
     {
         "repository": "node",
         "name": "node",
-        "tag": "latest"
+        "tag": "latest",
+        "clear": false
     },
     {
         "repository": "mcr.microsoft.com/dotnet/sdk",
         "name": "mcr.microsoft.com-dotnet-sdk",
-        "tag": "latest"
+        "tag": "latest",
+        "clear": false
     },
     {
         "repository": "mcr.microsoft.com/dotnet/aspnet",
         "name": "mcr.microsoft.com-dotnet-aspnet",
-        "tag": "latest"
+        "tag": "latest",
+        "clear": false
     }
 ]
 ```

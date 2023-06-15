@@ -8,7 +8,7 @@ param(
     $Target = "..\bundle\extensions\code",
     [string]
     [Parameter()]
-    $Extensions = "data\code-extensions.json"
+    $Source = "data\code-extensions.json"
 )
 
 function Get-CodeExtension([psobject] $extension, [string] $path) {
@@ -50,7 +50,7 @@ try {
         New-Item -Path $Target -ItemType Directory -Force
     }
 
-    $exts = Get-Content -Raw -Path $Extensions | ConvertFrom-Json
+    $exts = Get-Content -Raw -Path $Source | ConvertFrom-Json
 
     Write-Output "Generating Code Extensions in $Target"
 

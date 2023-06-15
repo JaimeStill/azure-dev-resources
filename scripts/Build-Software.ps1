@@ -1,10 +1,10 @@
 param(
     [string]
     [Parameter()]
-    $Target = "..\bundle\software",
+    $Target = "..\software",
     [string]
     [Parameter()]
-    $List = "data\software.json"
+    $Source = "data\software.json"
 )
 
 $initialProgressPreference = $global:ProgressPreference
@@ -33,7 +33,7 @@ try {
         New-Item -Path $Target -ItemType Directory -Force
     }
 
-    $data = Get-Content -Raw -Path $List | ConvertFrom-Json
+    $data = Get-Content -Raw -Path $Source | ConvertFrom-Json
 
     Write-Output "Generating Software in $Target"
 
