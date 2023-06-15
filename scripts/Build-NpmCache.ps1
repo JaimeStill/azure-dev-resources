@@ -1,7 +1,7 @@
 param(
     [string]
     [Parameter()]
-    $Cache = "node_cache",
+    $Target = "..\npm",
     [string]
     [Parameter()]
     $Source = "data\package.json",
@@ -13,7 +13,10 @@ param(
     $Version = "0.0.1",
     [string]
     [Parameter()]
-    $Target = "..\npm"
+    $Cache = "node_cache",
+    [psobject]
+    [Parameter()]
+    $Dependencies
 )
 
 function Merge-NpmDependencies([psobject] $package, [psobject] $deps) {
@@ -29,7 +32,9 @@ if (Test-Path $Target) {
 New-Item -Path $Target -ItemType Directory -Force
 New-Item (Join-Path $Target ".npmrc") -ItemType File -Value "cache=./$Cache"
 
-$deps = Get-Content -Raw -Path $Source | ConvertFrom-Json
+$deps = ($null -ne $Dependencies) `
+    ? $Dependencies `
+    : (Get-Content -Raw -Path $Source | ConvertFrom-Json)
 
 $package = @"
 {

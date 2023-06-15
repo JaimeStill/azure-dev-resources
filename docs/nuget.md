@@ -53,7 +53,6 @@ Parameter | Type | Default Value | Description
 Target | **string** | `..\nuget-packages` | The cache target directory.
 Source | **string** | `data\solution.json` | The JSON file containing information in the JSON Schema format outlined below.
 Solution | **string** | `..\solution` | The directory to create the .NET solution used to generate the cache.
-Framework | **string** | `net7.0` | The target framework for the solution projects. Valid values are: `net6.0`, `net7.0`, `netstandard2.0`, `netstandard2.1`.
 KeepSolution | **switch** | null | When present, do no remove the solution created to generate the cache.
 SkipClean | **switch** | null | When present, prevent the script from cleaning the local NuGet cache (`dotnet nuget locals all --clear`).
 
@@ -65,6 +64,7 @@ Property | Description
 ---------|------------
 `name` | the name of the project
 `template` | the `dotnet new <template>` to use to generate the project
+`framework` | the target framework when generating the project
 `dependencies` | an array of NuGet packages dependencies to use with `dotnet add package <dependency>`. To specify a version, use the following format: `package@version`.
 
 **Example**  
@@ -74,6 +74,7 @@ Property | Description
     {
         "name": "Core",
         "template": "classlib",
+        "framework": "net7.0",
         "dependencies": [
             "DocumentFormat.OpenXml",
             "Microsoft.Data.SqlClient",
@@ -84,7 +85,6 @@ Property | Description
             "Microsoft.EntityFrameworkCore.Tools",
             "Microsoft.Extensions.Configuration.Abstractions",
             "Microsoft.Extensions.Configuration.Binder",
-            "Newtonsoft.Json",
             "System.DirectoryServices",
             "System.DirectoryServices.AccountManagement"
         ]
@@ -92,14 +92,12 @@ Property | Description
     {
         "name": "Web",
         "template": "webapi",
+        "framework": "net7.0",
         "dependencies": [
-            "Automapper",
-            "Microsoft.AspNetCore.Mvc.NewtonsoftJson",
             "Microsoft.AspNetCore.OData",
-            "Microsoft.Data.SqlClient@2.1.4",
-            "Serilog.AspNetCore",
+            "Microsoft.Data.SqlClient",
             "Swashbuckle.AspNetCore",
-            "Swashbuckle.AspNetCore.Newtonsoft"
+            "System.Linq.Dynamic.Core"
         ]
     }
 ]

@@ -63,7 +63,6 @@ Parameter | Type | Default Value | Description
 ----------|------|---------------|------------
 Target | **string** | `..\docker` | The cache target directory.
 Source | **string** | `data\docker.json` | The JSON file containing information in the JSON Schema format outlined below.
-ClearImage | **switch** | null | When present, remove images after they have been cached.
 
 #### JSON Schema
 
@@ -74,6 +73,7 @@ Property | Description
 `repository` | the name of the docker image repository
 `name` | the name of the file when saving the docker image
 `tag` | the tag version of the docker image
+`clear` | if `true`, clear the image after saving
 
 **Example**  
 
@@ -82,17 +82,20 @@ Property | Description
     {
         "repository": "node",
         "name": "node",
-        "tag": "latest"
+        "tag": "latest",
+        "clear": false
     },
     {
         "repository": "mcr.microsoft.com/dotnet/sdk",
         "name": "mcr.microsoft.com-dotnet-sdk",
-        "tag": "latest"
+        "tag": "latest",
+        "clear": false
     },
     {
         "repository": "mcr.microsoft.com/dotnet/aspnet",
         "name": "mcr.microsoft.com-dotnet-aspnet",
-        "tag": "latest"
+        "tag": "latest",
+        "clear": false
     }
 ]
 ```

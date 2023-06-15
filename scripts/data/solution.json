@@ -2,6 +2,7 @@
     {
         "name": "Core",
         "template": "classlib",
+        "framework": "net7.0",
         "dependencies": [
             "DocumentFormat.OpenXml",
             "Microsoft.Data.SqlClient",
@@ -19,6 +20,7 @@
     {
         "name": "Web",
         "template": "webapi",
+        "framework": "net7.0",
         "dependencies": [
             "Microsoft.AspNetCore.OData",
             "Microsoft.Data.SqlClient",

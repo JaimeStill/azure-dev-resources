@@ -1,17 +1,13 @@
 param(
     [string]
     [Parameter()]
-    $Target = "..\nuget-packages",
+    $Target = "..\nuget",
     [string]
     [Parameter()]
     $Source = "data\solution.json",
     [string]
     [Parameter()]
-    $Solution = "..\solution",
-    [string]
-    [Parameter()]
-    [ValidateSet("net6.0", "net7.0", "netstandard2.0", "netstandard2.1")]
-    $Framework = "net7.0",
+    $Solution = "Solution",
     [switch]
     [Parameter()]
     $KeepSolution,
@@ -32,10 +28,10 @@ function Add-ProjectDependency([psobject] $dependency, [string] $output) {
     }
 }
 
-function Build-Project([psobject] $project, [string] $sln, [string] $framework) {
+function Build-Project([psobject] $project, [string] $sln) {
     $output = Join-Path $sln $project.name
 
-    & dotnet new $project.template -o $output -f $framework
+    & dotnet new $project.template -o $output -f $project.framework
     & dotnet sln $sln add $output
 
     $project.dependencies | ForEach-Object {
@@ -43,11 +39,11 @@ function Build-Project([psobject] $project, [string] $sln, [string] $framework) 
     }
 }
 
-function Build-Solution([psobject] $data, [string] $sln, [string] $framework) {
+function Build-Solution([psobject] $data, [string] $sln) {
     & dotnet new sln -o $sln
 
     $data | ForEach-Object {
-        Build-Project $_ $sln $framework
+        Build-Project $_ $sln
     }
 }
 
@@ -60,19 +56,20 @@ function Build-Cache([string] $cache, [string] $sln) {
 }
 
 $data = Get-Content -Raw -Path $Source | ConvertFrom-Json
+$sln = Join-Path $Target $Solution
 
-if (Test-Path $Solution) {
-    Remove-Item $Solution -Recurse -Force
+if (Test-Path $sln) {
+    Remove-Item $sln -Recurse -Force
 }
 
-Build-Solution $data $Solution $Framework
+Build-Solution $data $sln
 
 if (-not $SkipClean) {
     & dotnet nuget locals all --clear
 }
 
-Build-Cache $Target $Solution
+Build-Cache $Target $sln
 
 if (-not $KeepSolution) {
-    Remove-Item $Solution -Recurse -Force
+    Remove-Item $sln -Recurse -Force
 }

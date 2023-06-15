@@ -1,10 +1,10 @@
 param(
     [string]
     [Parameter()]
-    $Target = "..\bundle\software",
+    $Target = "..\software",
     [string]
     [Parameter()]
-    $List = "data\software.json"
+    $Source = "data\software.json"
 )
 
 $initialProgressPreference = $global:ProgressPreference
@@ -20,7 +20,7 @@ function Get-Software([psobject] $software, [string] $dir) {
     }
 
     try {
-        Invoke-WebRequest -Uri $software.source -OutFile $output -MaximumRetryCount 3
+        Invoke-WebRequest -Uri $software.source -OutFile $output -MaximumRetryCount 10
         Write-Output "$($software.name) successfully retrieved"
     }
     catch {
@@ -33,7 +33,7 @@ try {
         New-Item -Path $Target -ItemType Directory -Force
     }
 
-    $data = Get-Content -Raw -Path $List | ConvertFrom-Json
+    $data = Get-Content -Raw -Path $Source | ConvertFrom-Json
 
     Write-Output "Generating Software in $Target"
 
