@@ -1,4 +1,4 @@
-> This project is still a work in progress. As this documentation is established, any capabilities that still need to be fully researched and tested are documented in [Tasks](./tasks.md).
+> This project is still a work in progress.
 
 [Documentation](https://jaimestill.github.io/azure-dev-resources)  
 
