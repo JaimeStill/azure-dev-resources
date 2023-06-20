@@ -1,15 +1,15 @@
 {
-  "name": "simple-storage",
+  "name": "@local/simple-storage",
   "version": "0.0.1",
   "description": "Abstraction layer for interfacing with browser storage",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch"
   },
   "author": "Jaime Still",
   "license": "MIT",
-  "module": "./dist/index.js",
   "devDependencies": {
     "@types/uuid": "^9.0.2",
     "typescript": "^5.1.3"

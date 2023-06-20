@@ -47,6 +47,128 @@ The resulting directory structure should be:
 
 ## Local npm Packages
 
-Prove out the steps from here: https://stackoverflow.com/questions/15806241/how-to-specify-local-modules-as-npm-package-dependencies/38417065#38417065
+> A sample project for this capability can be found at [/lab/local-npm](https://github.com/JaimeStill/azure-dev-resources/tree/main/lab/local-npm).
+
+In the [`npm install`](https://docs.npmjs.com/cli/v9/commands/npm-install) docs define a `package` as:
+
+* a) a folder containing a program described by a [package.json](https://docs.npmjs.com/cli/v9/configuring-npm/package-json) file
+* b) a gzipped tarball containing (a)
+* c) a url that resolves to (b)
+* d) a `<name>@<version>` that is published on the registry (see [registry](https://docs.npmjs.com/cli/v9/using-npm/registry)) with (c)
+* e) a `<name>@<tag>` (see [npm dist-tag](https://docs.npmjs.com/cli/v9/commands/npm-dist-tag)) that points to (d)
+* f) a `<name>` that has a *latest* tag satisfying (e)
+* g) a `<git remote url>` that resolves to (a)
+
+The sections that follow will walk through how to scaffold a local TypeScript package that satisfies (a) above, then install and consume the local package in a Node.js project.
+
+### TypeScript Package Setup
+
+1. Initialize a Node.js project
+
+    ```bash
+    # create the root package directory
+    mkdir lib
+
+    # change directory to the package
+    cd ./lib/
+
+    # initialize the Node.js project
+    npm init
+    ```
+
+2. Fill in the `npm init` details:
+
+    ```json
+    {
+        "name": "@local/simple-storage",
+        "version": "0.0.1",
+        "description": "Abstraction layer for interfacing with browser storage",
+        "main": "dist/index.js",
+        "scripts": {
+            "test": "echo \"Error: no test specified\" && exit 1"
+        },
+        "author": "Jaime Still",
+        "license": "MIT"
+    }
+    ```
+
+3. Add dependencies:
+
+    ```bash
+    # dependencies
+    npm i uuid
+
+    # dev dependencies
+    npm i -D @types/uuid typescript
+    ```
+
+4. Adjust `package.json` with the following:
+
+    ```json
+    {
+        "types": "dist/index.d.ts",
+        "scripts": {
+            "build": "tsc",
+            "watch": "tsc --watch"
+        }
+    }
+    ```
+
+5. Create a `tsconfig.json`:
+
+    ```json
+    {
+        "compileOnSave": false,
+        "compilerOptions": {
+            "moduleResolution": "node",
+            "target": "ES2022",
+            "module": "ES2022",
+            "rootDir": "./src",
+            "outDir": "./dist",
+            "declaration": true,
+            "esModuleInterop": false,
+            "forceConsistentCasingInFileNames": true,
+            "strict": true
+        }
+    }
+    ```
+
+6. Create a `./src` directory, build out your TypeScript files, and export your public API in [index.ts](./lib/src/index.ts):
+
+    ```ts
+    export * from './base-storage'
+    export * from './istorage'
+    export * from './local-storage'
+    export * from './session-storage'
+    ```
+
+### Install and Consume a Local Package
+
+1. In a Node.js project, install the package as a dependency:
+
+    ```bash
+    npm i ../lib
+    ```
+
+    `package.json` should now contain a reference:
+
+    ```json
+    {
+        "dependencies": {
+            "@local/simple-storage": "file:../lib"
+        }
+    }
+    ```
+
+2. Use the package in your project:
+
+    ```ts
+    import { 
+        IStorage,
+        SessionStorage
+    } from '@local/simple-storage';
+
+    store: IStorage<string> = new SessionStorage();
+    ```
 
 [Home](./index.md)
