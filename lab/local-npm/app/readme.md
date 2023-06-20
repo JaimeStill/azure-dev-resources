@@ -1,6 +1,6 @@
 # App
 
-Generated with [vite](https://vite.dev) to facilitate consuming a [local npm package](../lib/).
+Generated with [vite](https://vitejs.dev) to facilitate consuming a [local npm package](../lib/).
 
 ```bash
 # initial app generation
