@@ -23,6 +23,8 @@ With the establishment of the IL6 cloud region, we now have access to the servic
     * [Hosting npm Packages](./npm.md#hosting-npm-packages)
     * [Per-project Dependency Cache](./npm.md#per-project-dependency-cache)
     * [Local npm Packages](./npm.md#local-npm-packages)
+        * [TypeScript Package Setup](./npm.md#typescript-package-setup)
+        * [Install and Consume a Local Package](./npm.md#install-and-consume-a-local-package)
 * [Docker](./docker.md)
     * [Cache and Restore Images](./docker.md#cache-and-restore-images)
     * [Scripted Image Cache](./docker.md#scripted-image-cache)
