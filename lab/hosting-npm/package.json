@@ -1,0 +1,9 @@
+{
+  "name": "app",
+  "version": "0.0.1",
+  "description": "Test cache generation",
+  "license": "MIT",
+  "dependencies": {
+    "@angular/core": "^16.1.1"
+  }
+}
