@@ -2,7 +2,7 @@
 
 ## Current Status - On Hold
 
-I now have the ability to [generate a holistic dependency tree cache](./Build-NodeDependencies.ps1) using both [npm]() and [pnpm](https://pnpm.io/), and can subsequently install offline via the cache. I can also optionally pack the tarballs for each dependency in the tree.
+I now have the ability to [generate a holistic dependency tree cache](./Build-NodeDependencies.ps1) using both [npm](https://docs.npmjs.com/about-npm) and [pnpm](https://pnpm.io/motivation), and can subsequently install offline via the cache. I can also optionally pack the tarballs for each dependency in the tree.
 
 What I have yet to figure out is how to properly establish a central [registry](https://docs.npmjs.com/cli/v8/using-npm/registry) that npm can then be pointed to via [.npmrc](https://docs.npmjs.com/cli/v9/configuring-npm/npmrc).
 
@@ -17,7 +17,7 @@ What would be preferrable would be to establish an HTTP server that is appropria
 To figure out:
 
 * The format to store npm packages
-* How to serve the npm packages so that the `registry` value can be used for retrieval.
+* How to serve the npm packages so that the `registry` value can be used for native retrieval via `npm i <package>` and pointing the config to the registry.
 
 ## Scripting Notes
 
