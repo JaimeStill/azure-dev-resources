@@ -1,0 +1,13 @@
+{
+    "snap": [
+        "dotnet-sdk",
+        "docker",
+        "redis",
+        "helm",
+        "microk8s"
+    ],
+    "apt": [
+        "git",
+        "nodejs"
+    ]
+}

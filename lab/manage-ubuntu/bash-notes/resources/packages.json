@@ -1,0 +1,12 @@
+{
+    "snap": [
+        {
+            "name": ".NET SDK",
+            "package": "dotnet-sdk"
+        },
+        {
+            "name": "Visual Studio Code",
+            "package": "code"
+        }
+    ]
+}
