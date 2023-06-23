@@ -123,7 +123,7 @@ while getopts ':t:s:p:a:c:d:eh' opt; do
 done
 
 target=${target:-"./packages"}
-source=${source:-"./packages.json"}
+source=${source:-"./data/linux.json"}
 platform=${platform:-"linux"}
 arch=${arch:-"x64"}
 channel=${channel:-"STS"}

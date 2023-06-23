@@ -1,9 +1,14 @@
 .logs/
 bundle/
+host/
+linux/
 node_cache/
 node_modules/
 npm/
 nuget-packages/
+packs/
+sdk/
+sdk-manifests/
 solution/
 *.appx
 *.assert
@@ -13,5 +18,6 @@ solution/
 *.msixbundle
 *.snap
 *.tar
+*.tar.gz
 *.vsix
 .docker-temp*

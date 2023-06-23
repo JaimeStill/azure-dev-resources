@@ -1,10 +1,10 @@
 param(
     [string]
     [Parameter()]
-    $Target = "./packages",
+    $Target = "../linux",
     [string]
     [Parameter()]
-    $Source = "./packages.json",
+    $Source = "./data/linux.json",
     [string]
     [Parameter()]
     $Platform = "linux",
@@ -16,13 +16,13 @@ param(
     $Channel = "STS",
     [string]
     [Parameter()]
-    $DotnetTarget = "./packages/dotnet",
+    $DotnetTarget = "../linux/dotnet",
     [switch]
     [Parameter()]
     $Extract
 )
 
-Write-Host "Generating Linux resources..." -ForegroundColor Blue
+Write-Host "Generating Linux cache..." -ForegroundColor Blue
 
 $command = ". wsl --exec ./cache-packages.bash -t $Target -s $Source -p $Platform -a $Arch -c $Channel -d $DotnetTarget"
 
@@ -32,4 +32,4 @@ if ($Extract) {
 
 Invoke-Expression $command
 
-Write-Host "Linux resources successfully generated!" -ForegroundColor Green
+Write-Host "Linux cache successfully generated!" -ForegroundColor Green

@@ -57,6 +57,16 @@ and return to the initial directory when finished
 sudo apt install /path/to/packages/*
 ```
 
+## Azure CLI apt Source
+
+```bash
+echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/azure-cli/ jammy main" | sudo tee -a /etc/apt/sources.list.d/azure-cli.list
+
+sudo apt update
+
+sudo apt install azure-cli -y
+```
+
 ## Links
 
 * [Ubuntu packages](https://packages.ubuntu.com/)

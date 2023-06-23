@@ -25,6 +25,27 @@ param(
     $DockerSource = "data\docker.json",
     [string]
     [Parameter()]
+    $LinuxTarget = "linux",
+    [string]
+    [Parameter()]
+    $LinuxSource = "./data/linux.json",
+    [string]
+    [Parameter()]
+    $LinuxPlatform = "linux",
+    [string]
+    [Parameter()]
+    $LinuxArch = "x64",
+    [string]
+    [Parameter()]
+    $LinuxChannel = "STS",
+    [string]
+    [Parameter()]
+    $LinuxDotnetTarget = "dotnet",
+    [switch]
+    [Parameter()]
+    $LinuxExtract,
+    [string]
+    [Parameter()]
     $NugetTarget = "nuget",
     [string]
     [Parameter()]
@@ -49,6 +70,14 @@ param(
 Write-Output "Bundling Azure Dev Resources..."
 
 $data = Get-content -Raw -Path $Source | ConvertFrom-Json
+
+.\Build-LinuxCache.ps1 -Target "$($Target -replace '\\', '/')/$LinuxTarget" `
+    -Source $LinuxSource `
+    -Platform $LinuxPlatform `
+    -Arch $LinuxArch `
+    -Channel $LinuxChannel `
+    -DotnetTarget "$Target/$LinuxTarget/$LinuxDotnetTarget" `
+    -Extract:$LinuxExtract
 
 $($data.npm.projects) | ForEach-Object {
     .\Build-NpmCache -Target (Join-Path $Target $($data.npm.target) $($_.name)) `
