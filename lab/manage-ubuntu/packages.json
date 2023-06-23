@@ -7,6 +7,7 @@
         "microk8s"
     ],
     "apt": [
+        "apt-offline",
         "git",
         "nodejs"
     ]

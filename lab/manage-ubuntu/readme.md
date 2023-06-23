@@ -17,3 +17,47 @@ $ sudo snap install <dir>/<snap-file>
 # verify installation
 $ snap list
 ```
+
+## Apt Packages
+
+```bash
+# initialize required packages
+packages="apt-offline git nodejs"
+
+: '
+download .deb for package + dependencies
+to the current directory
+'
+apt-get download \
+    $(apt-cache depends \
+        --recurse \
+        --no-recommends \
+        --no-suggests \
+        --no-conflicts \
+        --no-breaks \
+        --no-replaces \
+        --no-enhances \
+        --no-pre-depends \
+        ${packages} \
+        | grep "^\w"
+    )
+
+: '
+to execute a code block in a different directory
+and return to the initial directory when finished
+'
+(
+    # change to target directory
+    cd "<directory>"
+    apt-download "<packages>"
+)
+# returns back to the initial directory
+
+# install all .deb files in a directory
+sudo apt install /path/to/packages/*
+```
+
+## Links
+
+* [Ubuntu packages](https://packages.ubuntu.com/)
+* [Ubuntu package mirror](https://mirrors.edge.kernel.org/ubuntu/pool/)

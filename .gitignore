@@ -6,9 +6,12 @@ npm/
 nuget-packages/
 solution/
 *.appx
+*.assert
+*.deb
 *.exe
 *.msi
 *.msixbundle
+*.snap
 *.tar
 *.vsix
 .docker-temp*
