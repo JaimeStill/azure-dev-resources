@@ -5,6 +5,7 @@ linux/
 node_cache/
 node_modules/
 npm/
+nuget/
 nuget-packages/
 packs/
 sdk/

@@ -65,11 +65,11 @@ Property | Description
 `name` | the name of the project
 `template` | the `dotnet new <template>` to use to generate the project
 `framework` | the target framework when generating the project
-`dependencies` | an array of NuGet packages dependencies to use with `dotnet add package <dependency>`. To specify a version, use the following format: `package@version`.
+`dependencies` | an array of NuGet packages dependencies to use with `dotnet add package <dependency>`. To specify a specific version (including pre-release), use the following format: `package@version`. To specify a pre-release of the latest version, use the following format: `package!`.
 
 **Example**  
 
-```json
+```jsonc
 [
     {
         "name": "Core",
@@ -77,6 +77,7 @@ Property | Description
         "framework": "net7.0",
         "dependencies": [
             "DocumentFormat.OpenXml",
+            "Microsoft.AspNetCore.SignalR.Client",
             "Microsoft.Data.SqlClient",
             "Microsoft.EntityFrameworkCore",
             "Microsoft.EntityFrameworkCore.Design",
@@ -85,8 +86,9 @@ Property | Description
             "Microsoft.EntityFrameworkCore.Tools",
             "Microsoft.Extensions.Configuration.Abstractions",
             "Microsoft.Extensions.Configuration.Binder",
-            "System.DirectoryServices",
-            "System.DirectoryServices.AccountManagement"
+            // ! specifies a pre-release package
+            "System.CommandLine!",
+            "System.CommandLine.NamingConventionBinder!"
         ]
     },
     {
@@ -95,8 +97,12 @@ Property | Description
         "framework": "net7.0",
         "dependencies": [
             "Microsoft.AspNetCore.OData",
+            "Microsoft.AspNetCore.OpenApi",
             "Microsoft.Data.SqlClient",
             "Swashbuckle.AspNetCore",
+            // Specify a specific version of a package
+            "System.CommandLine@2.0.0-beta4.22272.1",
+            "System.CommandLine.NamingConventionBinder@2.0.0-beta4.22272.1",
             "System.Linq.Dynamic.Core"
         ]
     }

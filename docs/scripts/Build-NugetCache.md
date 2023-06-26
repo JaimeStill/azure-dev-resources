@@ -20,15 +20,21 @@ param(
     $SkipClean
 )
 
-function Add-ProjectDependency([psobject] $dependency, [string] $output) {
-    if ($_.Contains('@')) {
-        $split = $_.Split('@');
-        $dependency = $split[0];
-        $version = $split[1];
-
+function Add-ProjectDependency([string] $dependency, [string] $output) {    
+    if ($dependency.Contains('@')) {
+        $split = $dependency.Split('@')
+        $dependency = $split[0]
+        $version = $split[1]
+        
         & dotnet add $output package $dependency --version $version
-    } else {
-        & dotnet add $output package $_
+    }
+    else {
+        if ($dependency.EndsWith('!')) {
+            & dotnet add $output package $($dependency.Replace('!', '')) --prerelease
+        }
+        else {
+            & dotnet add $output package $dependency
+        }
     }
 }
 
@@ -81,7 +87,7 @@ if (-not $KeepSolution) {
 
 ## solution.json
 
-```json
+```jsonc
 [
     {
         "name": "Core",
@@ -89,6 +95,7 @@ if (-not $KeepSolution) {
         "framework": "net7.0",
         "dependencies": [
             "DocumentFormat.OpenXml",
+            "Microsoft.AspNetCore.SignalR.Client",
             "Microsoft.Data.SqlClient",
             "Microsoft.EntityFrameworkCore",
             "Microsoft.EntityFrameworkCore.Design",
@@ -97,8 +104,9 @@ if (-not $KeepSolution) {
             "Microsoft.EntityFrameworkCore.Tools",
             "Microsoft.Extensions.Configuration.Abstractions",
             "Microsoft.Extensions.Configuration.Binder",
-            "System.DirectoryServices",
-            "System.DirectoryServices.AccountManagement"
+            // ! specifies a pre-release package
+            "System.CommandLine!",
+            "System.CommandLine.NamingConventionBinder!"
         ]
     },
     {
@@ -107,8 +115,12 @@ if (-not $KeepSolution) {
         "framework": "net7.0",
         "dependencies": [
             "Microsoft.AspNetCore.OData",
+            "Microsoft.AspNetCore.OpenApi",
             "Microsoft.Data.SqlClient",
             "Swashbuckle.AspNetCore",
+            // Specify a specific version of a package
+            "System.CommandLine@2.0.0-beta4.22272.1",
+            "System.CommandLine.NamingConventionBinder@2.0.0-beta4.22272.1",
             "System.Linq.Dynamic.Core"
         ]
     }
