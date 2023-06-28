@@ -13,24 +13,20 @@ cache_apt() {
     local s=$1
     local t=$2
 
-    (
-        packages=$(jq '.apt[]' $s -c -r | tr '\n' ' ')
-        cd "$t/apt/" ;
+    if ! [ -x "$(command -v jq)" ]; then
+        apt install -y jq
+    fi
+        
+    packages=$(jq '.apt[]' $s -c -r | tr '\n' ' ')
 
-        apt-get download \
-            $(apt-cache depends \
-                --recurse \
-                --no-recommends \
-                --no-suggests \
-                --no-conflicts \
-                --no-breaks \
-                --no-replaces \
-                --no-enhances \
-                --no-pre-depends \
-                ${packages} \
-                | grep "^\w"
-        )
-    )
+    apt clean
+    apt remove -y ${packages}
+    apt autoremove -y
+    apt install -y -d ${packages}
+    cp /var/cache/apt/archives/*.deb "$t"
+    apt clean
+
+    echo "sudo dpkg -i ./*.deb" > "$t/install.bash"
 }
 
 get_dotnet_version() {
@@ -127,6 +123,7 @@ source=${source:-"./data/linux.json"}
 platform=${platform:-"linux"}
 arch=${arch:-"x64"}
 channel=${channel:-"STS"}
+apt_target="$target/apt-cache"
 dotnet_target="$target/dotnet"
 
 if [ ! -f $source ]
@@ -138,16 +135,10 @@ fi
 echo "Generating target directories..."
 create_dir "$target"
 create_dir "$dotnet_target"
-create_dir "$target/apt/"
-# create_dir "$target/snap/"
+create_dir "$apt_target"
+
+echo "Caching apt packages..."
+cache_apt "$source" "$apt_target"
 
 echo "Caching the .NET SDK..."
 cache_dotnet "$platform" "$arch" "$channel" "$extract" "$dotnet_target"
-
-echo "Caching apt packages..."
-cache_apt "$source" "$target"
-
-# echo "Caching snap packages..."
-# jq -c '.snap[]' $source -r | while read i; do
-#     snap download --target-directory="$target/snap/$i/" $i
-# done

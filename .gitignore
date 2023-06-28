@@ -1,4 +1,5 @@
 .logs/
+admin/
 bundle/
 host/
 linux/
@@ -11,14 +12,19 @@ packs/
 sdk/
 sdk-manifests/
 solution/
+wsl/
+.docker-temp*
 *.appx
 *.assert
 *.deb
+*.dll
 *.exe
 *.msi
 *.msixbundle
+*.p7x
+*.pri
 *.snap
 *.tar
 *.tar.gz
 *.vsix
-.docker-temp*
+*.xml

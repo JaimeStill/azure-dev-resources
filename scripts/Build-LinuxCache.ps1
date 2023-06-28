@@ -24,7 +24,7 @@ param(
 
 Write-Host "Generating Linux cache..." -ForegroundColor Blue
 
-$command = ". wsl --exec ./cache-packages.bash -t $Target -s $Source -p $Platform -a $Arch -c $Channel -d $DotnetTarget"
+$command = ". wsl -u root --exec ./cache-packages.bash -t $Target -s $Source -p $Platform -a $Arch -c $Channel -d $DotnetTarget"
 
 if ($Extract) {
     $command += " -e"
