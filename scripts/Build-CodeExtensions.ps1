@@ -1,7 +1,7 @@
 param(
     [string]
     [Parameter()]
-    $Target = "..\bundle\extensions\code",
+    $Target = "..\bundle\extensions\vs-code",
     [string]
     [Parameter()]
     $Source = "data\code-extensions.json"

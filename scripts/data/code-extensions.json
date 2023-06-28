@@ -6,8 +6,8 @@
     },
     {
         "publisher": "ms-dotnettools",
-        "name": "csdevkit",
-        "label": "C# Dev Kit"
+        "name": "csharp",
+        "label": "C#"
     },
     {
         "publisher": "ms-azuretools",

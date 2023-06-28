@@ -16,15 +16,21 @@ param(
     $SkipClean
 )
 
-function Add-ProjectDependency([psobject] $dependency, [string] $output) {
-    if ($_.Contains('@')) {
-        $split = $_.Split('@');
-        $dependency = $split[0];
-        $version = $split[1];
-
+function Add-ProjectDependency([string] $dependency, [string] $output) {    
+    if ($dependency.Contains('@')) {
+        $split = $dependency.Split('@')
+        $dependency = $split[0]
+        $version = $split[1]
+        
         & dotnet add $output package $dependency --version $version
-    } else {
-        & dotnet add $output package $_
+    }
+    else {
+        if ($dependency.EndsWith('!')) {
+            & dotnet add $output package $($dependency.Replace('!', '')) --prerelease
+        }
+        else {
+            & dotnet add $output package $dependency
+        }
     }
 }
 

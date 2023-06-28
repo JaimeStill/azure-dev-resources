@@ -1,4 +1,4 @@
-# Build-Software.ps1
+# Build-SoftwareCache.ps1
 [Home](../index.md) | [Scripts](./index.md)
 
 ```powershell
@@ -24,7 +24,7 @@ function Get-Software([psobject] $software, [string] $dir) {
     }
 
     try {
-        Invoke-WebRequest -Uri $software.source -OutFile $output -MaximumRetryCount 10 -RetryIntervalSec 6
+        Invoke-WebRequest -Uri $software.source -OutFile $output -MaximumRetryCount 10
         Write-Output "$($software.name) successfully retrieved"
     }
     catch {
@@ -67,7 +67,7 @@ finally {
     {
         "name": ".NET SDK",
         "file": "dotnet.exe",
-        "source": "https://download.visualstudio.microsoft.com/download/pr/2ab1aa68-3e14-401a-b106-833d66fa992b/060457e640f4095acf4723c4593314b6/dotnet-sdk-7.0.304-win-x64.exe"
+        "source": "https://dotnetcli.azureedge.net/dotnet/Sdk/7.0.305/dotnet-sdk-7.0.305-win-x64.exe"
     },
     {
         "name": "NodeJS LTS",
@@ -108,16 +108,6 @@ finally {
         "name": "PowerToys",
         "file": "powertoys.exe",
         "source": "https://github.com/microsoft/PowerToys/releases/download/v0.70.1/PowerToysSetup-0.70.1-x64.exe"
-    },
-    {
-        "name": "WSL2 Linux Kernel Update Package",
-        "file": "wsl-update.msi",
-        "source": "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi"
-    },
-    {
-        "name": "Ubuntu",
-        "file": "ubuntu.appx",
-        "source": "https://aka.ms/wslubuntu2204"
     }
 ]
 ```

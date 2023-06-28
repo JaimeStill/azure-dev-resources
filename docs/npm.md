@@ -26,7 +26,7 @@ To figure out:
 
 ## Per-project Dependency Cache
 
-The PowerShell script [Build-NpmCache.ps1](./scripts/Build-NpmCache.md) defines the ability to generate an npm package cache based on dependencies defined in a [`package.json`](./resources/package.json) file.
+The PowerShell script [Build-NpmCache.ps1](./scripts/Build-NpmCache.md) defines the ability to generate an npm package cache based on dependencies defined in a [`package.json`](./scripts/Build-NpmCache.md#packagejson) file.
 
 > Note that this package.json file should only consist of any of the dependency objects defined by the [package.json schema](https://docs.npmjs.com/cli/v9/configuring-npm/package-json) (dependencies, peerDependencies, bundleDependencies, and optionalDependencies). The full package.json will be generated in as a combination of script parameters and these dependencies.
 

@@ -57,12 +57,12 @@
 
 ### Scripted Image Cache
 
-The PowerShell script [Build-DockerCache.ps1](./scripts/Build-DockerCache.md) defines the ability to generate a cache of Docker images based on dependencies defined in a provided [JSON file](./resources/docker.json). The generated images can then be transported to a disconnected network for local use, or to host in [Azure Container Registry](https://azure.microsoft.com/en-us/products/container-registry).
+The PowerShell script [Build-DockerCache.ps1](./scripts/Build-DockerCache.md) defines the ability to generate a cache of Docker images based on dependencies defined in a provided [JSON file](./scripts/Build-DockerCache.md#dockerjson). The generated images can then be transported to a disconnected network for local use, or to host in [Azure Container Registry](https://azure.microsoft.com/en-us/products/container-registry).
 
 Parameter | Type | Default Value | Description
 ----------|------|---------------|------------
 Target | **string** | `..\docker` | The cache target directory.
-Source | **string** | `data\docker.json` | The JSON file containing information in the JSON Schema format outlined below.
+Source | **string** | `data\docker.json` | The JSON file containing information in the JSON Schema  outlined below.
 
 #### JSON Schema
 

@@ -5,32 +5,40 @@ With the establishment of the IL6 cloud region, we now have access to the servic
 ## Directory
 
 * [Scripts](./scripts/)
-* [OS Configuration](./os-configuration.md)
-    * [WSL + Ubuntu](./os-configuration.md#wsl--ubuntu)
-    * [Software](./os-configuration.md#software)
-    * [Extensions](./os-configuration.md#extensions)
-    * [Managing Ubuntu](./os-configuration.md#managing-ubuntu)
-    * [Configurations for Offline Environments](./os-configuration.md#configurations-for-offline-environments)
-        * [Environment Variables](./os-configuration.md#environment-variables)
-        * [Visual Studio Code](./os-configuration.md#visual-studio-code)
-* [NuGet](./nuget.md)
-    * [Hosting NuGet Packages](./nuget.md#hosting-nuget-packages)
-        * [Building a NuGet Cache](./nuget.md#building-a-nuget-cache)
-    * [Internal NuGet Packages](./nuget.md#internal-nuget-packages)
-        * [Publishing NuGet Updates](./nuget.md#publishing-nuget-updates)
-        * [Automating NuGet Package Deployments](./nuget.md#automating-nuget-package-deployments)
-* [npm](./npm.md)
-    * [Hosting npm Packages](./npm.md#hosting-npm-packages)
-    * [Per-project Dependency Cache](./npm.md#per-project-dependency-cache)
-    * [Local npm Packages](./npm.md#local-npm-packages)
-        * [TypeScript Package Setup](./npm.md#typescript-package-setup)
-        * [Install and Consume a Local Package](./npm.md#install-and-consume-a-local-package)
+* [Dev Environment Setup](./dev-environment-setup.md)
 * [Docker](./docker.md)
     * [Cache and Restore Images](./docker.md#cache-and-restore-images)
     * [Scripted Image Cache](./docker.md#scripted-image-cache)
     * [.NET Images](./docker.md#net-images)
     * [Node Images](./docker.md#node-images)
     * [Commands](./docker.md#commands)
+* [Extensions](./extensions.md)
+    * [Azure Data Studio](./extensions.md#azure-data-studio)
+        * [Scripted ADS Extension Cache](./extensions.md#scripted-ads-extension-cache)
+    * [Visual Studio Code](./extensions.md#visual-studio-code)
+        * [Scripted Code Extension Cache](./extensions.md#scripted-code-extension-cache)
+* [Linux](./linux.md)
+    * [Install Apt Software](./linux.md#install-apt-software)
+    * [Install the .NET SDK](./linux.md#install-the-net-sdk)
+* [npm](./npm.md)
+    * [Hosting npm Packages](./npm.md#hosting-npm-packages)
+    * [Per-project Dependency Cache](./npm.md#per-project-dependency-cache)
+    * [Local npm Packages](./npm.md#local-npm-packages)
+        * [TypeScript Package Setup](./npm.md#typescript-package-setup)
+        * [Install and Consume a Local Package](./npm.md#install-and-consume-a-local-package)
+* [NuGet](./nuget.md)
+    * [Hosting NuGet Packages](./nuget.md#hosting-nuget-packages)
+        * [Building a NuGet Cache](./nuget.md#building-a-nuget-cache)
+    * [Internal NuGet Packages](./nuget.md#internal-nuget-packages)
+        * [Publishing NuGet Updates](./nuget.md#publishing-nuget-updates)
+        * [Automating NuGet Package Deployments](./nuget.md#automating-nuget-package-deployments)
+* [Software](./software.md)
+    * [Configurations for Offline Environments](./software.md#configurations-for-offline-environments)
+        * [Environment Variables](./software.md#environment-variables)
+        * [Visual Studio Code](./software.md#visual-studio-code)
+    * [Building a Software Cache](./software.md#building-a-software-cache)
+* [Windows Subsystem for Linux](./wsl.md)
+    * [Caching WSL Resources](./wsl#caching-wsl-resources)
 
 ## Automated Resource Builds
 
@@ -39,20 +47,29 @@ All of the resources and dependencies specified in this documentation can be ret
 Parameter | Type | Default Value | Description
 ----------|------|---------------|------------
 Target | **string** | `..\bundle` | The target bundle directory.
-Source | **string** | `data\resources.json` | The [JSON file](./scripts/Build-DevResources.md#resourcesjson) containing information in the JSON Schema format outlined below.
+Source | **string** | `data\resources.json` | The [JSON file](./scripts/Build-DevResources.md#resourcesjson) containing information in the JSON Schema outlined below.
 AdsTarget | **string** | `extensions\ads` | The sub-directory to store Azure Data Studio extensions.
 AdsSource | **string** | `data\ads-extensions.json` | The [JSON file](./scripts/Build-AdsExtensions.md#ads-extensionsjson) specifying a list of Azure Data Studio extensions. Must conform to the proper schema!
 CodeTarget | **string** | `extensions\vs-code` | The sub-directory to store Visual Studio Code extensions.
 CodeSource | **string** | `data\code-extensions.json` | The [JSON file](./scripts/Build-CodeExtensions.md#code-extensionsjson) specifying a list of Visual Studio Code extensions. Must conform to the proper schema!
 DockerTarget | **string** | `docker` | The sub-directory to store Docker images.
 DockerSource | **string** | `data\docker.json` | The [JSON file](./scripts/Build-DockerCache.md#dockerjson) specifying a list of Docker images. Must conform to the proper schema!
+LinuxTarget | **string** | `linux` | The sub-directory to store cached APT packages and the .NET SDK
+LinuxSource | **string** | `./data/linux.json` | The [JSON file](./scripts/Build-LinuxCache.md#linuxjson) specifying the required APT packages.
+LinuxPlatform | **string** | `linux` | The .NET SDK OS target.
+LinuxArch | **string** | `x64` | The .NET SDK system architecture target.
+LinuxChannel | **string** | `STS` | The .NET SDK channel. Valid options are STS, LTS, or X.X (i.e. 3.1, 5.0, 8.0).
+LinuxDotnetTarget | **string** | `dotnet` | The sub-directory to store the .NET SDK (within `$LinuxTarget`).
+LinuxExtract | **switch** | When provided, extracts the downloaded .NET SDK `.tar.gz` into `$LinuxDotnetTarget/.dotnet/`
 NugetTarget | **string** | `nuget` | The sub-directory to store cached NuGet resources.
 NugetSource | **string** | `data\solution.json` | The [JSON file](./scripts/Build-NugetCache.md#solutionjson) specifying the .NET solution structure. Must conform to the proper schema!
 NugetSolution | **string** | `Solution` | Name and sub-directory within *NugetTarget* to save the .NET solution created to generate the NuGet cache.
 NugetKeepSolution | **switch** | `null` | When present, do not remove the solution created to generate the cache.
 NugetSkipClean | **switch** | `null` | When present, prevent the script from cleaning the local NuGet cache (`dotnet nuget locals all --clear`).
 SoftwareTarget | **string** | `software` | The sub-directory to store software executables.
-SoftwareSource | **string** | `data\software.json` | The [JSON file](./scripts/Build-Software.md#softwarejson) specifying a list of software executables. Must conform to the proper schema!
+SoftwareSource | **string** | `data\software.json` | The [JSON file](./scripts/Build-SoftwareCache.md#softwarejson) specifying a list of software executables. Must conform to the proper schema!
+WslTarget | **string** | `wsl` | The sub-direcory to store WSL resources.
+WslArch | **string** | `x64` | The WSL Linux kernel and Ubuntu architecture. Valid values are: `x64` and `arm64`.
 
 ### JSON Schema
 

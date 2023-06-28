@@ -1,0 +1,9 @@
+{
+    "apt": [
+        "apt-offline",
+        "azure-cli",
+        "git",
+        "nodejs",
+        "uuid-runtime"
+    ]
+}
