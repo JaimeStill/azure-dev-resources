@@ -101,7 +101,6 @@ Connect Azure Data Studio to `.\DevSql` by clicking `New -> New Connection`:
 Set *Server* to `.\DevSql` and change *Trust Server Certificate* to `True`, then click **Connect**:
 
 ![ads-setup-connection](https://github.com/JaimeStill/azure-dev-resources/assets/14102723/0c127ecb-26fd-428c-8941-13e530c58465)
-4102723/fd5761d7-6413-4f1c-b39b-b1c055dde2b8)
 
 The server connection should then be setup in the Connections view:
 
