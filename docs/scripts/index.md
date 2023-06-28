@@ -12,5 +12,5 @@ Script | Description
 [Build-LinuxCache](./Build-LinuxCache.md) | Retrieves software an dupdates for ubuntu. see [Linux](../linux.md) for more details.
 [Build-NpmCache](./Build-NpmCache.md) | Builds and caches dependencies for a Node.js project. See [npm - Per-project Dependency Cache](../npm.md#per-project-dependency-cache) for more details.
 [Build-NugetCache](./Build-NugetCache.md) | Generates a cache of the full dependency hierarchy for a series of specified projects and dependencies. Can optionally retain the solution that is created to generate the cache. See [NuGet - Building a NuGet Cache](../nuget.md#building-a-nuget-cache) for more details.
-[Build-Software](./Build-Software.md) | Retrieves the specified software installers. See [Software](../software.md) for more details.
+[Build-Software](./Build-SoftwareCache.md) | Retrieves the specified software installers. See [Software](../software.md) for more details.
 [Build-WslCache](./Build-WslCache.md) | Initializes the resources required to setup WSL2 and Ubuntu on a disconnected machine. see [Windows Subsystem for Linux](../wsl.md) for more details.

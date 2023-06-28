@@ -134,8 +134,8 @@ fi
 
 echo "Generating target directories..."
 create_dir "$target"
-create_dir "$dotnet_target"
 create_dir "$apt_target"
+create_dir "$dotnet_target"
 
 echo "Caching apt packages..."
 cache_apt "$source" "$apt_target"

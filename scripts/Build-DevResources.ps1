@@ -64,10 +64,23 @@ param(
     $SoftwareTarget = "software",
     [string]
     [Parameter()]
-    $SoftwareSource = "data\software.json"
+    $SoftwareSource = "data\software.json",
+    [string]
+    [Parameter()]
+    $WslTarget = "wsl",
+    [string]
+    [Parameter()]
+    [ValidateSet("x64", "arm64")]
+    $WslArch = "x64"
 )
 
 Write-Output "Bundling Azure Dev Resources..."
+
+if (Test-Path $Target) {
+    Remove-Item $Target -Recurse -Force
+}
+
+New-Item $Target -ItemType Directory -Force
 
 $data = Get-content -Raw -Path $Source | ConvertFrom-Json
 
@@ -76,7 +89,7 @@ $data = Get-content -Raw -Path $Source | ConvertFrom-Json
     -Platform $LinuxPlatform `
     -Arch $LinuxArch `
     -Channel $LinuxChannel `
-    -DotnetTarget "$Target/$LinuxTarget/$LinuxDotnetTarget" `
+    -DotnetTarget "$($Target -replace '\\', '/')/$LinuxTarget/$LinuxDotnetTarget" `
     -Extract:$LinuxExtract
 
 $($data.npm.projects) | ForEach-Object {
@@ -102,7 +115,10 @@ $($data.npm.projects) | ForEach-Object {
 .\Build-DockerCache.ps1 -Target "$Target\$DockerTarget" `
     -Source $DockerSource
 
-.\Build-Software.ps1 -Target "$Target\$SoftwareTarget" `
+.\Build-SoftwareCache.ps1 -Target "$Target\$SoftwareTarget" `
     -Source $SoftwareSource
+
+.\Build-WslCache.ps1 -Target "$Target\$WslTarget" `
+    -Arch $WslArch
 
 Write-Output "Finished bundling Azure Dev Resources!"

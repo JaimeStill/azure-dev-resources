@@ -27,7 +27,7 @@ param(
 
 Write-Host "Generating Linux cache..." -ForegroundColor Blue
 
-$command = ". wsl --exec ./cache-packages.bash -t $Target -s $Source -p $Platform -a $Arch -c $Channel -d $DotnetTarget"
+$command = ". wsl -u root --exec ./cache-packages.bash -t $Target -s $Source -p $Platform -a $Arch -c $Channel -d $DotnetTarget"
 
 if ($Extract) {
     $command += " -e"
@@ -56,24 +56,20 @@ cache_apt() {
     local s=$1
     local t=$2
 
-    (
-        packages=$(jq '.apt[]' $s -c -r | tr '\n' ' ')
-        cd "$t/apt/" ;
+    if ! [ -x "$(command -v jq)" ]; then
+        apt install -y jq
+    fi
+        
+    packages=$(jq '.apt[]' $s -c -r | tr '\n' ' ')
 
-        apt-get download \
-            $(apt-cache depends \
-                --recurse \
-                --no-recommends \
-                --no-suggests \
-                --no-conflicts \
-                --no-breaks \
-                --no-replaces \
-                --no-enhances \
-                --no-pre-depends \
-                ${packages} \
-                | grep "^\w"
-        )
-    )
+    apt clean
+    apt remove -y ${packages}
+    apt autoremove -y
+    apt install -y -d ${packages}
+    cp /var/cache/apt/archives/*.deb "$t"
+    apt clean
+
+    echo "sudo dpkg -i ./*.deb" > "$t/install.bash"
 }
 
 get_dotnet_version() {
@@ -170,7 +166,7 @@ source=${source:-"./data/linux.json"}
 platform=${platform:-"linux"}
 arch=${arch:-"x64"}
 channel=${channel:-"STS"}
-apt_target="$target/apt"
+apt_target="$target/apt-cache"
 dotnet_target="$target/dotnet"
 
 if [ ! -f $source ]
@@ -181,11 +177,11 @@ fi
 
 echo "Generating target directories..."
 create_dir "$target"
-create_dir "$dotnet_target"
 create_dir "$apt_target"
+create_dir "$dotnet_target"
 
 echo "Caching apt packages..."
-cache_apt "$source" "$target"
+cache_apt "$source" "$apt_target"
 
 echo "Caching the .NET SDK..."
 cache_dotnet "$platform" "$arch" "$channel" "$extract" "$dotnet_target"
@@ -199,6 +195,7 @@ cache_dotnet "$platform" "$arch" "$channel" "$extract" "$dotnet_target"
         "apt-offline",
         "azure-cli",
         "git",
+        "jq",
         "nodejs",
         "uuid-runtime"
     ]

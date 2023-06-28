@@ -1,4 +1,4 @@
-# Build-Software.ps1
+# Build-SoftwareCache.ps1
 [Home](../index.md) | [Scripts](./index.md)
 
 ```powershell

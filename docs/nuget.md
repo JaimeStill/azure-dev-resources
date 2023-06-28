@@ -51,7 +51,7 @@ The PowerShell script [Build-NugetCache.ps1](./scripts/Build-NugetCache.md) defi
 Parameter | Type | Default Value | Description
 ----------|------|---------------|------------
 Target | **string** | `..\nuget-packages` | The cache target directory.
-Source | **string** | `data\solution.json` | The JSON file containing information in the JSON Schema format outlined below.
+Source | **string** | `data\solution.json` | The JSON file containing information in the JSON Schema outlined below.
 Solution | **string** | `..\solution` | The directory to create the .NET solution used to generate the cache.
 KeepSolution | **switch** | null | When present, do no remove the solution created to generate the cache.
 SkipClean | **switch** | null | When present, prevent the script from cleaning the local NuGet cache (`dotnet nuget locals all --clear`).

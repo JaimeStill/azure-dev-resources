@@ -41,4 +41,13 @@ You can also setup a Terminal profile by modifying the settings JSON file:
 }
 ```
 
+## Caching WSL Resources
+
+The PowerShell script [Build-WslCache.ps1](./scripts/Build-WslCache.md) defines the ability to download the latest WSL Linux Kernel and WSL Ubuntu bundle. These resources can then be transported to a disconnected network and used to enable WSL with Ubuntu.
+
+Parameter | Type | Default Value | Description
+----------|------|---------------|------------
+Target | **string** | `..\wsl` | The cache target directory.
+Arch | **string** | `x64` | The WSL Linux kernel and Ubuntu architecture. Valid values are: `x64` and `arm64`.
+
 [Home](./index.md)
