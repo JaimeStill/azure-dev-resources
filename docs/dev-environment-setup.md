@@ -149,7 +149,7 @@ sudo apt-offline set ./offline.sig --update --upgrade
 
 I transferred the `.home/admin` directory to my online workstation and, pointed at the `admin` directory, executed:
 
-> This step took an unreasonably long amount of time to complete. Looking into writing a script that iterates through the `.sig` file to download the updates vs. using `apt-offline` in WSL. See [apt-offline: Script Package Downloads from Generated .sig Files](https://github.com/JaimeStill/azure-dev-resources/issues/15)
+> This step took an unreasonably long amount of time to complete. Looking into writing a script that iterates through the `.sig` file to download the updates vs. using `apt-offline` in WSL. See [apt-offline: Script Package Downloads from Generated .sig Files](https://github.com/JaimeStill/azure-dev-resources/issues/15).
 
 ```bash
 sudo apt-offline get -d ./update ./offline.sig
