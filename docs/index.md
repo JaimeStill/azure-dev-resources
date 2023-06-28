@@ -5,6 +5,7 @@ With the establishment of the IL6 cloud region, we now have access to the servic
 ## Directory
 
 * [Scripts](./scripts/)
+* [Dev Environment Setup](./dev-environment-setup.md)
 * [Docker](./docker.md)
     * [Cache and Restore Images](./docker.md#cache-and-restore-images)
     * [Scripted Image Cache](./docker.md#scripted-image-cache)
