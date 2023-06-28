@@ -86,7 +86,6 @@ Open Visual Studio Code and open the Extensions view in the left sidebar. CLick 
 Select all `.vsix` packages from `bundle\extensions\vs-code` and click *Install*:
 
 ![code-select-vsix](https://github.com/JaimeStill/azure-dev-resources/assets/14102723/9a5fa6f1-52a0-415f-90e1-233a9f162351)
-02723/be5e09e9-157a-429e-b1dc-6eb1db9f23b5)
 
 After all extensions have been installed, refresh the Extensions view to verify all extensions are activated:
 
