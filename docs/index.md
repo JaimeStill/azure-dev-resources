@@ -205,7 +205,7 @@ The schema is as follows:
             ]
         }
     },
-    // Build-SoftwareCache
+    // Build-SoftwareCache.ps1
     "software": {
         // cache directory for generated binaries
         "target": "software",
@@ -221,7 +221,7 @@ The schema is as follows:
             }
         ]
     },
-    // Build-WslCache
+    // Build-WslCache.ps1
     "wsl": {
         // cache directory for generated Kernel and Ubuntu app package
         "target": "wsl",
