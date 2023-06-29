@@ -1,22 +1,7 @@
 param(
-    [string]
-    [Parameter()]
-    $Target = "..\npm",
-    [string]
-    [Parameter()]
-    $Source = "data\package.json",
-    [string]
-    [Parameter()]
-    $Name = "cache",
-    [string]
-    [Parameter()]
-    $Version = "0.0.1",
-    [string]
-    [Parameter()]
-    $Cache = "node_cache",
-    [psobject]
-    [Parameter()]
-    $Dependencies
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
 function Merge-NpmDependencies([psobject] $package, [psobject] $deps) {
@@ -25,34 +10,38 @@ function Merge-NpmDependencies([psobject] $package, [psobject] $deps) {
     }
 }
 
-if (Test-Path $Target) {
-    Remove-Item $Target -Recurse -Force
+Write-Host "Generating npm cache..." -ForegroundColor Blue
+
+if (Test-Path $Config.target) {
+    Remove-Item $Config.target -Recurse -Force
 }
 
-New-Item -Path $Target -ItemType Directory -Force
-New-Item (Join-Path $Target ".npmrc") -ItemType File -Value "cache=./$Cache"
+New-Item $Config.target -Recurse -Force
 
-$deps = ($null -ne $Dependencies) `
-    ? $Dependencies `
-    : (Get-Content -Raw -Path $Source | ConvertFrom-Json)
+$Config.data | ForEach-Object {
+    $project = Join-Path $Config.target $_.name
 
-$package = @"
-{
-    "name": "$Name",
-    "version": "$Version"
+    $package = @{
+        name = $_.name
+        version = $_.version
+    }
+
+    Merge-NpmDependencies $package $_.packages
+
+    New-Item -Path $project -ItemType Directory -Force
+    New-Item (Join-Path $project ".npmrc") -ItemType file -Value "cache=./$($_.cache)"
+    New-Item (Join-Path $project "package.json") -ItemType File -Value ($package | ConvertTo-Json)
+
+    $path = Get-Location
+    Set-Location $project
+
+    & npm install
+
+    if (Test-Path node_modules) {
+        Remove-Item node_modules -Recurse -Force
+    }
+
+    Set-Location $path
 }
-"@ | ConvertFrom-Json
 
-Merge-NpmDependencies $package $deps
-
-New-Item (Join-Path $Target "package.json") -ItemType File -Value ($package | ConvertTo-Json)
-
-$path = Get-Location
-
-Set-Location $Target
-
-& npm install
-
-Remove-Item node_modules -Recurse -Force
-
-Set-Location $path
+Write-Host "npm cache successfully generated!" -ForegroundColor Green

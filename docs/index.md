@@ -8,18 +8,16 @@ With the establishment of the IL6 cloud region, we now have access to the servic
 * [Dev Environment Setup](./dev-environment-setup.md)
 * [Docker](./docker.md)
     * [Cache and Restore Images](./docker.md#cache-and-restore-images)
-    * [Scripted Image Cache](./docker.md#scripted-image-cache)
     * [.NET Images](./docker.md#net-images)
     * [Node Images](./docker.md#node-images)
     * [Commands](./docker.md#commands)
 * [Extensions](./extensions.md)
     * [Azure Data Studio](./extensions.md#azure-data-studio)
-        * [Scripted ADS Extension Cache](./extensions.md#scripted-ads-extension-cache)
     * [Visual Studio Code](./extensions.md#visual-studio-code)
-        * [Scripted Code Extension Cache](./extensions.md#scripted-code-extension-cache)
 * [Linux](./linux.md)
     * [Install Apt Software](./linux.md#install-apt-software)
     * [Install the .NET SDK](./linux.md#install-the-net-sdk)
+    * [apt-offline Updates](./linux.md#apt-offline-updates)
 * [npm](./npm.md)
     * [Hosting npm Packages](./npm.md#hosting-npm-packages)
     * [Per-project Dependency Cache](./npm.md#per-project-dependency-cache)
@@ -28,7 +26,6 @@ With the establishment of the IL6 cloud region, we now have access to the servic
         * [Install and Consume a Local Package](./npm.md#install-and-consume-a-local-package)
 * [NuGet](./nuget.md)
     * [Hosting NuGet Packages](./nuget.md#hosting-nuget-packages)
-        * [Building a NuGet Cache](./nuget.md#building-a-nuget-cache)
     * [Internal NuGet Packages](./nuget.md#internal-nuget-packages)
         * [Publishing NuGet Updates](./nuget.md#publishing-nuget-updates)
         * [Automating NuGet Package Deployments](./nuget.md#automating-nuget-package-deployments)
@@ -36,90 +33,200 @@ With the establishment of the IL6 cloud region, we now have access to the servic
     * [Configurations for Offline Environments](./software.md#configurations-for-offline-environments)
         * [Environment Variables](./software.md#environment-variables)
         * [Visual Studio Code](./software.md#visual-studio-code)
-    * [Building a Software Cache](./software.md#building-a-software-cache)
 * [Windows Subsystem for Linux](./wsl.md)
-    * [Caching WSL Resources](./wsl#caching-wsl-resources)
 
 ## Automated Resource Builds
 
-All of the resources and dependencies specified in this documentation can be retrieved and bundled together into a single directory by executing the [Build-DevResources.ps1](./scripts/Build-DevResources.md) script. It aggregates the execution of the scripts specified in the sections of this documentation. Additionally, it allows for the generation of multiple cached Node.js projects. These resources can then be transported to a disconnected network and used to establish or update their related features.
+All of the resources and dependencies specified in this documentation can be retrieved and bundled together into a single directory by executing the [Build-DevResources.ps1](./scripts/Build-DevResources.md) script and passing in a [JSON config file](#json-config-schema). It aggregates the execution of the scripts specified in the sections of this documentation based on the requirements specified in the provided configuration. These resources can then be transported to a disconnected network and used to establish or update their related features.
 
-Parameter | Type | Default Value | Description
-----------|------|---------------|------------
-Target | **string** | `..\bundle` | The target bundle directory.
-Source | **string** | `data\resources.json` | The [JSON file](./scripts/Build-DevResources.md#resourcesjson) containing information in the JSON Schema outlined below.
-AdsTarget | **string** | `extensions\ads` | The sub-directory to store Azure Data Studio extensions.
-AdsSource | **string** | `data\ads-extensions.json` | The [JSON file](./scripts/Build-AdsExtensions.md#ads-extensionsjson) specifying a list of Azure Data Studio extensions. Must conform to the proper schema!
-CodeTarget | **string** | `extensions\vs-code` | The sub-directory to store Visual Studio Code extensions.
-CodeSource | **string** | `data\code-extensions.json` | The [JSON file](./scripts/Build-CodeExtensions.md#code-extensionsjson) specifying a list of Visual Studio Code extensions. Must conform to the proper schema!
-DockerTarget | **string** | `docker` | The sub-directory to store Docker images.
-DockerSource | **string** | `data\docker.json` | The [JSON file](./scripts/Build-DockerCache.md#dockerjson) specifying a list of Docker images. Must conform to the proper schema!
-LinuxTarget | **string** | `linux` | The sub-directory to store cached APT packages and the .NET SDK
-LinuxSource | **string** | `./data/linux.json` | The [JSON file](./scripts/Build-LinuxCache.md#linuxjson) specifying the required APT packages.
-LinuxPlatform | **string** | `linux` | The .NET SDK OS target.
-LinuxArch | **string** | `x64` | The .NET SDK system architecture target.
-LinuxChannel | **string** | `STS` | The .NET SDK channel. Valid options are STS, LTS, or X.X (i.e. 3.1, 5.0, 8.0).
-LinuxDotnetTarget | **string** | `dotnet` | The sub-directory to store the .NET SDK (within `$LinuxTarget`).
-LinuxExtract | **switch** | When provided, extracts the downloaded .NET SDK `.tar.gz` into `$LinuxDotnetTarget/.dotnet/`
-NugetTarget | **string** | `nuget` | The sub-directory to store cached NuGet resources.
-NugetSource | **string** | `data\solution.json` | The [JSON file](./scripts/Build-NugetCache.md#solutionjson) specifying the .NET solution structure. Must conform to the proper schema!
-NugetSolution | **string** | `Solution` | Name and sub-directory within *NugetTarget* to save the .NET solution created to generate the NuGet cache.
-NugetKeepSolution | **switch** | `null` | When present, do not remove the solution created to generate the cache.
-NugetSkipClean | **switch** | `null` | When present, prevent the script from cleaning the local NuGet cache (`dotnet nuget locals all --clear`).
-SoftwareTarget | **string** | `software` | The sub-directory to store software executables.
-SoftwareSource | **string** | `data\software.json` | The [JSON file](./scripts/Build-SoftwareCache.md#softwarejson) specifying a list of software executables. Must conform to the proper schema!
-WslTarget | **string** | `wsl` | The sub-direcory to store WSL resources.
-WslArch | **string** | `x64` | The WSL Linux kernel and Ubuntu architecture. Valid values are: `x64` and `arm64`.
+### JSON Config Schema
 
-### JSON Schema
+> For a comprehensive set of configuration examples, see the [scripts/config](https://github.com/JaimeStill/azure-dev-resources/tree/project-schema/scripts/config) directory in the project repository.
 
-An object that provides metadata for passing data to the executed sub-scripts. Currently, only generating multiple Node.js projects is supported, but it is structured in such a way as to be more extensible in the future. The schema is as follows:
+A [JSON config file](#json-config-schema) that specifies where to store the cached resources (`target`) and provides metadata to the executed sub-scripts (each base property apart from `target`, i.e. - `linux` for caching Ubuntu resources, `npm` for caching npm projects with their dependencies, etc.).
 
-Property | Description
----------|------------
-`npm` | an object containing metadata for Node.js projects.
-`target` | the sub-directory to save the generated Node.js projects.
-`projects` | an array of objects containing metadata to pass to [`Build-NpmCache.ps1`](./scripts/Build-NpmCache.md).
-`name` | the name for the generated package.json file.
-`version` | the version for the generated package.json file.
-`cache` | the directory to store the gzipped npm packages. Used to populate the project-local `.npmrc` cache variable.
-`packages` | an object containing the dependency objects specified by package.json.
+The sub-script base properties are optional. If a sub-script base property is provided, all of the properties within its schema are required unless specified below. You should provide at least one sub-script base property.
 
-**Example**  
+Each `target` within a sub-script base property will be joined with the root `target` property. For instance:
 
 ```json
 {
-    "npm": {
-        "target": "npm",
-        "projects": [
+    "target": "..\\bundle",
+    "wsl": {
+        "target": "wsl",
+        "arch": "x64"
+    }
+}
+```
+
+The runtime target for `wsl.target` will be `..\bundle\wsl`.
+
+The schema is as follows:
+
+```jsonc
+{
+    // the root cache directory
+    "target": "..\\bundle",
+    // Build-AdsExtensions.ps1
+    "ads": {
+        // cache directory for Azure Data Studio extensions
+        "target": "extensions\\ads",
+        // list of extensions
+        "data": [
             {
+                // extension name
+                "name": "Admin Pack for SQL Server",
+                // generated file name
+                "file": "admin-pack-sql-server.vsix",
+                // download URI
+                "source": "https://go.microsoft.com/fwlink/?linkid=2099889"
+            }
+        ]
+    },
+    // Build-CodeExtensions.ps1
+    "vscode": {
+        // cache directory for Visual Studio Code extensions
+        "target": "extensions\\vscode",
+        // list of extensions
+        "data": [
+            {
+                // registered publisher
+                "publisher": "angular",
+                // registered name
+                "name": "ng-template",
+                // user friendly name
+                "display": "Angular Language Service"
+            }
+        ]
+    },
+    // Build-DockerCache.ps1
+    "docker": {
+        // cache directory for Docker images
+        "target": "docker",
+        // list of images
+        "data": [
+            {
+                // image repository
+                "repository": "mcr.microsoft.com/dotnet/sdk",
+                // cached image file name
+                "name": "mcr.microsoft.com-dotnet-sdk",
+                // image tag
+                "tag": "latest",
+                // if true, remove the image after caching
+                "clear": false
+            }
+        ]
+    },
+    // Build-LinuxCache.ps1
+    "linux": {
+        // cache directory for Linux resources
+        "target": "linux",
+        // script metadata options
+        "data": {
+            // apt packages to cache
+            "apt": [
+                "apt-offline",
+                "git",
+                "jq"
+            ],
+            // OPTIONAL: .NET SDK metadata
+            // options correspond with .NET install script options
+            // see https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script#options
+            "dotnet": {
+                // see --architecture
+                "arch": "x64",
+                // see --channel
+                "channel": "STS",
+                // see --os
+                "os": "linux",
+                // extract the retrieved .tar.gz into a .dotnet directory
+                "extract": false
+            }
+        }
+    },
+    // Build-NpmCache.ps1
+    "npm": {
+        // cache directory for generated Node.js projects
+        "target": "npm",
+        // Node.js project configurations
+        "data": [
+            {
+                // package.json name
                 "name": "cache",
+                // package.json version
                 "version": "0.0.1",
+                // project dependency cache set in .npmrc
                 "cache": "node_cache",
+                // all dependency objects and their dependencies
+                // see https://docs.npmjs.com/cli/v9/configuring-npm/package-json#dependencies
                 "packages": {
+                    // package.json dependencies
                     "dependencies": {
                         "@microsoft/signalr": "^7.0.7"
                     },
-                    "devDependencies": {
-                        "@types/node": "^20.3.1",
-                        "typescript": "^5.1.3"
-                    }
-                }
-            },
-            {
-                "name": "optimus",
-                "version": "0.1.0",
-                "cache": "optimus_prime",
-                "packages": {
-                    "dependencies": {
-                        "moleculer": "^0.14.29"
-                    },
+                    // package.json devDependencies
                     "devDependencies": {
                         "typescript": "^5.1.3"
                     }
                 }
             }
         ]
+    },
+    // Build-NugetCache.ps1
+    "nuget": {
+        // cache directory for generated NuGet packages
+        "target": "nuget",
+        // script metadata options
+        "data": {
+            // directory to host the generated solution
+            "solution": ".solution",
+            // if true, keep the solution after generating the cache
+            "keep": false,
+            // if true, clean the NuGet cache before caching dependencies
+            "clean": true,
+            // dotnet new projects to generate in the solution
+            "projects": [
+                {
+                    // project name
+                    "name": "Core",
+                    // dotnet new <template>
+                    "template": "classlib",
+                    // dotnet new <template> -f <framework>
+                    "framework": "net7.0",
+                    // NuGet package dependencies
+                    "dependencies": [
+                        "Microsoft.AspNetCore.SignalR.Client",
+                        // ending in ! indicates --prerelease
+                        "System.CommandLine!",
+                        // can specify a specific version
+                        "System.CommandLine@2.0.0-beta4.22272.1"
+                    ]
+                }
+            ]
+        }
+    },
+    // Build-SoftwareCache
+    "software": {
+        // cache directory for generated binaries
+        "target": "software",
+        // list of binaries
+        "data": [
+            {
+                // resource name
+                "name": "Visual Studio Code",
+                // cached binary name
+                "file": "vscode.exe",
+                // download URI
+                "source": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
+            }
+        ]
+    },
+    // Build-WslCache
+    "wsl": {
+        // cache directory for generated Kernel and Ubuntu app package
+        "target": "wsl",
+        // system architecture - x64 or arm64
+        "arch": "x64"
     }
 }
 ```

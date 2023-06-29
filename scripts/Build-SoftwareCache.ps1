@@ -1,17 +1,14 @@
 param(
-    [string]
-    [Parameter()]
-    $Target = "..\software",
-    [string]
-    [Parameter()]
-    $Source = "data\software.json"
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
 $initialProgressPreference = $global:ProgressPreference
 $global:ProgressPreference = 'SilentlyContinue'
 
 function Get-Software([psobject] $software, [string] $dir) {
-    Write-Output "Retrieving $($software.name) from $($software.source)"
+    Write-Host "Retrieving $($software.name) from $($software.source)"
 
     $output = Join-Path $dir $software.file
 
@@ -21,7 +18,7 @@ function Get-Software([psobject] $software, [string] $dir) {
 
     try {
         Invoke-WebRequest -Uri $software.source -OutFile $output -MaximumRetryCount 10
-        Write-Output "$($software.name) successfully retrieved"
+        Write-Host "$($software.name) successfully retrieved"
     }
     catch {
         Write-Error $_
@@ -29,17 +26,19 @@ function Get-Software([psobject] $software, [string] $dir) {
 }
 
 try {
-    if (-not (Test-Path $Target)) {
-        New-Item -Path $Target -ItemType Directory -Force
+    Write-Host "Generating Software cache..." -ForegroundColor Blue
+
+    if (Test-Path $Config.target) {
+        Remove-Item $Config.target -Recurse -Force
     }
 
-    $data = Get-Content -Raw -Path $Source | ConvertFrom-Json
+    New-Item $Config.target -ItemType Directory -Force
 
-    Write-Output "Generating Software in $Target"
-
-    $data | ForEach-Object {
-        Get-Software $_ $Target
+    $Config.data | ForEach-Object {
+        Get-Software $_ $Config.target
     }
+
+    Write-Host "Software cache successfully generated!" -ForegroundColor Green
 }
 finally {
     $global:ProgressPreference = $initialProgressPreference

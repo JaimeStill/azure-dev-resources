@@ -3,24 +3,9 @@
 
 ```powershell
 param(
-    [string]
-    [Parameter()]
-    $Target = "..\npm",
-    [string]
-    [Parameter()]
-    $Source = "data\package.json",
-    [string]
-    [Parameter()]
-    $Name = "cache",
-    [string]
-    [Parameter()]
-    $Version = "0.0.1",
-    [string]
-    [Parameter()]
-    $Cache = "node_cache",
-    [psobject]
-    [Parameter()]
-    $Dependencies
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
 function Merge-NpmDependencies([psobject] $package, [psobject] $deps) {
@@ -29,49 +14,71 @@ function Merge-NpmDependencies([psobject] $package, [psobject] $deps) {
     }
 }
 
-if (Test-Path $Target) {
-    Remove-Item $Target -Recurse -Force
+Write-Host "Generating npm cache..." -ForegroundColor Blue
+
+if (Test-Path $Config.target) {
+    Remove-Item $Config.target -Recurse -Force
 }
 
-New-Item -Path $Target -ItemType Directory -Force
-New-Item (Join-Path $Target ".npmrc") -ItemType File -Value "cache=./$Cache"
+New-Item $Config.target -Recurse -Force
 
-$deps = ($null -ne $Dependencies) `
-    ? $Dependencies `
-    : (Get-Content -Raw -Path $Source | ConvertFrom-Json)
+$Config.data | ForEach-Object {
+    $project = Join-Path $Config.target $_.name
 
-$package = @"
-{
-    "name": "$Name",
-    "version": "$Version"
+    $package = @{
+        name = $_.name
+        version = $_.version
+    }
+
+    Merge-NpmDependencies $package $_.packages
+
+    New-Item -Path $project -ItemType Directory -Force
+    New-Item (Join-Path $project ".npmrc") -ItemType file -Value "cache=./$($_.cache)"
+    New-Item (Join-Path $project "package.json") -ItemType File -Value ($package | ConvertTo-Json)
+
+    $path = Get-Location
+    Set-Location $project
+
+    & npm install
+
+    if (Test-Path node_modules) {
+        Remove-Item node_modules -Recurse -Force
+    }
+
+    Set-Location $path
 }
-"@ | ConvertFrom-Json
 
-Merge-NpmDependencies $package $deps
-
-New-Item (Join-Path $Target "package.json") -ItemType File -Value ($package | ConvertTo-Json)
-
-$path = Get-Location
-
-Set-Location $Target
-
-& npm install
-
-Remove-Item node_modules -Recurse -Force
-
-Set-Location $path
+Write-Host "npm cache successfully generated!" -ForegroundColor Green
 ```
 
-## package.json
+## Config Schema
 
-```json
-{
-    "dependencies": {
-        "@microsoft/signalr": "^7.0.7"
-    },
-    "devDependencies": {
-        "@types/node": "^20.3.1",
-        "typescript": "^5.1.3"
-    }
+```jsonc
+"npm": {
+    // cache directory for generated Node.js projects
+    "target": "npm",
+    // Node.js project configurations
+    "data": [
+        {
+            // package.json name
+            "name": "cache",
+            // package.json version
+            "version": "0.0.1",
+            // project dependency cache set in .npmrc
+            "cache": "node_cache",
+            // all dependency objects and their dependencies
+            // see https://docs.npmjs.com/cli/v9/configuring-npm/package-json#dependencies
+            "packages": {
+                // package.json dependencies
+                "dependencies": {
+                    "@microsoft/signalr": "^7.0.7"
+                },
+                // package.json devDependencies
+                "devDependencies": {
+                    "typescript": "^5.1.3"
+                }
+            }
+        }
+    ]
 }
 ```

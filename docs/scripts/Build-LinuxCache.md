@@ -2,38 +2,22 @@
 
 ```powershell
 param(
-    [string]
-    [Parameter()]
-    $Target = "../linux",
-    [string]
-    [Parameter()]
-    $Source = "./data/linux.json",
-    [string]
-    [Parameter()]
-    $Platform = "linux",
-    [string]
-    [Parameter()]
-    $Arch = "x64",
-    [string]
-    [Parameter()]
-    $Channel = "STS",
-    [string]
-    [Parameter()]
-    $DotnetTarget = "../linux/dotnet",
-    [switch]
-    [Parameter()]
-    $Extract
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
 Write-Host "Generating Linux cache..." -ForegroundColor Blue
 
-$command = ". wsl -u root --exec ./cache-packages.bash -t $Target -s $Source -p $Platform -a $Arch -c $Channel -d $DotnetTarget"
-
-if ($Extract) {
-    $command += " -e"
+if (Test-Path $Config.target) {
+    Remove-Item $Config.target -Recurse -Force
 }
 
-Invoke-Expression $command
+New-Item $Config.target -ItemType Directory -Force
+
+$Config.target = $Config.target -replace '\\', '/'
+
+. wsl -u root --exec ./cache-packages.bash -c "$($Config | ConvertTo-Json)"
 
 Write-Host "Linux cache successfully generated!" -ForegroundColor Green
 ```
@@ -48,19 +32,13 @@ dotnet_url="https://dotnetcli.azureedge.net/dotnet/Sdk"
 create_dir() {
     if [ ! -d $1 ]
     then
-        mkdir $1
+        mkdir -p $1
     fi
 }
 
 cache_apt() {
-    local s=$1
+    local packages=$1
     local t=$2
-
-    if ! [ -x "$(command -v jq)" ]; then
-        apt install -y jq
-    fi
-        
-    packages=$(jq '.apt[]' $s -c -r | tr '\n' ' ')
 
     apt clean
     apt remove -y ${packages}
@@ -86,11 +64,11 @@ get_dotnet_version() {
 
 download_dotnet() {
     local v=$1
-    local p=$2
-    local a=$3
+    local a=$2
+    local o=$3
     local t=$4
 
-    file="dotnet-sdk-$v-$p-$a.tar.gz"
+    file="dotnet-sdk-$v-$o-$a.tar.gz"
     uri="$dotnet_url/$v/$file"
 
     curl "$uri" -o "$t/$file" \
@@ -109,17 +87,17 @@ extract_dotnet() {
 }
 
 cache_dotnet() {
-    local p=$1
-    local a=$2
-    local c=$3
+    local a=$1
+    local c=$2
+    local o=$3
     local e=$4
     local t=$5
 
     echo "Getting latest dotnet-sdk version for $c"
     local version=$(get_dotnet_version "$c")
 
-    echo "Retrieving dotnet-sdk-$version-$p-$a.tar.gz"
-    file=$(download_dotnet "$version" "$p" "$a" "$t")
+    echo "Retrieving dotnet-sdk-$version-$o-$a.tar.gz"
+    file=$(download_dotnet "$version" "$a" "$o" "$t")
 
     if [ "$e" = true ] ; then
         echo "Extracting $file to $t/.dotnet/"
@@ -127,77 +105,79 @@ cache_dotnet() {
     fi
 }
 
-while getopts ':t:s:p:a:c:d:eh' opt; do
+while getopts ':c:h' opt; do
  case "$opt" in
-    t)
-        target="$OPTARG"
-        ;;
-    s)
-        source="$OPTARG"
-        ;;
-    p)
-        platform="$OPTARG"
-        ;;
-    a)
-        arch="$OPTARG"
-        ;;
     c)
-        channel="$OPTARG"
-        ;;
-    d)
-        dotnet_target="$OPTARG"
-        ;;
-    e)
-        extract=true
+        config="$OPTARG"
         ;;
     :)
-        echo -e "Option requires an argument\nUsage: $(basename $0) [-t dir] [-s <source>.json]"
+        echo -e "Option requires an argument\nUsage: $(basename $0) [-c config]"
         exit 1
         ;;
     ?|h)
-        echo "Usage: $(basename $0) [-t dir] [-s <source>.json]"
+        echo "Usage: $(basename $0) [-c config]"
         exit 0
         ;;
  esac
 done
 
-target=${target:-"./packages"}
-source=${source:-"./data/linux.json"}
-platform=${platform:-"linux"}
-arch=${arch:-"x64"}
-channel=${channel:-"STS"}
-apt_target="$target/apt-cache"
-dotnet_target="$target/dotnet"
-
-if [ ! -f $source ]
+if [ -z "$config" ]
 then
-    echo "$source does not exist"
+    echo "config was not provided"
     exit 1;
 fi
 
-echo "Generating target directories..."
-create_dir "$target"
+if ! [ -x "$(command -v jq)" ]; then
+    apt install -y jq
+fi
+
+target=$(echo $config | jq '.target' -r)
+dotnet=$(echo $config | jq '.data.dotnet' -r)
+
+if [ -n "$dotnet" ]; then
+    arch=$(echo $dotnet | jq '.arch' -r)
+    channel=$(echo $dotnet | jq '.channel' -r)
+    os=$(echo $dotnet | jq '.os' -r)
+    extract=$(echo $dotnet | jq '.extract' -r)
+    dotnet_target="$target/dotnet"
+
+    create_dir "$dotnet_target"
+    cache_dotnet "$arch" "$channel" "$os" "$extract" "$dotnet_target"
+fi
+
+apt=$(echo $config | jq '.data.apt[]' -r | tr '\n' ' ')
+apt_target="$target/apt-cache"
 create_dir "$apt_target"
-create_dir "$dotnet_target"
-
-echo "Caching apt packages..."
-cache_apt "$source" "$apt_target"
-
-echo "Caching the .NET SDK..."
-cache_dotnet "$platform" "$arch" "$channel" "$extract" "$dotnet_target"
+cache_apt "$apt" "$apt_target"
 ```
 
-## linux.json
+## Config Schema
 
-```json
-{
-    "apt": [
-        "apt-offline",
-        "azure-cli",
-        "git",
-        "jq",
-        "nodejs",
-        "uuid-runtime"
-    ]
+```jsonc
+"linux": {
+    // cache directory for Linux resources
+    "target": "linux",
+    // script metadata options
+    "data": {
+        // apt packages to cache
+        "apt": [
+            "apt-offline",
+            "git",
+            "jq"
+        ],
+        // OPTIONAL: .NET SDK metadata
+        // options correspond with .NET install script options
+        // see https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script#options
+        "dotnet": {
+            // see --architecture
+            "arch": "x64",
+            // see --channel
+            "channel": "STS",
+            // see --os
+            "os": "linux",
+            // extract the retrieved .tar.gz into a .dotnet directory
+            "extract": false
+        }
+    }
 }
 ```

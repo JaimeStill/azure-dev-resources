@@ -1,0 +1,269 @@
+{
+    "target": "..\\bundle",
+    "ads": {
+        "target": "extensions\\ads",
+        "data": [
+            {
+                "name": "Admin Pack for SQL Server",
+                "file": "admin-pack-sql-server.vsix",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2099889"
+            },
+            {
+                "name": "Database Admin Tool Extensions for Windows",
+                "file": "db-admin-tool.vsix",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2099888"
+            },
+            {
+                "name": "PostgreSQL",
+                "file": "postgresql.vsix",
+                "source": "https://github.com/microsoft/azuredatastudio-postgresql/releases/download/v0.3.1/azuredatastudio-postgresql-0.3.1-win-x64.vsix"
+            },
+            {
+                "name": "Query History",
+                "file": "query-history.vsix",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2109534"
+            }
+        ]
+    },
+    "vscode": {
+        "target": "extensions\\vscode",
+        "data": [
+            {
+                "publisher": "angular",
+                "name": "ng-template",
+                "display": "Angular Language Service"
+            },
+            {
+                "publisher": "ms-dotnettools",
+                "name": "csharp",
+                "display": "C#"
+            },
+            {
+                "publisher": "ms-azuretools",
+                "name": "vscode-docker",
+                "display": "Docker"
+            },
+            {
+                "publisher": "editorconfig",
+                "name": "editorconfig",
+                "display": "EditorConfig"
+            },
+            {
+                "publisher": "bierner",
+                "name": "github-markdown-preview",
+                "display": "GitHub Markdown Preview"
+            },
+            {
+                "publisher": "github",
+                "name": "github-vscode-theme",
+                "display": "GitHub Theme"
+            },
+            {
+                "publisher": "ms-vscode",
+                "name": "powershell",
+                "display": "PowerShell"
+            },
+            {
+                "publisher": "ms-vscode-remote",
+                "name": "vscode-remote-extensionpack",
+                "display": "Remote Development"
+            },
+            {
+                "publisher": "spmeesseman",
+                "name": "vscode-taskexplorer",
+                "display": "Task Explorer"
+            },
+            {
+                "publisher": "rangav",
+                "name": "vscode-thunder-client",
+                "display": "Thunder Client"
+            },
+            {
+                "publisher": "redhat",
+                "name": "vscode-yaml",
+                "display": "YAML"
+            }
+        ]
+    },
+    "docker": {
+        "target": "docker",
+        "data": [
+            {
+                "repository": "node",
+                "name": "node",
+                "tag": "latest",
+                "clear": false
+            },
+            {
+                "repository": "mcr.microsoft.com/dotnet/sdk",
+                "name": "mcr.microsoft.com-dotnet-sdk",
+                "tag": "latest",
+                "clear": false
+            },
+            {
+                "repository": "mcr.microsoft.com/dotnet/aspnet",
+                "name": "mcr.microsoft.com-dotnet-aspnet",
+                "tag": "latest",
+                "clear": false
+            }
+        ]
+    },
+    "linux": {
+        "target": "linux",
+        "data": {
+            "apt": [
+                "apt-offline",
+                "azure-cli",
+                "git",
+                "jq",
+                "nodejs",
+                "uuid-runtime"
+            ],
+            "dotnet": {
+                "arch": "x64",
+                "channel": "STS",
+                "os": "linux",
+                "extract": false
+            }
+        }
+    },
+    "npm": {
+        "target": "npm",
+        "data": [
+            {
+                "name": "cache",
+                "version": "0.0.1",
+                "cache": "node_cache",
+                "packages": {
+                    "dependencies": {
+                        "@microsoft/signalr": "^7.0.7"
+                    },
+                    "devDependencies": {
+                        "@types/node": "^20.3.1",
+                        "typescript": "^5.1.3"
+                    }
+                }
+            },
+            {
+                "name": "optimus",
+                "version": "0.1.0",
+                "cache": "optimus_prime",
+                "packages": {
+                    "dependencies": {
+                        "moleculer": "^0.14.29"
+                    },
+                    "devDependencies": {
+                        "typescript": "^5.1.3"
+                    }
+                }
+            }
+        ]
+    },
+    "nuget": {
+        "target": "nuget",
+        "data": {
+            "solution": ".solution",
+            "keep": false,
+            "clean": true,
+            "projects": [
+                {
+                    "name": "Core",
+                    "template": "classlib",
+                    "framework": "net7.0",
+                    "dependencies": [
+                        "DocumentFormat.OpenXml",
+                        "Microsoft.AspNetCore.SignalR.Client",
+                        "Microsoft.Data.SqlClient",
+                        "Microsoft.EntityFrameworkCore",
+                        "Microsoft.EntityFrameworkCore.Design",
+                        "Microsoft.EntityFrameworkCore.Relational",
+                        "Microsoft.EntityFrameworkCore.SqlServer",
+                        "Microsoft.EntityFrameworkCore.Tools",
+                        "Microsoft.Extensions.Configuration.Abstractions",
+                        "Microsoft.Extensions.Configuration.Binder",
+                        "System.CommandLine!",
+                        "System.CommandLine.NamingConventionBinder!"
+                    ]
+                },
+                {
+                    "name": "Web",
+                    "template": "webapi",
+                    "framework": "net7.0",
+                    "dependencies": [
+                        "Microsoft.AspNetCore.OData",
+                        "Microsoft.AspNetCore.OpenApi",
+                        "Microsoft.Data.SqlClient",
+                        "Swashbuckle.AspNetCore",
+                        "System.CommandLine@2.0.0-beta4.22272.1",
+                        "System.CommandLine.NamingConventionBinder@2.0.0-beta4.22272.1",
+                        "System.Linq.Dynamic.Core"
+                    ]
+                }
+            ]
+        }
+    },
+    "software": {
+        "target": "software",
+        "data": [
+            {
+                "name": "Visual Studio Code",
+                "file": "vscode.exe",
+                "source": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
+            },
+            {
+                "name": "git",
+                "file": "git.exe",
+                "source": "https://github.com/git-for-windows/git/releases/download/v2.41.0.windows.1/Git-2.41.0-64-bit.exe"
+            },
+            {
+                "name": ".NET SDK",
+                "file": "dotnet.exe",
+                "source": "https://dotnetcli.azureedge.net/dotnet/Sdk/7.0.305/dotnet-sdk-7.0.305-win-x64.exe"
+            },
+            {
+                "name": "NodeJS LTS",
+                "file": "node.msi",
+                "source": "https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi"
+            },
+            {
+                "name": "Azure CLI",
+                "file": "azurecli.msi",
+                "source": "https://aka.ms/installazurecliwindows"
+            },
+            {
+                "name": "PowerShell",
+                "file": "pwsh.msi",
+                "source": "https://github.com/PowerShell/PowerShell/releases/download/v7.2.11/PowerShell-7.2.11-win-x64.msi"
+            },
+            {
+                "name": "SQL Server Express",
+                "file": "sql-express.exe",
+                "source": "https://go.microsoft.com/fwlink/p/?linkid=2216019&clcid=0x409&culture=en-us&country=us"
+            },
+            {
+                "name": "Azure Data Studio",
+                "file": "azure-data-studio.exe",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2237020"
+            },
+            {
+                "name": "Docker Desktop",
+                "file": "docker.exe",
+                "source": "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
+            },
+            {
+                "name": "Windows Terminal",
+                "file": "terminal.msixbundle",
+                "source": "https://github.com/microsoft/terminal/releases/download/v1.17.11461.0/Microsoft.WindowsTerminal_1.17.11461.0_8wekyb3d8bbwe.msixbundle"
+            },
+            {
+                "name": "PowerToys",
+                "file": "powertoys.exe",
+                "source": "https://github.com/microsoft/PowerToys/releases/download/v0.70.1/PowerToysSetup-0.70.1-x64.exe"
+            }
+        ]
+    },
+    "wsl": {
+        "target": "wsl",
+        "arch": "x64"
+    }
+}

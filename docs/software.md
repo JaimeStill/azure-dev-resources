@@ -1,7 +1,7 @@
 # Software
 [Home](./index.md)
 
-> All of the required dependencies specified below can be bundled into a single directory by running the [Build-SoftwareCache.ps1](./scripts/Build-SoftwareCache.md) script.
+All of the required dependencies specified below can be bundled into a single directory by running the [Build-SoftwareCache.ps1](./scripts/Build-SoftwareCache.md) script. These resources can then be transported to a disconnected network and used to setup the underlying dev environment.
 
 Name | Description
 -----|------------
@@ -59,24 +59,5 @@ Press <kbd>F1</kbd> -> **Preferences: Open Settings (JSON)**:
     "update.mode": "none"
 }
 ```
-
-## Building a Software Cache
-
-The PowerShell script [Build-SoftwareCache.ps1](./scripts/Build-SoftwareCache.md) defines the ability to acquire installation packages and any other required binaries. A provided [JSON file](./scripts/Build-SoftwareCache.md#softwarejson) specifies the resources to acquire. These resources can then be transported ot a disconnected network and used to setup the underlying dev environment.
-
-Parameter | Type | Default Value | Description
-----------|------|---------------|------------
-Target | **string** | `..\software` | The cache target directory.
-Source | **string** | `data\software.json` | The JSON file containing the list of resources to acquire.
-
-### JSON Schema
-
-An array of objects that provide metadata for a .NET project. Object schema is as follows:
-
-Property | Description
----------|------------
-`name` | The name of the resource being acquired.
-`file` | The cached resource file name.
-`source` | The URI used to acquired the resource.
 
 [Home](./index.md)

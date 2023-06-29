@@ -1,17 +1,14 @@
 param(
-    [string]
-    [Parameter()]
-    $Target = "..\bundle\extensions\ads",
-    [string]
-    [Parameter()]
-    $Source = "data\ads-extensions.json"
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
 $initialProgressPreference = $global:ProgressPreference
 $global:ProgressPreference = 'SilentlyContinue'
 
 function Get-AdsExtension([psobject] $ext, [string] $dir) {
-    Write-Output "Retrieving $($ext.name) from $($ext.source)"
+    Write-Host "Retrieving $($ext.name) from $($ext.source)"
 
     $output = Join-Path $dir $ext.file
 
@@ -21,7 +18,7 @@ function Get-AdsExtension([psobject] $ext, [string] $dir) {
 
     try {
         Invoke-WebRequest -Uri $ext.source -OutFile $output -MaximumRetryCount 10 -RetryIntervalSec 6
-        Write-Output "$($ext.name) successfully retrieved"
+        Write-Host "$($ext.name) successfully retrieved"
     }
     catch {
         Write-Error $_
@@ -29,17 +26,19 @@ function Get-AdsExtension([psobject] $ext, [string] $dir) {
 }
 
 try {
-    if (-not (Test-Path $Target)) {
-        New-Item -Path $Target -ItemType Directory -Force
+    Write-Host "Generating Azure Data Studio extension cache..." -ForegroundColor Blue
+
+    if (Test-Path $Config.target) {
+        Remove-Item $Config.target -Recurse -Force
     }
 
-    $data = Get-Content -Raw -Path $Source | ConvertFrom-Json
+    New-Item $Config.target -ItemType Directory -Force
 
-    Write-Output "Generating Azure Data Studio extensions in $Target"
-
-    $data | ForEach-Object {
-        Get-AdsExtension $_ $Target
+    $Config.data | ForEach-Object {
+        Get-AdsExtension $_ $Config.target
     }
+
+    Write-Host "Azure Data Studio extension cache successfully generated!" -ForegroundColor Green
 }
 finally {
     $global:ProgressPreference = $initialProgressPreference

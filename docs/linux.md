@@ -66,17 +66,3 @@ Once complete, transfer the generated `update` directory to the offline system a
 ```bash
 sudo apt-offline install ./update
 ```
-
-## Building the Cache
-
-The PowerShell script [Build-LinuxCache.ps1](./scripts/Build-LinuxCache.md) defines the ability to generate an APT cache, as well as retrieve the latest version of a specified .NET SDK. The desired APT packages are specified in a [JSON file](./scripts/Build-LinuxCache.md#linuxjson) that is provided to the script. The PowerShell script configures the execution of a [cache-packages.bash](./scripts/Build-LinuxCache.md#cache-packagesbash) script that is executed via `wsl --exec` to achieve this functionality. The generated cache can then be transported to a disconnected network and used to establish or update a WSL Ubuntu system.
-
-Parameter | Type | Default Value | Description
-----------|------|---------------|------------
-Target | **string** | `../linux` | The cache target directory.
-Source | **string** | `./data/linux.json` | The JSON file containing the list of apt packages to cache.
-Platform | **string** | `linux` | The .NET SDK OS target.
-Arch | **string** | `x64` | The .NET SDK system architecture target.
-Channel | **string** | `STS` | The .NET SDK channel. Valid options are STS, LTS, or X.X (i.e. 3.1, 5.0, 8.0).
-DotnetTarget | **string** | `../linux/dotnet` | The .NET SDK cache target directory.
-Extract | **switch** | `null` | When provided, extracts the downloaded `.tar.gz` for the .NET SDK into `$DotnetTarget/.dotnet/`
