@@ -54,7 +54,7 @@ $initialProgressPreference = $global:ProgressPreference
 $global:ProgressPreference = 'SilentlyContinue'
 
 try {
-    Write-Host "Generating Visual Studio Code extension cache..." -ForegroundColor Cyan
+    Write-Host "Generating Visual Studio Code extension cache..." -ForegroundColor Blue
 
     if (Test-Path $Config.target) {
         Remove-Item $Config.target -Recurse -Force
@@ -66,7 +66,7 @@ try {
         Get-CodeExtension $_ $Config.target
     }
 
-    Write-Host "Visual Studio Code extension cache successfully generated!" -ForegroundColor Cyan
+    Write-Host "Visual Studio Code extension cache successfully generated!" -ForegroundColor Green
 }
 finally {
     $global:ProgressPreference = $initialProgressPreference
@@ -75,7 +75,7 @@ finally {
 
 ## Config Schema
 
-```json
+```jsonc
 "vscode": {
     // cache directory for Visual Studio Code extensions
     "target": "extensions\\vscode",

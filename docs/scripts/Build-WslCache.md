@@ -2,34 +2,30 @@
 
 ```powershell
 param(
-    [string]
-    [Parameter()]
-    $Target = "..\wsl",
-    [string]
-    [Parameter()]
-    [ValidateSet("x64", "arm64")]
-    $Arch = "x64"
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
 $temp = '.\temp'
 $distro = 'ubuntu'
-$kernelUri = "https://aka.ms/wsl2kernelmsi$Arch"
+$kernelUri = "https://aka.ms/wsl2kernelmsi$($Config.arch)"
 $ubuntuUri = 'https://aka.ms/wslubuntu'
-$filter = "Ubuntu.+($Arch)+.appx"
+$filter = "Ubuntu.+($($Config.arch))+.appx"
 
-Write-Host "Retrieving WSL Ubuntu Infrastructure"
+Write-Host "Generating WSL cache..." -ForegroundColor Blue
 
 if (Test-Path $temp) {
     Remove-Item $temp -Recurse -Force
 }
 
-if (Test-Path $Target) {
-    Remove-Item $Target -Recurse -Force
+if (Test-Path $Config.target) {
+    Remove-Item $Config.target -Recurse -Force
 }
 
-New-Item $Target -ItemType Directory -Force
+New-Item $Config.target -ItemType Directory -Force
 
-Invoke-WebRequest -Uri $kernelUri -OutFile (Join-Path $Target "wsl-kernel-$Arch.msi") -MaximumRetryCount 10
+Invoke-WebRequest -Uri $kernelUri -OutFile (Join-Path $Config.target "wsl-kernel-$($Config.arch).msi") -MaximumRetryCount 10
 
 Invoke-WebRequest -Uri $ubuntuUri -OutFile "$distro.appx" -MaximumRetryCount 10
 
@@ -40,8 +36,21 @@ $package = (Get-ChildItem "$temp" -File `
     | Select-String -Pattern $filter `
 ).Matches.Value
 
-Expand-Archive (Join-Path $temp $package) (Join-Path $Target $distro)
+Expand-Archive (Join-Path $temp $package) (Join-Path $Config.target $distro)
 
 Remove-Item "$distro.appx" -Force
 Remove-Item $temp -Recurse -Force
+
+Write-Host "WSL cache successfully generated!" -ForegroundColor Green
+```
+
+## Config Schema
+
+```jsonc
+"wsl": {
+    // cache directory for generated Kernel and Ubuntu app package
+    "target": "wsl",
+    // system architecture - x64 or arm64
+    "arch": "x64"
+}
 ```

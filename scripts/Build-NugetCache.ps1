@@ -49,7 +49,7 @@ function Build-Cache([string] $cache, [string] $sln) {
     & dotnet restore $sln --packages $cache
 }
 
-Write-Host "Generating NuGet cache..." -ForegroundColor Cyan
+Write-Host "Generating NuGet cache..." -ForegroundColor Blue
 
 $sln = Join-Path $Config.target $Config.data.solution
 
@@ -69,4 +69,4 @@ if (-not $Config.data.keep) {
     Remove-Item $sln -Recurse -Force
 }
 
-Write-Host "NuGet cache successfully generated!" -ForegroundColor Cyan
+Write-Host "NuGet cache successfully generated!" -ForegroundColor Green

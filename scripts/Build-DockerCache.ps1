@@ -21,7 +21,7 @@ function Get-DockerImage([psobject] $image, [string] $dir) {
     }
 }
 
-Write-Host "Generating Docker image cache..." -ForegroundColor Cyan
+Write-Host "Generating Docker image cache..." -ForegroundColor Blue
 
 if (Test-Path $Config.target) {
     Remove-Item $Config.target -Recurse -Force
@@ -33,4 +33,4 @@ $Config.data | ForEach-Object {
     Get-DockerImage $_ $Config.target
 }
 
-Write-Host "Docker image cache successfully generated!" -ForegroundColor Cyan
+Write-Host "Docker image cache successfully generated!" -ForegroundColor Green

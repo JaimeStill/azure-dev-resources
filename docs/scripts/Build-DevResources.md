@@ -58,7 +58,7 @@ else {
 
 ## Config Schema
 
-```json
+```jsonc
 {
     // the root cache directory
     "target": "..\\bundle",

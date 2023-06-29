@@ -1,7 +1,7 @@
 param(
     [string]
     [Parameter()]
-    $Config = "..\config\full.json"
+    $Config = ".\resources\full.json"
 )
 
 $data = Get-Content -Raw -Path $Config | ConvertFrom-Json

@@ -26,7 +26,7 @@ function Get-Software([psobject] $software, [string] $dir) {
 }
 
 try {
-    Write-Host "Generating Software cache..." -ForegroundColor Cyan
+    Write-Host "Generating Software cache..." -ForegroundColor Blue
 
     if (Test-Path $Config.target) {
         Remove-Item $Config.target -Recurse -Force
@@ -38,7 +38,7 @@ try {
         Get-Software $_ $Config.target
     }
 
-    Write-Host "Software cache successfully generated!" -ForegroundColor Cyan
+    Write-Host "Software cache successfully generated!" -ForegroundColor Green
 }
 finally {
     $global:ProgressPreference = $initialProgressPreference

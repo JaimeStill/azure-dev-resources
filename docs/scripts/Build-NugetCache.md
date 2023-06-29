@@ -3,21 +3,9 @@
 
 ```powershell
 param(
-    [string]
-    [Parameter()]
-    $Target = "..\nuget",
-    [string]
-    [Parameter()]
-    $Source = "data\solution.json",
-    [string]
-    [Parameter()]
-    $Solution = "Solution",
-    [switch]
-    [Parameter()]
-    $KeepSolution,
-    [switch]
-    [Parameter()]
-    $SkipClean
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
 function Add-ProjectDependency([string] $dependency, [string] $output) {    
@@ -49,10 +37,10 @@ function Build-Project([psobject] $project, [string] $sln) {
     }
 }
 
-function Build-Solution([psobject] $data, [string] $sln) {
+function Build-Solution([psobject] $projects, [string] $sln) {
     & dotnet new sln -o $sln
 
-    $data | ForEach-Object {
+    $projects | ForEach-Object {
         Build-Project $_ $sln
     }
 }
@@ -65,64 +53,62 @@ function Build-Cache([string] $cache, [string] $sln) {
     & dotnet restore $sln --packages $cache
 }
 
-$data = Get-Content -Raw -Path $Source | ConvertFrom-Json
-$sln = Join-Path $Target $Solution
+Write-Host "Generating NuGet cache..." -ForegroundColor Blue
+
+$sln = Join-Path $Config.target $Config.data.solution
 
 if (Test-Path $sln) {
     Remove-Item $sln -Recurse -Force
 }
 
-Build-Solution $data $sln
+Build-Solution $Config.data.projects $sln
 
-if (-not $SkipClean) {
+if ($Config.data.clean) {
     & dotnet nuget locals all --clear
 }
 
-Build-Cache $Target $sln
+Build-Cache $Config.target $sln
 
-if (-not $KeepSolution) {
+if (-not $Config.data.keep) {
     Remove-Item $sln -Recurse -Force
 }
+
+Write-Host "NuGet cache successfully generated!" -ForegroundColor Green
 ```
 
-## solution.json
+## Config Schema
 
 ```jsonc
-[
-    {
-        "name": "Core",
-        "template": "classlib",
-        "framework": "net7.0",
-        "dependencies": [
-            "DocumentFormat.OpenXml",
-            "Microsoft.AspNetCore.SignalR.Client",
-            "Microsoft.Data.SqlClient",
-            "Microsoft.EntityFrameworkCore",
-            "Microsoft.EntityFrameworkCore.Design",
-            "Microsoft.EntityFrameworkCore.Relational",
-            "Microsoft.EntityFrameworkCore.SqlServer",
-            "Microsoft.EntityFrameworkCore.Tools",
-            "Microsoft.Extensions.Configuration.Abstractions",
-            "Microsoft.Extensions.Configuration.Binder",
-            // ! specifies a pre-release package
-            "System.CommandLine!",
-            "System.CommandLine.NamingConventionBinder!"
-        ]
-    },
-    {
-        "name": "Web",
-        "template": "webapi",
-        "framework": "net7.0",
-        "dependencies": [
-            "Microsoft.AspNetCore.OData",
-            "Microsoft.AspNetCore.OpenApi",
-            "Microsoft.Data.SqlClient",
-            "Swashbuckle.AspNetCore",
-            // Specify a specific version of a package
-            "System.CommandLine@2.0.0-beta4.22272.1",
-            "System.CommandLine.NamingConventionBinder@2.0.0-beta4.22272.1",
-            "System.Linq.Dynamic.Core"
+"nuget": {
+    // cache directory for generated NuGet packages
+    "target": "nuget",
+    // script metadata options
+    "data": {
+        // directory to host the generated solution
+        "solution": ".solution",
+        // if true, keep the solution after generating the cache
+        "keep": false,
+        // if true, clean the NuGet cache before caching dependencies
+        "clean": true,
+        // dotnet new projects to generate in the solution
+        "projects": [
+            {
+                // project name
+                "name": "Core",
+                // dotnet new <template>
+                "template": "classlib",
+                // dotnet new <template> -f <framework>
+                "framework": "net7.0",
+                // NuGet package dependencies
+                "dependencies": [
+                    "Microsoft.AspNetCore.SignalR.Client",
+                    // ending in ! indicates --prerelease
+                    "System.CommandLine!",
+                    // can specify a specific version
+                    "System.CommandLine@2.0.0-beta4.22272.1"
+                ]
+            }
         ]
     }
-]
+}
 ```

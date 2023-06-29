@@ -30,7 +30,7 @@ function Get-AdsExtension([psobject] $ext, [string] $dir) {
 }
 
 try {
-    Write-Host "Generating Azure Data Studio extension cache..." -ForegroundColor Cyan
+    Write-Host "Generating Azure Data Studio extension cache..." -ForegroundColor Blue
 
     if (Test-Path $Config.target) {
         Remove-Item $Config.target -Recurse -Force
@@ -42,7 +42,7 @@ try {
         Get-AdsExtension $_ $Config.target
     }
 
-    Write-Host "Azure Data Studio extension cache successfully generated!" -ForegroundColor Cyan
+    Write-Host "Azure Data Studio extension cache successfully generated!" -ForegroundColor Green
 }
 finally {
     $global:ProgressPreference = $initialProgressPreference
@@ -51,7 +51,7 @@ finally {
 
 ## Config Schema
 
-```json
+```jsonc
 "ads": {
     // cache directory for Azure Data Studio extensions
     "target": "extensions\\ads",

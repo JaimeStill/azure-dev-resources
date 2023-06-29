@@ -10,7 +10,7 @@ function Merge-NpmDependencies([psobject] $package, [psobject] $deps) {
     }
 }
 
-Write-Host "Generating npm cache..." -ForegroundColor Cyan
+Write-Host "Generating npm cache..." -ForegroundColor Blue
 
 if (Test-Path $Config.target) {
     Remove-Item $Config.target -Recurse -Force
@@ -44,4 +44,4 @@ $Config.data | ForEach-Object {
     Set-Location $path
 }
 
-Write-Host "npm cache successfully generated!" -ForegroundColor Cyan
+Write-Host "npm cache successfully generated!" -ForegroundColor Green
