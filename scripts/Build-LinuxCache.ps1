@@ -1,35 +1,19 @@
 param(
-    [string]
-    [Parameter()]
-    $Target = "../linux",
-    [string]
-    [Parameter()]
-    $Source = "./data/linux.json",
-    [string]
-    [Parameter()]
-    $Platform = "linux",
-    [string]
-    [Parameter()]
-    $Arch = "x64",
-    [string]
-    [Parameter()]
-    $Channel = "STS",
-    [string]
-    [Parameter()]
-    $DotnetTarget = "../linux/dotnet",
-    [switch]
-    [Parameter()]
-    $Extract
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
-Write-Host "Generating Linux cache..." -ForegroundColor Blue
+Write-Host "Generating Linux cache..." -ForegroundColor Cyan
 
-$command = ". wsl -u root --exec ./cache-packages.bash -t $Target -s $Source -p $Platform -a $Arch -c $Channel -d $DotnetTarget"
-
-if ($Extract) {
-    $command += " -e"
+if (Test-Path $Config.target) {
+    Remove-Item $Config.target -Recurse -Force
 }
 
-Invoke-Expression $command
+New-Item $Config.target -ItemType Directory -Force
 
-Write-Host "Linux cache successfully generated!" -ForegroundColor Green
+$Config.target = $Config.target -replace '\\', '/'
+
+. wsl -u root --exec ./cache-packages.bash -c "$($Config | ConvertTo-Json)"
+
+Write-Host "Linux cache successfully generated!" -ForegroundColor Cyan

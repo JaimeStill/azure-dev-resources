@@ -186,7 +186,7 @@ function Build-DependencyCache([string] $name, [string] $semver) {
     #>
     if (-not ($script:packages -contains "$name@$semver")) {
         $script:packages += "$name@$semver"
-        Write-Output "Generating dependency cache for $name@$semver"
+        Write-Host "Generating dependency cache for $name@$semver"
 
         $versions = Get-SemVersions $name $semver
 

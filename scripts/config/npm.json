@@ -1,7 +1,8 @@
 {
+    "target": "..\\bundle",
     "npm": {
         "target": "npm",
-        "projects": [
+        "data": [
             {
                 "name": "cache",
                 "version": "0.0.1",

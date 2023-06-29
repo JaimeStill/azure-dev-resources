@@ -1,10 +1,7 @@
 param(
-    [string]
-    [Parameter()]
-    $Target = "..\bundle\extensions\vs-code",
-    [string]
-    [Parameter()]
-    $Source = "data\code-extensions.json"
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
 function Invoke-CodeDownload([string] $download, [string] $output) {
@@ -14,7 +11,7 @@ function Invoke-CodeDownload([string] $download, [string] $output) {
     catch {
         if ($_.Exception.Response.StatusCode -eq 429) {
             $RetryPeriod = 60
-            Write-Output "Rate Limit Exceeded. Sleeping $RetryPeriod seconds due to HTTP 429 response"
+            Write-Host "Rate Limit Exceeded. Sleeping $RetryPeriod seconds due to HTTP 429 response"
             Start-Sleep -Seconds $RetryPeriod
             Invoke-CodeDownload @PSBoundParameters
         } else {
@@ -24,9 +21,9 @@ function Invoke-CodeDownload([string] $download, [string] $output) {
 }
 
 function Get-CodeExtension([psobject] $extension, [string] $path) {
-    Write-Output "Retrieving $($extension.label)"
+    Write-Host "Retrieving $($extension.display)"
     
-    Write-Output "Getting Version Number for $($extension.label)"
+    Write-Host "Getting Version Number for $($extension.display)"
 
     $uri = "https://marketplace.visualstudio.com/items?itemName=$($extension.publisher).$($extension.name)"
     $content = Invoke-RestMethod -Uri $uri
@@ -34,7 +31,7 @@ function Get-CodeExtension([psobject] $extension, [string] $path) {
     $json = $Matches[0] -replace '<script class="jiContent" defer="defer" type="application/json">' -replace '</script>'
     $json = $json | ConvertFrom-Json
 
-    Write-Output "Generating Download URI for $($extension.label).$($json.Resources.Version)"
+    Write-Host "Generating Download URI for $($extension.display)@$($json.Resources.Version)"
 
     $download = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/$($extension.publisher)/vsextensions/$($extension.name)/$($json.Resources.Version)/vspackage"
 
@@ -44,26 +41,28 @@ function Get-CodeExtension([psobject] $extension, [string] $path) {
         Remove-Item $output -Force
     }
 
-    Write-Output "Downloading $($extension.label) from $download"
+    Write-Host "Downloading $($extension.display) from $download"
     Invoke-CodeDownload $download $output
-    Write-Output "$($extension.label) successfully downloaded"
+    Write-Host "$($extension.display) successfully downloaded"
 }
 
 $initialProgressPreference = $global:ProgressPreference
 $global:ProgressPreference = 'SilentlyContinue'
 
 try {
-    if (-not (Test-Path $Target)) {
-        New-Item -Path $Target -ItemType Directory -Force
+    Write-Host "Generating Visual Studio Code extension cache..." -ForegroundColor Cyan
+
+    if (Test-Path $Config.target) {
+        Remove-Item $Config.target -Recurse -Force
     }
 
-    $exts = Get-Content -Raw -Path $Source | ConvertFrom-Json
+    New-Item $Config.target -ItemType Directory -Force
 
-    Write-Output "Generating Code Extensions in $Target"
-
-    $exts | ForEach-Object {
-        Get-CodeExtension $_ $Target
+    $Config.data | ForEach-Object {
+        Get-CodeExtension $_ $Config.target
     }
+
+    Write-Host "Visual Studio Code extension cache successfully generated!" -ForegroundColor Cyan
 }
 finally {
     $global:ProgressPreference = $initialProgressPreference

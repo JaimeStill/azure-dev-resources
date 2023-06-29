@@ -1,0 +1,63 @@
+{
+    "target": "..\\bundle",
+    "vscode": {
+        "target": "extensions\\vscode",
+        "data": [
+            {
+                "publisher": "angular",
+                "name": "ng-template",
+                "display": "Angular Language Service"
+            },
+            {
+                "publisher": "ms-dotnettools",
+                "name": "csharp",
+                "display": "C#"
+            },
+            {
+                "publisher": "ms-azuretools",
+                "name": "vscode-docker",
+                "display": "Docker"
+            },
+            {
+                "publisher": "editorconfig",
+                "name": "editorconfig",
+                "display": "EditorConfig"
+            },
+            {
+                "publisher": "bierner",
+                "name": "github-markdown-preview",
+                "display": "GitHub Markdown Preview"
+            },
+            {
+                "publisher": "github",
+                "name": "github-vscode-theme",
+                "display": "GitHub Theme"
+            },
+            {
+                "publisher": "ms-vscode",
+                "name": "powershell",
+                "display": "PowerShell"
+            },
+            {
+                "publisher": "ms-vscode-remote",
+                "name": "vscode-remote-extensionpack",
+                "display": "Remote Development"
+            },
+            {
+                "publisher": "spmeesseman",
+                "name": "vscode-taskexplorer",
+                "display": "Task Explorer"
+            },
+            {
+                "publisher": "rangav",
+                "name": "vscode-thunder-client",
+                "display": "Thunder Client"
+            },
+            {
+                "publisher": "redhat",
+                "name": "vscode-yaml",
+                "display": "YAML"
+            }
+        ]
+    }
+}

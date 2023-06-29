@@ -1,6 +1,8 @@
 # Docker
 [Home](./index.md)
 
+Docker images can be cached via the [Build-DockerCache.ps1](./scripts/Build-DockerCache.md) script.
+
 ## Cache and Restore Images
 
 1. Pull the image you want to cache:
@@ -54,51 +56,6 @@
 
     docker run -d ... mcr.microsoft.com/dotnet/sdk:latest
     ```
-
-### Scripted Image Cache
-
-The PowerShell script [Build-DockerCache.ps1](./scripts/Build-DockerCache.md) defines the ability to generate a cache of Docker images based on dependencies defined in a provided [JSON file](./scripts/Build-DockerCache.md#dockerjson). The generated images can then be transported to a disconnected network for local use, or to host in [Azure Container Registry](https://azure.microsoft.com/en-us/products/container-registry).
-
-Parameter | Type | Default Value | Description
-----------|------|---------------|------------
-Target | **string** | `..\docker` | The cache target directory.
-Source | **string** | `data\docker.json` | The JSON file containing information in the JSON Schema  outlined below.
-
-#### JSON Schema
-
-An array of objects that represent the needed Docker image information. Object schema is as follows:
-
-Property | Description
----------|------------
-`repository` | the name of the docker image repository
-`name` | the name of the file when saving the docker image
-`tag` | the tag version of the docker image
-`clear` | if `true`, clear the image after saving
-
-**Example**  
-
-```json
-[
-    {
-        "repository": "node",
-        "name": "node",
-        "tag": "latest",
-        "clear": false
-    },
-    {
-        "repository": "mcr.microsoft.com/dotnet/sdk",
-        "name": "mcr.microsoft.com-dotnet-sdk",
-        "tag": "latest",
-        "clear": false
-    },
-    {
-        "repository": "mcr.microsoft.com/dotnet/aspnet",
-        "name": "mcr.microsoft.com-dotnet-aspnet",
-        "tag": "latest",
-        "clear": false
-    }
-]
-```
 
 ## .NET Images
 

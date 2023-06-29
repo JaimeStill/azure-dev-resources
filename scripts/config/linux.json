@@ -1,0 +1,22 @@
+{
+    "target": "..\\bundle",
+    "linux": {
+        "target": "linux",
+        "data": {
+            "apt": [
+                "apt-offline",
+                "azure-cli",
+                "git",
+                "jq",
+                "nodejs",
+                "uuid-runtime"
+            ],
+            "dotnet": {
+                "arch": "x64",
+                "channel": "STS",
+                "os": "linux",
+                "extract": false
+            }
+        }
+    }
+}

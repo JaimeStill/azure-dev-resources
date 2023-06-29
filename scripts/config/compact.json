@@ -1,0 +1,96 @@
+{
+    "target": "..\\bundle",
+    "ads": {
+        "target": "extensions\\ads",
+        "data": [
+            {
+                "name": "Admin Pack for SQL Server",
+                "file": "admin-pack-sql-server.vsix",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2099889"
+            }
+        ]
+    },
+    "vscode": {
+        "target": "extensions\\vscode",
+        "data": [            
+            {
+                "publisher": "ms-dotnettools",
+                "name": "csharp",
+                "display": "C#"
+            }
+        ]
+    },
+    "npm": {
+        "target": "npm",
+        "data": [
+            {
+                "name": "cache",
+                "version": "0.0.1",
+                "cache": "node_cache",
+                "packages": {
+                    "dependencies": {
+                        "@microsoft/signalr": "^7.0.7"
+                    },
+                    "devDependencies": {
+                        "@types/node": "^20.3.1",
+                        "typescript": "^5.1.3"
+                    }
+                }
+            }
+        ]
+    },
+    "nuget": {
+        "target": "nuget",
+        "data": {
+            "solution": ".solution",
+            "keep": false,
+            "clean": true,
+            "projects": [
+                {
+                    "name": "Core",
+                    "template": "classlib",
+                    "framework": "net7.0",
+                    "dependencies": [
+                        "DocumentFormat.OpenXml",
+                        "Microsoft.AspNetCore.SignalR.Client",
+                        "Microsoft.Data.SqlClient",
+                        "Microsoft.EntityFrameworkCore",
+                        "Microsoft.EntityFrameworkCore.Design",
+                        "Microsoft.EntityFrameworkCore.Relational",
+                        "Microsoft.EntityFrameworkCore.SqlServer",
+                        "Microsoft.EntityFrameworkCore.Tools",
+                        "Microsoft.Extensions.Configuration.Abstractions",
+                        "Microsoft.Extensions.Configuration.Binder",
+                        "System.CommandLine!",
+                        "System.CommandLine.NamingConventionBinder!"
+                    ]
+                }
+            ]
+        }
+    },
+    "software": {
+        "target": "software",
+        "data": [
+            {
+                "name": "Visual Studio Code",
+                "file": "vscode.exe",
+                "source": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
+            },
+            {
+                "name": "git",
+                "file": "git.exe",
+                "source": "https://github.com/git-for-windows/git/releases/download/v2.41.0.windows.1/Git-2.41.0-64-bit.exe"
+            },
+            {
+                "name": ".NET SDK",
+                "file": "dotnet.exe",
+                "source": "https://dotnetcli.azureedge.net/dotnet/Sdk/7.0.305/dotnet-sdk-7.0.305-win-x64.exe"
+            },
+            {
+                "name": "NodeJS LTS",
+                "file": "node.msi",
+                "source": "https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi"
+            }
+        ]
+    }
+}

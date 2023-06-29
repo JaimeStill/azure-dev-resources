@@ -3,19 +3,16 @@
 
 ```powershell
 param(
-    [string]
-    [Parameter()]
-    $Target = "..\bundle\extensions\ads",
-    [string]
-    [Parameter()]
-    $Source = "data\ads-extensions.json"
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
 $initialProgressPreference = $global:ProgressPreference
 $global:ProgressPreference = 'SilentlyContinue'
 
 function Get-AdsExtension([psobject] $ext, [string] $dir) {
-    Write-Output "Retrieving $($ext.name) from $($ext.source)"
+    Write-Host "Retrieving $($ext.name) from $($ext.source)"
 
     $output = Join-Path $dir $ext.file
 
@@ -25,7 +22,7 @@ function Get-AdsExtension([psobject] $ext, [string] $dir) {
 
     try {
         Invoke-WebRequest -Uri $ext.source -OutFile $output -MaximumRetryCount 10 -RetryIntervalSec 6
-        Write-Output "$($ext.name) successfully retrieved"
+        Write-Host "$($ext.name) successfully retrieved"
     }
     catch {
         Write-Error $_
@@ -33,46 +30,41 @@ function Get-AdsExtension([psobject] $ext, [string] $dir) {
 }
 
 try {
-    if (-not (Test-Path $Target)) {
-        New-Item -Path $Target -ItemType Directory -Force
+    Write-Host "Generating Azure Data Studio extension cache..." -ForegroundColor Cyan
+
+    if (Test-Path $Config.target) {
+        Remove-Item $Config.target -Recurse -Force
     }
 
-    $data = Get-Content -Raw -Path $Source | ConvertFrom-Json
+    New-Item $Config.target -ItemType Directory -Force
 
-    Write-Output "Generating Azure Data Studio extensions in $Target"
-
-    $data | ForEach-Object {
-        Get-AdsExtension $_ $Target
+    $Config.data | ForEach-Object {
+        Get-AdsExtension $_ $Config.target
     }
+
+    Write-Host "Azure Data Studio extension cache successfully generated!" -ForegroundColor Cyan
 }
 finally {
     $global:ProgressPreference = $initialProgressPreference
 }
 ```
 
-## ads-extensions.json
+## Config Schema
 
 ```json
-[
-    {
-        "name": "Admin Pack for SQL Server",
-        "file": "admin-pack-sql-server.vsix",
-        "source": "https://go.microsoft.com/fwlink/?linkid=2099889"
-    },
-    {
-        "name": "Database Admin Tool Extensions for Windows",
-        "file": "db-admin-tool.vsix",
-        "source": "https://go.microsoft.com/fwlink/?linkid=2099888"
-    },
-    {
-        "name": "PostgreSQL",
-        "file": "postgresql.vsix",
-        "source": "https://github.com/microsoft/azuredatastudio-postgresql/releases/download/v0.3.1/azuredatastudio-postgresql-0.3.1-win-x64.vsix"
-    },
-    {
-        "name": "Query History",
-        "file": "query-history.vsix",
-        "source": "https://go.microsoft.com/fwlink/?linkid=2109534"
-    }
-]
+"ads": {
+    // cache directory for Azure Data Studio extensions
+    "target": "extensions\\ads",
+    // list of extensions
+    "data": [
+        {
+            // extension name
+            "name": "Admin Pack for SQL Server",
+            // generated file name
+            "file": "admin-pack-sql-server.vsix",
+            // download URI
+            "source": "https://go.microsoft.com/fwlink/?linkid=2099889"
+        }
+    ]
+}
 ```

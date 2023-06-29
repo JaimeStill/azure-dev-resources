@@ -1,0 +1,7 @@
+{
+    "target": "..\\bundle",
+    "wsl": {
+        "target": "wsl",
+        "arch": "x64"
+    }
+}

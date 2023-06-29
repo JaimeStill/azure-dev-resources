@@ -1,19 +1,7 @@
 param(
-    [string]
-    [Parameter()]
-    $Target = "..\nuget",
-    [string]
-    [Parameter()]
-    $Source = "data\solution.json",
-    [string]
-    [Parameter()]
-    $Solution = "Solution",
-    [switch]
-    [Parameter()]
-    $KeepSolution,
-    [switch]
-    [Parameter()]
-    $SkipClean
+    [PSObject]
+    [Parameter(Mandatory)]
+    $Config
 )
 
 function Add-ProjectDependency([string] $dependency, [string] $output) {    
@@ -45,10 +33,10 @@ function Build-Project([psobject] $project, [string] $sln) {
     }
 }
 
-function Build-Solution([psobject] $data, [string] $sln) {
+function Build-Solution([psobject] $projects, [string] $sln) {
     & dotnet new sln -o $sln
 
-    $data | ForEach-Object {
+    $projects | ForEach-Object {
         Build-Project $_ $sln
     }
 }
@@ -61,21 +49,24 @@ function Build-Cache([string] $cache, [string] $sln) {
     & dotnet restore $sln --packages $cache
 }
 
-$data = Get-Content -Raw -Path $Source | ConvertFrom-Json
-$sln = Join-Path $Target $Solution
+Write-Host "Generating NuGet cache..." -ForegroundColor Cyan
+
+$sln = Join-Path $Config.target $Config.data.solution
 
 if (Test-Path $sln) {
     Remove-Item $sln -Recurse -Force
 }
 
-Build-Solution $data $sln
+Build-Solution $Config.data.projects $sln
 
-if (-not $SkipClean) {
+if ($Config.data.clean) {
     & dotnet nuget locals all --clear
 }
 
-Build-Cache $Target $sln
+Build-Cache $Config.target $sln
 
-if (-not $KeepSolution) {
+if (-not $Config.data.keep) {
     Remove-Item $sln -Recurse -Force
 }
+
+Write-Host "NuGet cache successfully generated!" -ForegroundColor Cyan

@@ -19,25 +19,6 @@ Extension | Description
 [PostgreSQL](https://github.com/microsoft/azuredatastudio-postgresql) | Connect, query, and manage Postgres databases with Azure Data Studio.
 [Query History](https://github.com/microsoft/azuredatastudio/tree/main/extensions/query-history) | Adds a Query History view for viewing and running past executed queries.
 
-### Scripted ADS Extension Cache
-
-The PowerShell script [Build-AdsExtensions.ps1](./scripts/Build-AdsExtensions.md) defines the ability to generate a cache of Azure data Studio extensions. The cached extensions are defined in a provided [JSON file](./scripts/Build-AdsExtensions.md#ads-extensionsjson). The cached extensiosn can then be transported to a disconnected network for local use.
-
-Paramter | Type | Default Value | Description
----------|------|---------------|------------
-Target | **string** | `..\bundle\extensions\ads` | The cache target directory
-Source | **string** | `data\ads-extensions.json` | The JSON file containing extension metadata in the JSON Schema outlined below
-
-#### JSON Schema
-
-An array of objects that provide metadata for acquiring an Azure Data Studio extension:
-
-Property | Description
----------|------------
-`name` | the name of the extension
-`file` | the cached extension file name
-`source` | the URI for acquiring the extension
-
 ## Visual Studio Code
 
 Extension | Description
@@ -53,22 +34,3 @@ Extension | Description
 [Task Explorer](https://marketplace.visualstudio.com/items?itemName=spmeesseman.vscode-taskexplorer) | Provides a view in either (or both) the Sidebar and/or Explorer that displays all supported tasks organized into a treeview, with parent task file nodes, grouped nodes, and project folders. Tasks can be opened for view/edit, executed, and stopped, among other things for specific task types, via context menu.
 [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client) | A lightweight Rest API client extension for VS Code wiht simple and clean design.
 [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) | Provides comprehensive YAML Language support to VS Code with built-in Kubernetes syntax support.
-
-### Scripted Code Extension Cache
-
-The PowerShell script [Build-CodeExtensions.ps1](./scripts/Build-CodeExtensions.md) defines the ability to generate a cache of Visual Studio Code extensions. The cached extensions are defined in a provided [JSON file](./scripts/Build-CodeExtensions.md#code-extensionsjson), and the script retrieves the latest version of the specified extension. The cached extensiosn can then be transported to a disconnected network for local use.
-
-Paramter | Type | Default Value | Description
----------|------|---------------|------------
-Target | **string** | `..\bundle\extensions\vs-code` | The cache target directory
-Source | **string** | `data\code-extensions.json` | The JSON file containing extension metadata in the JSON Schema outlined below
-
-#### JSON Schema
-
-An array of objects that provide metadata for acquiring a Visual Studio Code extension:
-
-Property | Description
----------|------------
-`publisher` | the name of the extension publisher
-`name` | the registered name of the extension
-`label` | a display-friendly label for the extension
