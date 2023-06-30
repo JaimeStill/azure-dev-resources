@@ -15,6 +15,18 @@ if ($null -ne $data) {
         $data.$($prop.Name).target = Join-Path $data.target $prop.Value.target
     }
 
+    if ($null -ne $data.ads) {
+        .\Build-AdsExtensions.ps1 -Config $data.ads
+    }
+
+    if ($null -ne $data.docker) {
+        .\Build-DockerCache.ps1 -Config $data.docker
+    }
+
+    if ($null -ne $data.dotnet) {
+        .\Build-DotnetCache.ps1 -Config $data.dotnet
+    }
+
     if ($null -ne $data.linux) {
         .\Build-LinuxCache.ps1 -Config $data.linux
     }
@@ -27,20 +39,12 @@ if ($null -ne $data) {
         .\Build-NugetCache.ps1 -Config $data.nuget
     }
 
-    if ($null -ne $data.ads) {
-        .\Build-AdsExtensions.ps1 -Config $data.ads
+    if ($null -ne $data.resources) {
+        .\Build-ResourceCache.ps1 -Config $data.resources
     }
 
     if ($null -ne $data.vscode) {
         .\Build-CodeExtensions.ps1 -Config $data.vscode
-    }
-
-    if ($null -ne $data.docker) {
-        .\Build-DockerCache.ps1 -Config $data.docker
-    }
-
-    if ($null -ne $data.software) {
-        .\Build-SoftwareCache.ps1 -Config $data.software
     }
 
     if ($null -ne $data.wsl) {

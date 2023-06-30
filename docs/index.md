@@ -21,6 +21,7 @@ With the establishment of the IL6 cloud region, we now have access to the servic
 * [npm](./npm.md)
     * [Hosting npm Packages](./npm.md#hosting-npm-packages)
     * [Per-project Dependency Cache](./npm.md#per-project-dependency-cache)
+    * [Global npm Packages](./npm.md#global-npm-packages)
     * [Local npm Packages](./npm.md#local-npm-packages)
         * [TypeScript Package Setup](./npm.md#typescript-package-setup)
         * [Install and Consume a Local Package](./npm.md#install-and-consume-a-local-package)
@@ -29,21 +30,23 @@ With the establishment of the IL6 cloud region, we now have access to the servic
     * [Internal NuGet Packages](./nuget.md#internal-nuget-packages)
         * [Publishing NuGet Updates](./nuget.md#publishing-nuget-updates)
         * [Automating NuGet Package Deployments](./nuget.md#automating-nuget-package-deployments)
-* [Software](./software.md)
-    * [Configurations for Offline Environments](./software.md#configurations-for-offline-environments)
-        * [Environment Variables](./software.md#environment-variables)
-        * [Visual Studio Code](./software.md#visual-studio-code)
+* [Resources](./resources.md)
+    * [.NET SDK and .NET CLI Tools](./resources.md#net-sdk-and-net-cli-tools)
+    * [SQL Server 2022 Express](./resources.md#sql-server-2022-express)
+    * [Configurations for Offline Environments](./resources.md#configurations-for-offline-environments)
+        * [Environment Variables](./resources.md#environment-variables)
+        * [Visual Studio Code](./resources.md#visual-studio-code)
 * [Windows Subsystem for Linux](./wsl.md)
 
 ## Automated Resource Builds
 
-All of the resources and dependencies specified in this documentation can be retrieved and bundled together into a single directory by executing the [Build-DevResources.ps1](./scripts/Build-DevResources.md) script and passing in a [JSON config file](#json-config-schema). It aggregates the execution of the scripts specified in the sections of this documentation based on the requirements specified in the provided configuration. These resources can then be transported to a disconnected network and used to establish or update their related features.
+All of the resources and dependencies specified in this documentation can be retrieved and bundled together into a single directory by executing the [Build-DevResources.ps1](./scripts/Build-DevResources.md) script and passing in a [config JSON file](#config-json-schema). It aggregates the execution of the scripts specified in the sections of this documentation based on the requirements specified in the provided configuration. These resources can then be transported to a disconnected network and used to establish or update their related features.
 
-### JSON Config Schema
+### Config JSON Schema
 
 > For a comprehensive set of configuration examples, see the [scripts/config](https://github.com/JaimeStill/azure-dev-resources/tree/project-schema/scripts/config) directory in the project repository.
 
-A [JSON config file](#json-config-schema) that specifies where to store the cached resources (`target`) and provides metadata to the executed sub-scripts (each base property apart from `target`, i.e. - `linux` for caching Ubuntu resources, `npm` for caching npm projects with their dependencies, etc.).
+Specifies where to store the cached resources (`target`) and provides metadata to the executed sub-scripts (each base property apart from `target`, i.e. - `linux` for caching Ubuntu resources, `npm` for caching npm projects with their dependencies, etc.).
 
 The sub-script base properties are optional. If a sub-script base property is provided, all of the properties within its schema are required unless specified below. You should provide at least one sub-script base property.
 
@@ -117,6 +120,37 @@ The schema is as follows:
             }
         ]
     },
+    // Build-DotnetCache.ps1
+    "dotnet": {
+        // cache directory for the .NET SDK
+        "target": "dotnet",
+        // OPTIONAL: .NET SDK metadata
+        // options correspond with .NET install script options
+        // see https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script#options
+        "sdk": {
+            // see --architecture
+            "arch": "x64",
+            // see -channel
+            "channel": "STS",
+            // see --os
+            "os": "win"
+        },
+        // OPTIONAL: .NET CLI tools
+        // see https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools
+        "tools": {
+            // sub-directory to store cached tools
+            "target": "tools",
+            // list of tools to cache
+            // 
+            "data": [
+                "dotnet-ef",
+                // can specify a specific version
+                "dotnet-serve@1.10.172",
+                // ending in ! indicates --prerelease
+                "dotnetsay!"
+            ]
+        }
+    }
     // Build-LinuxCache.ps1
     "linux": {
         // cache directory for Linux resources
@@ -148,8 +182,43 @@ The schema is as follows:
     "npm": {
         // cache directory for generated Node.js projects
         "target": "npm",
+        // specifies details for caching global npm packages
+        "global": {
+            // cache directory for global npm packages
+            "target": "global",
+            /*
+                list of environment variables to set
+                while generating the global npm cache
+            */
+            "environment": [
+                {
+                    // the environment variable to set
+                    "key": "CYPRESS_INSTALL_BINARY",
+                    // the environment variable value
+                    "value": 0
+                }
+            ],
+            // the global npm packages to cache
+            "packages": [
+                "cypress"
+            ],
+            /*
+                list of external binaries associated with
+                the npm packages being cached
+            */
+            "binaries": [
+                {
+                    // cache directory for the binary
+                    "target": "cypress_cache",
+                    // file name for the downloaded binary
+                    "file": "cypress.zip",
+                    // download URI for the binary
+                    "source": "https://download.cypress.io/desktop?platform=win32&arch=x64"
+                }
+            ]
+        },
         // Node.js project configurations
-        "data": [
+        "projects": [
             {
                 // package.json name
                 "name": "cache",
@@ -205,12 +274,12 @@ The schema is as follows:
             ]
         }
     },
-    // Build-SoftwareCache.ps1
-    "software": {
+    // Build-ResourcesCache.ps1
+    "resources": {
         // cache directory for generated binaries
-        "target": "software",
-        // list of binaries
-        "data": [
+        "target": "resources",
+        // OPTIONAL: list of files for this directory
+        "files": [
             {
                 // resource name
                 "name": "Visual Studio Code",
@@ -218,6 +287,36 @@ The schema is as follows:
                 "file": "vscode.exe",
                 // download URI
                 "source": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
+            }
+        ],
+        // OPTIONAL: list of sub-directories for this directory
+        // each object in this array has the same schema as the root "resources" object
+        "folders": [
+            {
+                /* 
+                    cache directory for the files within this folder
+
+                    note that you can lift directory by using relative
+                    directory paths. For instance, if you wanted to lift
+                    "fonts" to directly within the generated "bundle"
+                    directory, you could define it as follows:
+
+                    "target": "../fonts"
+                    
+                    this will generate the following directory structure:
+
+                    * bundle
+                        * fonts
+                        * resources
+                */
+                "target": "fonts",
+                "files": [
+                    {
+                        "name": "Cascadia Code",
+                        "file": "cascadia-code.zip",
+                        "source": "https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip"
+                    }
+                ]
             }
         ]
     },
