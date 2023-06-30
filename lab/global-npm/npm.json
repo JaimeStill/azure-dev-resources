@@ -1,0 +1,20 @@
+{
+    "target": "global",
+    "environment": [
+        {
+            "key": "CYPRESS_INSTALL_BINARY",
+            "value": 0
+        }
+    ],
+    "packages": [
+        "@angular/cli",
+        "cypress"
+    ],
+    "binaries": [
+        {
+            "target": "cypress_cache",
+            "file": "cypress.zip",
+            "source": "https://download.cypress.io/desktop?platform=win32&arch=x64"
+        }
+    ]
+}

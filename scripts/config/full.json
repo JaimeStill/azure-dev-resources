@@ -1,5 +1,18 @@
 {
     "target": "..\\bundle",
+    "dotnet": {
+        "target": "dotnet",        
+        "arch": "x64",
+        "channel": "STS",
+        "os": "win",
+        "tools": {
+            "target": "tools",
+            "data": [
+                "dotnet-ef",
+                "dotnet-serve@1.10.172"
+            ]
+        }
+    },
     "ads": {
         "target": "extensions\\ads",
         "data": [

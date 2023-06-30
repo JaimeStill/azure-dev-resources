@@ -1,0 +1,8 @@
+{
+    "target": "tools",
+    "data": [
+        "dotnetsay",
+        "dotnet-ef",
+        "dotnet-serve@1.10.172"
+    ]
+}
