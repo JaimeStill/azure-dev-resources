@@ -44,7 +44,7 @@ All of the resources and dependencies specified in this documentation can be ret
 
 ### Config JSON Schema
 
-> For a comprehensive set of configuration examples, see the [scripts/config](https://github.com/JaimeStill/azure-dev-resources/tree/project-schema/scripts/config) directory in the project repository.
+> For a comprehensive set of configuration examples, see the [scripts/config](https://github.com/JaimeStill/azure-dev-resources/tree/main/scripts/config) directory in the project repository.
 
 Specifies where to store the cached resources (`target`) and provides metadata to the executed sub-scripts (each base property apart from `target`, i.e. - `linux` for caching Ubuntu resources, `npm` for caching npm projects with their dependencies, etc.).
 
