@@ -39,8 +39,8 @@ if ($null -ne $data) {
         .\Build-DockerCache.ps1 -Config $data.docker
     }
 
-    if ($null -ne $data.software) {
-        .\Build-SoftwareCache.ps1 -Config $data.software
+    if ($null -ne $data.resources) {
+        .\Build-ResourceCache.ps1 -Config $data.resources
     }
 
     if ($null -ne $data.wsl) {

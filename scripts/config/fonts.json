@@ -1,6 +1,6 @@
 {
     "target": "..\\bundle",
-    "software": {
+    "resources": {
         "target": "fonts",
         "data": [
             {

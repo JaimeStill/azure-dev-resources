@@ -202,9 +202,9 @@
             ]
         }
     },
-    "software": {
-        "target": "software",
-        "data": [
+    "resources": {
+        "target": "resources",
+        "files": [
             {
                 "name": "Visual Studio Code",
                 "file": "vscode.exe",
@@ -259,6 +259,23 @@
                 "name": "PowerToys",
                 "file": "powertoys.exe",
                 "source": "https://github.com/microsoft/PowerToys/releases/download/v0.70.1/PowerToysSetup-0.70.1-x64.exe"
+            }
+        ],
+        "folders": [
+            {
+                "target": "fonts",
+                "files": [
+                    {
+                        "name": "Cascadia Code",
+                        "file": "cascadia-code.zip",
+                        "source": "https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip"
+                    },
+                    {
+                        "name": "Intel One Mono",
+                        "file": "intel-one-mono.zip",
+                        "source": "https://github.com/intel/intel-one-mono/releases/download/V1.2.1/otf.zip"
+                    }
+                ]
             }
         ]
     },
