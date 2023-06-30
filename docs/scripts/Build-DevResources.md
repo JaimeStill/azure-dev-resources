@@ -43,8 +43,8 @@ if ($null -ne $data) {
         .\Build-DockerCache.ps1 -Config $data.docker
     }
 
-    if ($null -ne $data.software) {
-        .\Build-SoftwareCache.ps1 -Config $data.software
+    if ($null -ne $data.resources) {
+        .\Build-ResourceCache.ps1 -Config $data.resources
     }
 
     if ($null -ne $data.wsl) {
@@ -200,12 +200,12 @@ else {
             ]
         }
     },
-    // Build-SoftwareCache
-    "software": {
+    // Build-ResourceCache
+    "resources": {
         // cache directory for generated binaries
-        "target": "software",
-        // list of binaries
-        "data": [
+        "target": "resources",
+        // OPTIONAL: list of files for this directory
+        "files": [
             {
                 // resource name
                 "name": "Visual Studio Code",
@@ -213,6 +213,20 @@ else {
                 "file": "vscode.exe",
                 // download URI
                 "source": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
+            }
+        ],
+        // OPTIONAL: list of sub-directories for this directory
+        // each object in this array has the same schema as the root "resources" object
+        "folders": [
+            {
+                "target": "fonts",
+                "files": [
+                    {
+                        "name": "Cascadia Code",
+                        "file": "cascadia-code.zip",
+                        "source": "https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip"
+                    }
+                ]
             }
         ]
     },

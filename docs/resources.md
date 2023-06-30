@@ -1,7 +1,7 @@
-# Software
+# Resources
 [Home](./index.md)
 
-All of the required dependencies specified below can be bundled into a single directory by running the [Build-SoftwareCache.ps1](./scripts/Build-SoftwareCache.md) script. These resources can then be transported to a disconnected network and used to setup the underlying dev environment.
+All of the required dependencies specified below can be bundled into a single directory by running the [Build-ResourceCache.ps1](./scripts/Build-ResourceCache.md) script. These resources can then be transported to a disconnected network and used to setup the underlying dev environment.
 
 Name | Description
 -----|------------
@@ -23,7 +23,7 @@ After downloading the SQL Server 2022 Express installer, it needs to be launched
 
 ![download-media](https://github.com/JaimeStill/azure-dev-resources/assets/14102723/bd62d17a-36b5-420b-910a-c766ca94519c)  
 
-Select **Express Advanced** and target a directory in your `bundle\software` directory to store the installation files (in this case, `bindle\software\sql-server-2022-express`):
+Select **Express Advanced** and target a directory in your `bundle\resources` directory to store the installation files (in this case, `bindle\resources\sql-server-2022-express`):
 
 ![installer-download](https://github.com/JaimeStill/azure-dev-resources/assets/14102723/1cf970a6-59fb-403e-b872-3c6e6986cd7c)
 

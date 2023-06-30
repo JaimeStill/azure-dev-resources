@@ -202,9 +202,9 @@
             ]
         }
     },
-    "software": {
-        "target": "software",
-        "data": [
+    "resources": {
+        "target": "resources",
+        "files": [
             {
                 "name": "Visual Studio Code",
                 "file": "vscode.exe",

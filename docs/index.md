@@ -29,10 +29,10 @@ With the establishment of the IL6 cloud region, we now have access to the servic
     * [Internal NuGet Packages](./nuget.md#internal-nuget-packages)
         * [Publishing NuGet Updates](./nuget.md#publishing-nuget-updates)
         * [Automating NuGet Package Deployments](./nuget.md#automating-nuget-package-deployments)
-* [Software](./software.md)
-    * [Configurations for Offline Environments](./software.md#configurations-for-offline-environments)
-        * [Environment Variables](./software.md#environment-variables)
-        * [Visual Studio Code](./software.md#visual-studio-code)
+* [Resources](./resources.md)
+    * [Configurations for Offline Environments](./resources.md#configurations-for-offline-environments)
+        * [Environment Variables](./resources.md#environment-variables)
+        * [Visual Studio Code](./resources.md#visual-studio-code)
 * [Windows Subsystem for Linux](./wsl.md)
 
 ## Automated Resource Builds
@@ -205,12 +205,12 @@ The schema is as follows:
             ]
         }
     },
-    // Build-SoftwareCache.ps1
-    "software": {
+    // Build-ResourcesCache.ps1
+    "resources": {
         // cache directory for generated binaries
-        "target": "software",
-        // list of binaries
-        "data": [
+        "target": "resources",
+        // OPTIONAL: list of files for this directory
+        "files": [
             {
                 // resource name
                 "name": "Visual Studio Code",
@@ -218,6 +218,36 @@ The schema is as follows:
                 "file": "vscode.exe",
                 // download URI
                 "source": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
+            }
+        ],
+        // OPTIONAL: list of sub-directories for this directory
+        // each object in this array has the same schema as the root "resources" object
+        "folders": [
+            {
+                /* 
+                    cache directory for the files within this folder
+
+                    note that you can lift directory by using relative
+                    directory paths. For instance, if you wanted to lift
+                    "fonts" to directly within the generated "bundle"
+                    directory, you could define it as follows:
+
+                    "target": "../fonts"
+                    
+                    this will generate the following directory structure:
+
+                    * bundle
+                        * fonts
+                        * resources
+                */
+                "target": "fonts",
+                "files": [
+                    {
+                        "name": "Cascadia Code",
+                        "file": "cascadia-code.zip",
+                        "source": "https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip"
+                    }
+                ]
             }
         ]
     },
