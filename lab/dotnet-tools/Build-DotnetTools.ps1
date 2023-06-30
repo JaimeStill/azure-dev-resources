@@ -16,7 +16,9 @@ function Install-DotnetTool([string] $tool, [string] $dir) {
         if ($tool.EndsWith('!')) {
             & dotnet tool install $tool --tool-path $dir --prerelease
         }
-        & dotnet tool install $tool --tool-path $dir
+        else {
+            & dotnet tool install $tool --tool-path $dir
+        }
     }
 }
 

@@ -35,6 +35,53 @@ The resulting directory structure for each project should be:
 * package-lock.json
 * package.json
 
+## Global npm Packages
+
+The PowerShell script [Build-NpmCache.ps1](./scripts/Build-NpmCache.md) defines the ability to generate a cache of npm packages, as well as any associated binaries, intended for global installation. Additionally, you can set environment variables that will be initialized for the duration of the global cache generation. This cache can then be transported to a disconnected network and used to establish or update globally installed npm packages.
+
+A good example of a global npm package that uses all of these features is [Cypress](https://docs.cypress.io/guides/overview/why-cypress). When cypress is globally installed, it automatically installs the associated binary data in the cypress cache at `$env:LocalAppData\Cypress\Cache` on windows, and `~/.cache/Cypress` on linux. 
+
+Cypress provides a series of [environment variables](https://docs.cypress.io/guides/references/advanced-installation#Environment-variables) that can be set to control the way it behaves when installed. Notably, the `CYPRESS_INSTALL_BINARY` variable can be set to `0` to indicate that the binary should not be automatically installed when installing the npm package. 
+
+Additionally, binaries can be downloaded using the provided [Download URLs](https://docs.cypress.io/guides/references/advanced-installation#Download-URLs) provided by cypress. Instead of downloading the binaries to the local user cache when caching the cypress package, the binary will automatically be downloaded based on the metadata provided in the `binaries` array of the configuration passed to the script:
+
+```jsonc
+"global": {
+    // cache directory for global npm packages
+    "target": "global",
+    /*
+        list of environment variables to set
+        while generating the global npm cache
+    */
+    "environment": [
+        {
+            // the environment variable to set
+            "key": "CYPRESS_INSTALL_BINARY",
+            // the environment variable value
+            "value": 0
+        }
+    ],
+    // the global npm packages to cache
+    "packages": [
+        "cypress"
+    ],
+    /*
+        list of external binaries associated with
+        the npm packages being cached
+    */
+    "binaries": [
+        {
+            // cache directory for the binary
+            "target": "cypress_cache",
+            // file name for the downloaded binary
+            "file": "cypress.zip",
+            // download URI for the binary
+            "source": "https://download.cypress.io/desktop?platform=win32&arch=x64"
+        }
+    ]
+}
+```
+
 ## Local npm Packages
 
 > A sample project for this capability can be found at [/lab/local-npm](https://github.com/JaimeStill/azure-dev-resources/tree/main/lab/local-npm).

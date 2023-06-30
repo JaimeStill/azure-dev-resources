@@ -14,11 +14,6 @@
                 "source": "https://github.com/git-for-windows/git/releases/download/v2.41.0.windows.1/Git-2.41.0-64-bit.exe"
             },
             {
-                "name": ".NET SDK",
-                "file": "dotnet.exe",
-                "source": "https://dotnetcli.azureedge.net/dotnet/Sdk/7.0.305/dotnet-sdk-7.0.305-win-x64.exe"
-            },
-            {
                 "name": "NodeJS LTS",
                 "file": "node.msi",
                 "source": "https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi"

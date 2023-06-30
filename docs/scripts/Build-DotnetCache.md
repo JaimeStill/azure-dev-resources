@@ -1,3 +1,7 @@
+# Build-DotnetCache.ps1
+[Home](../index.md) | [Scripts](./index.md)
+
+```powershell
 param(
     [PSObject]
     [Parameter(Mandatory)]
@@ -69,5 +73,41 @@ try {
     Write-Host ".NET SDK cache successfully generated!" -ForegroundColor Green
 }
 finally {
-    $global:ProgressPreference = $initialProgressPreference
+    $global:ProgressPreference = $initialProgressPreference    
 }
+```
+
+## Config Schema
+
+```jsonc
+"dotnet": {
+    // cache directory for the .NET SDK
+    "target": "dotnet",
+    // OPTIONAL: .NET SDK metadata
+    // options correspond with .NET install script options
+    // see https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script#options
+    "sdk": {
+        // see --architecture
+        "arch": "x64",
+        // see -channel
+        "channel": "STS",
+        // see --os
+        "os": "win"
+    },
+    // OPTIONAL: .NET CLI tools
+    // see https://learn.microsoft.com/en-us/dotnet/core/tools/global-tools
+    "tools": {
+        // sub-directory to store cached tools
+        "target": "tools",
+        // list of tools to cache
+        // 
+        "data": [
+            "dotnet-ef",
+            // can specify a specific version
+            "dotnet-serve@1.10.172",
+            // ending in ! indicates --prerelease
+            "dotnetsay!"
+        ]
+    }
+}
+```
