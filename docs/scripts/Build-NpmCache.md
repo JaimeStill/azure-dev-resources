@@ -137,10 +137,8 @@ finally {
     "global": {
         // cache directory for global npm packages
         "target": "global",
-        /*
-            list of environment variables to set
-            while generating the global npm cache
-        */
+        // list of environment variables to set
+        // while generating the global npm cache
         "environment": [
             {
                 // the environment variable to set
@@ -153,10 +151,8 @@ finally {
         "packages": [
             "cypress"
         ],
-        /*
-            list of external binaries associated with
-            the npm packages being cached
-        */
+        // list of external binaries associated with
+        // the npm packages being cached
         "binaries": [
             {
                 // cache directory for the binary

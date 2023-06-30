@@ -186,10 +186,8 @@ The schema is as follows:
         "global": {
             // cache directory for global npm packages
             "target": "global",
-            /*
-                list of environment variables to set
-                while generating the global npm cache
-            */
+            // list of environment variables to set
+            // while generating the global npm cache
             "environment": [
                 {
                     // the environment variable to set
@@ -202,10 +200,8 @@ The schema is as follows:
             "packages": [
                 "cypress"
             ],
-            /*
-                list of external binaries associated with
-                the npm packages being cached
-            */
+            // list of external binaries associated with
+            // the npm packages being cached
             "binaries": [
                 {
                     // cache directory for the binary
@@ -293,22 +289,20 @@ The schema is as follows:
         // each object in this array has the same schema as the root "resources" object
         "folders": [
             {
-                /* 
-                    cache directory for the files within this folder
-
-                    note that you can lift directory by using relative
-                    directory paths. For instance, if you wanted to lift
-                    "fonts" to directly within the generated "bundle"
-                    directory, you could define it as follows:
-
-                    "target": "../fonts"
-                    
-                    this will generate the following directory structure:
-
-                    * bundle
-                        * fonts
-                        * resources
-                */
+                // cache directory for the files within this folder
+                //
+                // note that you can lift directory by using relative
+                // directory paths. For instance, if you wanted to lift
+                // "fonts" to directly within the generated "bundle"
+                // directory, you could define it as follows:
+                //
+                // "target": "../fonts"
+                // 
+                // this will generate the following directory structure:
+                //
+                // * bundle
+                //    * fonts
+                //    * resources
                 "target": "fonts",
                 "files": [
                     {

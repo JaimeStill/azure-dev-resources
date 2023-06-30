@@ -84,22 +84,20 @@ finally {
     // each object in this array has the same schema as the root "resources" object
     "folders": [
         {
-            /* 
-                cache directory for the files within this folder
-
-                note that you can lift directory by using relative
-                directory paths. For instance, if you wanted to lift
-                "fonts" to directly within the generated "bundle"
-                directory, you could define it as follows:
-
-                "target": "../fonts"
-                
-                this will generate the following directory structure:
-
-                * bundle
-                    * fonts
-                    * resources
-            */
+            // cache directory for the files within this folder
+            //
+            // note that you can lift directory by using relative
+            // directory paths. For instance, if you wanted to lift
+            // "fonts" to directly within the generated "bundle"
+            // directory, you could define it as follows:
+            //
+            // "target": "../fonts"
+            // 
+            // this will generate the following directory structure:
+            //
+            // * bundle
+            //    * fonts
+            //    * resources
             "target": "fonts",
             "files": [
                 {
