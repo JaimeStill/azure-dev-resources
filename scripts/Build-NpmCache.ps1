@@ -43,7 +43,7 @@ function Build-NpmProjects([psobject] $projects, [string] $dir) {
         }
 
         New-Item -Path $project -ItemType Directory -Force
-        New-Item (Join-Path $project ".npmrc") -ItemType File -Value "cache-./$($_.cache)"
+        New-Item (Join-Path $project ".npmrc") -ItemType File -Value "cache=./$($_.cache)"
         New-Item (Join-Path $project "package.json") -ItemType File -Value ($package | ConvertTo-Json)
 
         Set-Location $project
