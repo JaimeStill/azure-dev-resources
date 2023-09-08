@@ -103,14 +103,20 @@ ENTRYPOINT ["dotnet", "<Project>.Api.dll"]
 
 ```dockerfile
 FROM node:latest as build
-WORKDIR /usr/local/app
+WORKDIR /usr/local/app/
 COPY ./ /usr/local/app/
 RUN npm install
 RUN npm run build
 
 FROM nginx:latest
-COPY --from=build /usr/local/app/dist/core-spa /usr/share/nginx/html
+COPY --from=build /usr/local/app/dist/{project} /usr/share/nginx/html
 EXPOSE 80
+```
+
+```
+docker build -t {tag} .
+
+docker run -it --rm -p {port}:80 {tag}
 ```
 
 **.dockerignore**  

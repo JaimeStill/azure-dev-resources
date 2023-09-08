@@ -1,0 +1,260 @@
+{
+    "target": "..\\bundle",
+    "ads": {
+        "target": "extensions\\ads",
+        "data": [
+            {
+                "name": "Admin Pack for SQL Server",
+                "file": "admin-pack-sql-server.vsix",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2099889"
+            },
+            {
+                "name": "Database Admin Tool Extensions for Windows",
+                "file": "db-admin-tool.vsix",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2099888"
+            },
+            {
+                "name": "Query History",
+                "file": "query-history.vsix",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2109534"
+            }
+        ]
+    },
+    "docker": {
+        "target": "docker",
+        "data": [
+            {
+                "repository": "nginx",
+                "name": "nginx",
+                "tag": "latest",
+                "clear": false
+            },
+            {
+                "repository": "node",
+                "name": "node",
+                "tag": "lts-alpine",
+                "clear": false
+            },
+            {
+                "repository": "mcr.microsoft.com/dotnet/sdk",
+                "name": "mcr.microsoft.com-dotnet-sdk",
+                "tag": "latest",
+                "clear": false
+            },
+            {
+                "repository": "mcr.microsoft.com/dotnet/aspnet",
+                "name": "mcr.microsoft.com-dotnet-aspnet",
+                "tag": "latest",
+                "clear": false
+            }
+        ]
+    },
+    "dotnet": {
+        "target": "dotnet",
+        "sdk": {
+            "arch": "x64",
+            "channel": "STS",
+            "os": "win"
+        },
+        "tools": {
+            "target": "tools",
+            "data": [
+                "dotnet-ef"
+            ]
+        }
+    },
+    "linux": {
+        "target": "linux",
+        "data": {
+            "apt": [
+                "apt-offline",
+                "azure-cli",
+                "git",
+                "jq",
+                "nodejs",
+                "uuid-runtime"
+            ],
+            "dotnet": {
+                "arch": "x64",
+                "channel": "STS",
+                "os": "linux",
+                "extract": false
+            }
+        }
+    },
+    "nuget": {
+        "target": "nuget",
+        "data": {
+            "solution": ".solution",
+            "keep": false,
+            "clean": true,
+            "projects": [
+                {
+                    "name": "Core",
+                    "template": "console",
+                    "framework": "net7.0",
+                    "dependencies": [
+                        "DocumentFormat.OpenXml",
+                        "Microsoft.Data.SqlClient",
+                        "Microsoft.EntityFrameworkCore",
+                        "Microsoft.EntityFrameworkCore.Relational",
+                        "Microsoft.EntityFrameworkCore.SqlServer",
+                        "Microsoft.EntityFrameworkCore.Tools",
+                        "Microsoft.Extensions.Configuration.Abstractions",
+                        "Microsoft.Extensions.Configuration.Binder",
+                        "System.CommandLine!",
+                        "System.CommandLine.NamingConventionBinder!"
+                    ]
+                },
+                {
+                    "name": "Web",
+                    "template": "webapi",
+                    "framework": "net7.0",
+                    "dependencies": [
+                        "Microsoft.AspNetCore.OData",
+                        "Microsoft.AspNetCore.OpenApi",
+                        "Microsoft.AspNetCore.SignalR.Client",
+                        "Microsoft.EntityFrameworkCore.Design",
+                        "Swashbuckle.AspNetCore"
+                    ]
+                }
+            ]
+        }
+    },
+    "resources": {
+        "target": "resources",
+        "files": [
+            {
+                "name": "Visual Studio Code",
+                "file": "vscode.exe",
+                "source": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
+            },
+            {
+                "name": "git",
+                "file": "git.exe",
+                "source": "https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.2/Git-2.42.0.2-64-bit.exe"
+            },
+            {
+                "name": "NodeJS LTS",
+                "file": "node.msi",
+                "source": "https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi"
+            },
+            {
+                "name": "Azure CLI",
+                "file": "azurecli.msi",
+                "source": "https://aka.ms/installazurecliwindows"
+            },
+            {
+                "name": "PowerShell",
+                "file": "pwsh.msi",
+                "source": "https://github.com/PowerShell/PowerShell/releases/download/v7.3.6/PowerShell-7.3.6-win-x64.msi"
+            },
+            {
+                "name": "SQL Server Developer Edition",
+                "file": "sql-2022-developer.exe",
+                "source": "https://go.microsoft.com/fwlink/p/?linkid=2215158&clcid=0x409&culture=en-us&country=us"
+            },
+            {
+                "name": "Azure Data Studio",
+                "file": "azure-data-studio.exe",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2243234"
+            },
+            {
+                "name": "Docker Desktop",
+                "file": "docker.exe",
+                "source": "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
+            },
+            {
+                "name": "Windows Terminal",
+                "file": "terminal.msixbundle",
+                "source": "https://github.com/microsoft/terminal/releases/download/v1.17.11461.0/Microsoft.WindowsTerminal_1.17.11461.0_8wekyb3d8bbwe.msixbundle"
+            },
+            {
+                "name": "PowerToys",
+                "file": "powertoys.exe",
+                "source": "https://github.com/microsoft/PowerToys/releases/download/v0.73.0/PowerToysUserSetup-0.73.0-x64.exe"
+            }
+        ],
+        "folders": [
+            {
+                "target": "fonts",
+                "files": [
+                    {
+                        "name": "Cascadia Code",
+                        "file": "cascadia-code.zip",
+                        "source": "https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip"
+                    },
+                    {
+                        "name": "Intel One Mono",
+                        "file": "intel-one-mono.zip",
+                        "source": "https://github.com/intel/intel-one-mono/releases/download/V1.2.1/otf.zip"
+                    }
+                ]
+            }
+        ]
+    },
+    "vscode": {
+        "target": "extensions\\vscode",
+        "data": [
+            {
+                "publisher": "angular",
+                "name": "ng-template",
+                "display": "Angular Language Service"
+            },
+            {
+                "publisher": "ms-dotnettools",
+                "name": "csharp",
+                "display": "C#"
+            },
+            {
+                "publisher": "ms-azuretools",
+                "name": "vscode-docker",
+                "display": "Docker"
+            },
+            {
+                "publisher": "editorconfig",
+                "name": "editorconfig",
+                "display": "EditorConfig"
+            },
+            {
+                "publisher": "bierner",
+                "name": "github-markdown-preview",
+                "display": "GitHub Markdown Preview"
+            },
+            {
+                "publisher": "github",
+                "name": "github-vscode-theme",
+                "display": "GitHub Theme"
+            },
+            {
+                "publisher": "ms-vscode",
+                "name": "powershell",
+                "display": "PowerShell"
+            },
+            {
+                "publisher": "ms-vscode-remote",
+                "name": "vscode-remote-extensionpack",
+                "display": "Remote Development"
+            },
+            {
+                "publisher": "spmeesseman",
+                "name": "vscode-taskexplorer",
+                "display": "Task Explorer"
+            },
+            {
+                "publisher": "rangav",
+                "name": "vscode-thunder-client",
+                "display": "Thunder Client"
+            },
+            {
+                "publisher": "redhat",
+                "name": "vscode-yaml",
+                "display": "YAML"
+            }
+        ]
+    },
+    "wsl": {
+        "target": "wsl",
+        "arch": "x64"
+    }
+}
