@@ -84,12 +84,16 @@ function Build-GlobalNpm([psobject] $globe, [string] $dir) {
 
         New-Item $dir -ItemType Directory -Force
 
-        $globe.packages | ForEach-Object {
-            & npm i -g $_ --prefix $dir
+        if ($null -ne $globe.packages) {
+            $globe.packages | ForEach-Object {
+                & npm i -g $_ --prefix $dir
+            }
         }
 
-        $globe.binaries | ForEach-Object {
-            Build-GlobalBinary $_ $dir
+        if ($null -ne $globe.binaries) {
+            $globe.binaries | ForEach-Object {
+                Build-GlobalBinary $_ $dir
+            }
         }
     }
     finally {

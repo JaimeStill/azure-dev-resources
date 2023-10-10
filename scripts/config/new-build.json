@@ -143,7 +143,7 @@
             {
                 "name": "NodeJS LTS",
                 "file": "node.msi",
-                "source": "https://nodejs.org/dist/v18.16.1/node-v18.16.1-x64.msi"
+                "source": "https://nodejs.org/dist/v18.18.0/node-v18.18.0-x64.msi"
             },
             {
                 "name": "Azure CLI",
@@ -173,12 +173,27 @@
             {
                 "name": "Windows Terminal",
                 "file": "terminal.msixbundle",
-                "source": "https://github.com/microsoft/terminal/releases/download/v1.17.11461.0/Microsoft.WindowsTerminal_1.17.11461.0_8wekyb3d8bbwe.msixbundle"
+                "source": "https://github.com/microsoft/terminal/releases/download/v1.18.2681.0/Microsoft.WindowsTerminal_1.18.2681.0_8wekyb3d8bbwe.msixbundle"
             },
             {
                 "name": "PowerToys",
                 "file": "powertoys.exe",
-                "source": "https://github.com/microsoft/PowerToys/releases/download/v0.73.0/PowerToysUserSetup-0.73.0-x64.exe"
+                "source": "https://github.com/microsoft/PowerToys/releases/download/v0.74.1/PowerToysSetup-0.74.1-x64.exe"
+            },
+            {
+                "name": "Microsoft OLE DB Driver",
+                "file": "msoledbsql.msi",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2238602"
+            },
+            {
+                "name": "WebView2",
+                "file": "webview2.exe",
+                "source": "https://msedge.sf.dl.delivery.mp.microsoft.com/filestreamingservice/files/0af26c79-02f0-4f06-a12d-116bc05ca860/MicrosoftEdgeWebView2RuntimeInstallerX64.exe"
+            },
+            {
+                "name": "Microsoft UI XAML",
+                "file": "Microsoft.UI.Xaml.2.7.x64.appx",
+                "source": "https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.7.3/Microsoft.UI.Xaml.2.7.x64.appx"
             }
         ],
         "folders": [
