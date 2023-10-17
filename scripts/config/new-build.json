@@ -225,7 +225,8 @@
             {
                 "publisher": "ms-dotnettools",
                 "name": "csharp",
-                "display": "C#"
+                "display": "C#",
+                "targetPlatform": "win32-x64"
             },
             {
                 "publisher": "ms-azuretools",

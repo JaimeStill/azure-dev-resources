@@ -1,5 +1,5 @@
 {
-    "target": "..\\..\\bundle",
+    "target": "..\\bundle",
     "npm": {
         "target": "npm",
         "global": {
@@ -47,7 +47,8 @@
             {
                 "publisher": "ms-dotnettools",
                 "name": "csharp",
-                "display": "C#"
+                "display": "C#",
+                "targetPlatform": "win32-x64"
             },
             {
                 "publisher": "ms-azuretools",
@@ -68,6 +69,11 @@
                 "publisher": "github",
                 "name": "github-vscode-theme",
                 "display": "GitHub Theme"
+            },
+            {
+                "publisher": "ms-dotnettools",
+                "name": "vscode-dotnet-runtime",
+                "display": ".NET Runtime"
             },
             {
                 "publisher": "ms-vscode",

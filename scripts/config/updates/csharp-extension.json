@@ -1,0 +1,14 @@
+{
+    "target": "..\\bundle",
+    "vscode": {
+        "target": "extensions\\vscode",
+        "data": [
+            {
+                "publisher": "ms-dotnettools",
+                "name": "csharp",
+                "display": "C#",
+                "targetPlatform": "win32-x64"
+            }
+        ]
+    }
+}

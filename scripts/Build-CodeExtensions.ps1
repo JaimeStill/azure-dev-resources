@@ -35,6 +35,10 @@ function Get-CodeExtension([psobject] $extension, [string] $path) {
 
     $download = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/$($extension.publisher)/vsextensions/$($extension.name)/$($json.Resources.Version)/vspackage"
 
+    if ($extension.targetPlatform) {
+        $download = "$($download)?targetPlatform=$($extension.targetPlatform)"
+    }
+
     $output = Join-Path $path "$($extension.name).$($json.Resources.Version).vsix"
 
     if (Test-Path $output) {
