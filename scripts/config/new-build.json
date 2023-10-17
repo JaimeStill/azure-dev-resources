@@ -258,6 +258,11 @@
                 "display": "Remote Development"
             },
             {
+                "publisher": "PKief",
+                "name": "material-icon-theme",
+                "display": "Material Icon Theme"
+            },
+            {
                 "publisher": "spmeesseman",
                 "name": "vscode-taskexplorer",
                 "display": "Task Explorer"

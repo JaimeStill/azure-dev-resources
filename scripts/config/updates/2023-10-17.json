@@ -1,0 +1,104 @@
+{
+    "target": "..\\..\\bundle",
+    "npm": {
+        "target": "npm",
+        "global": {
+            "target": "global",
+            "packages": [
+                "@angular-devkit/schematics-cli",
+                "@angular/cli",
+                "npm"
+            ]
+        }
+    },
+    "resources": {
+        "target": "resources",
+        "files": [
+            {
+                "name": "Visual Studio Code",
+                "file": "vscode.exe",
+                "source": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
+            },
+            {
+                "name": "Windows Terminal",
+                "file": "terminal.msixbundle",
+                "source": "https://github.com/microsoft/terminal/releases/download/v1.18.2681.0/Microsoft.WindowsTerminal_1.18.2681.0_8wekyb3d8bbwe.msixbundle"
+            },
+            {
+                "name": "PowerShell",
+                "file": "pwsh.msi",
+                "source": "https://github.com/PowerShell/PowerShell/releases/download/v7.3.8/PowerShell-7.3.8-win-x64.msi"
+            },
+            {
+                "name": "Microsoft UI XAML",
+                "file": "Microsoft.UI.Xaml.2.8.x64.appx",
+                "source": "https://github.com/microsoft/microsoft-ui-xaml/releases/download/v2.8.5/Microsoft.UI.Xaml.2.8.x64.appx"
+            }
+        ]
+    },
+    "vscode": {
+        "target": "extensions\\vscode",
+        "data": [
+            {
+                "publisher": "angular",
+                "name": "ng-template",
+                "display": "Angular Language Service"
+            },
+            {
+                "publisher": "ms-dotnettools",
+                "name": "csharp",
+                "display": "C#"
+            },
+            {
+                "publisher": "ms-azuretools",
+                "name": "vscode-docker",
+                "display": "Docker"
+            },
+            {
+                "publisher": "editorconfig",
+                "name": "editorconfig",
+                "display": "EditorConfig"
+            },
+            {
+                "publisher": "bierner",
+                "name": "github-markdown-preview",
+                "display": "GitHub Markdown Preview"
+            },
+            {
+                "publisher": "github",
+                "name": "github-vscode-theme",
+                "display": "GitHub Theme"
+            },
+            {
+                "publisher": "ms-vscode",
+                "name": "powershell",
+                "display": "PowerShell"
+            },
+            {
+                "publisher": "ms-vscode-remote",
+                "name": "vscode-remote-extensionpack",
+                "display": "Remote Development"
+            },
+            {
+                "publisher": "PKief",
+                "name": "material-icon-theme",
+                "display": "Material Icon Theme"
+            },
+            {
+                "publisher": "spmeesseman",
+                "name": "vscode-taskexplorer",
+                "display": "Task Explorer"
+            },
+            {
+                "publisher": "rangav",
+                "name": "vscode-thunder-client",
+                "display": "Thunder Client"
+            },
+            {
+                "publisher": "redhat",
+                "name": "vscode-yaml",
+                "display": "YAML"
+            }
+        ]
+    }
+}
