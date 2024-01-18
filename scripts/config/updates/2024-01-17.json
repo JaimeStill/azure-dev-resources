@@ -1,0 +1,355 @@
+{
+    "target": "..\\bundle",
+    "docker": {
+        "target": "docker",
+        "data": [
+            {
+                "repository": "nginx",
+                "name": "nginx",
+                "tag": "latest",
+                "clear": false
+            },
+            {
+                "repository": "node",
+                "name": "node",
+                "tag": "lts-alpine",
+                "clear": false
+            },
+            {
+                "repository": "mcr.microsoft.com/dotnet/sdk",
+                "name": "mcr.microsoft.com-dotnet-sdk",
+                "tag": "latest",
+                "clear": false
+            },
+            {
+                "repository": "mcr.microsoft.com/dotnet/aspnet",
+                "name": "mcr.microsoft.com-dotnet-aspnet",
+                "tag": "latest",
+                "clear": false
+            },
+            {
+                "repository": "mcr.microsoft.com/mssql/server",
+                "name": "mcr.microsoft.com-mssql-server",
+                "tag": "2022-latest",
+                "clear": false
+            }
+        ]
+    },
+    "dotnet": {
+        "target": "dotnet",
+        "sdk": {
+            "arch": "x64",
+            "channel": "LTS",
+            "os": "win"
+        },
+        "tools": {
+            "target": "tools",
+            "data": [
+                "dotnet-ef"
+            ]
+        }
+    },
+    "npm": {
+        "target": "npm",
+        "global": {
+            "target": "global",
+            "packages": [
+                "@angular-devkit/schematics-cli",
+                "@angular/cli",
+                "npm"
+            ]
+        },
+        "projects": [
+            {
+                "name": "@hive/core",
+                "version": "0.0.1",
+                "cache": "node_cache",
+                "packages": {
+                    "dependencies": {
+                        "@angular/common": "^17.0.9",
+                        "@microsoft/signalr": "^8.0.0",
+                        "rxjs": "~7.8.1"
+                    },
+                    "devDependencies": {
+                        "typescript": "^5.2.2"
+                    }
+                }
+            },
+            {
+                "name": "hive",
+                "version": "0.0.1",
+                "cache": "node_cache",
+                "packages": {
+                    "dependencies": {
+                        "@angular/animations": "^17.0.9",
+                        "@angular/cdk": "^17.0.6",
+                        "@angular/common": "^17.0.9",
+                        "@angular/compiler": "^17.0.9",
+                        "@angular/core": "^17.0.9",
+                        "@angular/forms": "^17.0.9",
+                        "@angular/material": "^17.0.6",
+                        "@angular/platform-browser": "^17.0.9",
+                        "@angular/platform-browser-dynamic": "^17.0.9",
+                        "@angular/router": "^17.0.9",
+                        "rxjs": "~7.8.1",
+                        "tslib": "^2.6.2",
+                        "zone.js": "^0.14.3"
+                    },
+                    "devDependencies": {
+                        "@angular-devkit/build-angular": "^17.0.10",
+                        "@angular/cli": "^17.0.10",
+                        "@angular/compiler-cli": "^17.0.9",
+                        "ng-packagr": "^17.1.0",
+                        "typescript": "~5.2.2"
+                    }
+                }
+            },
+            {
+                "name": "app",
+                "version": "0.0.1",
+                "cache": "node_cache",
+                "packages": {
+                    "dependencies": {
+                        "@angular/animations": "^17.0.9",
+                        "@angular/cdk": "^17.0.6",
+                        "@angular/common": "^17.0.9",
+                        "@angular/compiler": "^17.0.9",
+                        "@angular/core": "^17.0.9",
+                        "@angular/forms": "^17.0.9",
+                        "@angular/material": "^17.0.6",
+                        "@angular/platform-browser": "^17.0.9",
+                        "@angular/platform-browser-dynamic": "^17.0.9",
+                        "@angular/router": "^17.0.9",
+                        "rxjs": "~7.8.1",
+                        "tslib": "^2.6.2",
+                        "zone.js": "^0.14.3"
+                    },
+                    "devDependencies": {
+                        "@angular-devkit/build-angular": "^17.0.10",
+                        "@angular/cli": "^17.0.10",
+                        "@angular/compiler-cli": "^17.0.9",
+                        "typescript": "~5.2.2"
+                    }
+                }
+            },
+            {
+                "name": "dotnet-identity-spa",
+                "version": "0.0.1",
+                "cache": "node_cache",
+                "packages": {
+                    "dependencies": {
+                        "@angular/animations": "^17.0.9",
+                        "@angular/cdk": "^17.0.5",
+                        "@angular/common": "^17.0.9",
+                        "@angular/compiler": "^17.0.9",
+                        "@angular/core": "^17.0.9",
+                        "@angular/forms": "^17.0.9",
+                        "@angular/material": "^17.0.5",
+                        "@angular/platform-browser": "^17.0.9",
+                        "@angular/platform-browser-dynamic": "^17.0.9",
+                        "@angular/router": "^17.0.9",
+                        "@azure/msal-angular": "^3.0.10",
+                        "@azure/msal-browser": "^3.7.0",
+                        "rxjs": "~7.8.1",
+                        "tslib": "^2.6.2",
+                        "zone.js": "^0.14.3"
+                    },
+                    "devDependencies": {
+                        "@angular-devkit/build-angular": "^17.0.10",
+                        "@angular/cli": "^17.0.10",
+                        "@angular/compiler-cli": "^17.0.9",
+                        "typescript": "~5.2.2"
+                    }
+                }
+            }
+        ]
+    },
+    "nuget": {
+        "target": "nuget",
+        "data": {
+            "solution": ".solution",
+            "keep": false,
+            "clean": true,
+            "projects": [
+                {
+                    "name": "Core",
+                    "template": "console",
+                    "framework": "net8.0",
+                    "dependencies": [
+                        "DocumentFormat.OpenXml",
+                        "Microsoft.Data.SqlClient",
+                        "Microsoft.EntityFrameworkCore",
+                        "Microsoft.EntityFrameworkCore.InMemory",
+                        "Microsoft.EntityFrameworkCore.Relational",
+                        "Microsoft.EntityFrameworkCore.Sqlite",
+                        "Microsoft.EntityFrameworkCore.SqlServer",
+                        "Microsoft.EntityFrameworkCore.Tools",
+                        "Microsoft.Extensions.Configuration.Abstractions",
+                        "Microsoft.Extensions.Configuration.Binder",
+                        "System.CommandLine!",
+                        "System.CommandLine.NamingConventionBinder!"
+                    ]
+                },
+                {
+                    "name": "Web",
+                    "template": "webapi",
+                    "framework": "net8.0",
+                    "dependencies": [
+                        "Microsoft.AspNetCore.OData",
+                        "Microsoft.AspNetCore.OpenApi",
+                        "Microsoft.AspNetCore.SignalR.Client",
+                        "Microsoft.EntityFrameworkCore.Design",
+                        "Microsoft.Identity.Web",
+                        "Microsoft.Identity.Web.DownstreamApi",
+                        "Swashbuckle.AspNetCore"
+                    ]
+                }
+            ]
+        }
+    },
+    "resources": {
+        "target": "resources",
+        "files": [
+            {
+                "name": "Visual Studio Code",
+                "file": "vscode.exe",
+                "source": "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
+            },
+            {
+                "name": "git",
+                "file": "git.exe",
+                "source": "https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe"
+            },
+            {
+                "name": "NodeJS LTS",
+                "file": "node.msi",
+                "source": "https://nodejs.org/dist/v20.11.0/node-v20.11.0-x64.msi"
+            },
+            {
+                "name": "Azure CLI",
+                "file": "azurecli.msi",
+                "source": "https://aka.ms/installazurecliwindowsx64"
+            },
+            {
+                "name": "PowerShell",
+                "file": "pwsh.msi",
+                "source": "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi"
+            },
+            {
+                "name": "SQL Server 2022 Cumulative Update",
+                "file": "sql-server-2022-cu11.exe",
+                "source": "https://download.microsoft.com/download/9/6/8/96819b0c-c8fb-4b44-91b5-c97015bbda9f/SQLServer2022-KB5032679-x64.exe"
+            },
+            {
+                "name": "Azure Data Studio",
+                "file": "azure-data-studio.exe",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2251836"
+            },
+            {
+                "name": "Docker Desktop",
+                "file": "docker.exe",
+                "source": "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
+            },
+            {
+                "name": "Docker Buildx",
+                "file": "buildx-v0.12.1.windows-amd64.exe",
+                "source": "https://github.com/docker/buildx/releases/download/v0.12.1/buildx-v0.12.1.windows-amd64.exe"
+            },
+            {
+                "name": "PowerToys",
+                "file": "powertoys.exe",
+                "source": "https://github.com/microsoft/PowerToys/releases/download/v0.77.0/PowerToysSetup-0.77.0-x64.exe"
+            }
+        ]
+    },
+    "ads": {
+        "target": "extensions\\ads",
+        "data": [
+            {
+                "name": "Admin Pack for SQL Server",
+                "file": "admin-pack-sql-server.vsix",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2099889"
+            },
+            {
+                "name": "Database Admin Tool Extensions for Windows",
+                "file": "db-admin-tool.vsix",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2099888"
+            },
+            {
+                "name": "Query History",
+                "file": "query-history.vsix",
+                "source": "https://go.microsoft.com/fwlink/?linkid=2109534"
+            }
+        ]
+    },
+    "vscode": {
+        "target": "extensions\\vscode",
+        "data": [
+            {
+                "publisher": "angular",
+                "name": "ng-template",
+                "display": "Angular Language Service"
+            },
+            {
+                "publisher": "ms-dotnettools",
+                "name": "csharp",
+                "display": "C#",
+                "targetPlatform": "win32-x64"
+            },
+            {
+                "publisher": "ms-azuretools",
+                "name": "vscode-docker",
+                "display": "Docker"
+            },
+            {
+                "publisher": "editorconfig",
+                "name": "editorconfig",
+                "display": "EditorConfig"
+            },
+            {
+                "publisher": "bierner",
+                "name": "github-markdown-preview",
+                "display": "GitHub Markdown Preview"
+            },
+            {
+                "publisher": "github",
+                "name": "github-vscode-theme",
+                "display": "GitHub Theme"
+            },
+            {
+                "publisher": "ms-vscode",
+                "name": "powershell",
+                "display": "PowerShell"
+            },
+            {
+                "publisher": "ms-vscode-remote",
+                "name": "vscode-remote-extensionpack",
+                "display": "Remote Development"
+            },
+            {
+                "publisher": "PKief",
+                "name": "material-icon-theme",
+                "display": "Material Icon Theme"
+            },
+            {
+                "publisher": "spmeesseman",
+                "name": "vscode-taskexplorer",
+                "display": "Task Explorer"
+            },
+            {
+                "publisher": "rangav",
+                "name": "vscode-thunder-client",
+                "display": "Thunder Client"
+            },
+            {
+                "publisher": "redhat",
+                "name": "vscode-yaml",
+                "display": "YAML"
+            }
+        ]
+    },
+    "wsl": {
+        "target": "wsl",
+        "arch": "x64"
+    }
+}
