@@ -1,0 +1,17 @@
+{
+    "target": "..\\bundle",
+    "wsl": {
+        "target": "wsl",
+        "arch": "x64"
+    },
+    "resources": {
+        "target": "resources",
+        "files": [
+            {
+                "name": "Docker Desktop",
+                "file": "docker.exe",
+                "source": "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
+            }
+        ]
+    }
+}

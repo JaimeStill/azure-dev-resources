@@ -6,7 +6,7 @@ param(
 
 $temp = '.\temp'
 $distro = 'ubuntu'
-$kernelUri = "https://aka.ms/wsl2kernelmsi$($Config.arch)"
+$kernelUri = "https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_$($Config.arch).msi"
 $ubuntuUri = 'https://aka.ms/wslubuntu'
 $filter = "Ubuntu.+($($Config.arch))+.appx"
 
