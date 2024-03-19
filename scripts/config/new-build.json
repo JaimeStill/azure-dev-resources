@@ -95,6 +95,7 @@
             "packages": [
                 "@angular-devkit/schematics-cli",
                 "@angular/cli",
+                "@devcontainers/cli",
                 "npm"
             ]
         },
@@ -213,8 +214,9 @@
                 {
                     "name": "Core",
                     "template": "console",
-                    "framework": "net7.0",
+                    "framework": "net8.0",
                     "dependencies": [
+                        "Dapper",
                         "DocumentFormat.OpenXml",
                         "Microsoft.Data.SqlClient",
                         "Microsoft.EntityFrameworkCore",
@@ -230,7 +232,7 @@
                 {
                     "name": "Web",
                     "template": "webapi",
-                    "framework": "net7.0",
+                    "framework": "net8.0",
                     "dependencies": [
                         "Microsoft.AspNetCore.OData",
                         "Microsoft.AspNetCore.OpenApi",
