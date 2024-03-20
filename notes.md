@@ -16,3 +16,11 @@ tar -czvf [directory].tar.gz -C [directory] .
 mkdir -p [directory]
 tar -xvf [directory].tar.gz -C [directory]
 ```
+
+## Load All Docker Images
+
+On the air-gapped network, load all Docker images with the following:
+
+```pwsh
+Get-ChildItem -Filter *.tar | foreach { docker load -i $_ }
+```
