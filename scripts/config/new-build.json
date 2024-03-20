@@ -288,11 +288,6 @@
                 "source": "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
             },
             {
-                "name": "Docker Buildx",
-                "file": "buildx-v0.12.1.windows-amd64.exe",
-                "source": "https://github.com/docker/buildx/releases/download/v0.12.1/buildx-v0.12.1.windows-amd64.exe"
-            },
-            {
                 "name": "Windows Terminal",
                 "file": "terminal.msixbundle",
                 "source": "https://github.com/microsoft/terminal/releases/download/v1.18.2681.0/Microsoft.WindowsTerminal_1.18.2681.0_8wekyb3d8bbwe.msixbundle"
