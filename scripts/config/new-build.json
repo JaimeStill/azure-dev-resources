@@ -265,7 +265,7 @@
             {
                 "name": "Azure CLI",
                 "file": "azurecli.msi",
-                "source": "https://aka.ms/installazurecliwindows"
+                "source": "https://aka.ms/installazurecliwindowsx64"
             },
             {
                 "name": "PowerShell",
